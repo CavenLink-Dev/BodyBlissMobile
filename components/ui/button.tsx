@@ -4,32 +4,42 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
+/*
+  Body Bliss buttons — Rule of Three (design doc §5):
+  - primary:   #3D3B36 fill + white label (11.2:1)
+  - secondary: #EAC005 fill + charcoal label (8.79:1) + token inner shadow
+  - quiet:     charcoal text only
+  Metrics per tokens: 44px visual height, 48px hit target (2px invisible
+  expansion per side), min-width 132, radius 8, padding-inline 12, gap 10,
+  DM Sans 18/20 capitalize. Weight 600 is the proposed value (open item —
+  pending owner approval). Pressed = darkened fill (relative darkening;
+  no separate pressed colour token exists). Disabled = reduced opacity +
+  not-allowed (interim treatment, open item pending owner approval).
+  Focus = 2px #252525 ring, 2px offset. Motion = 150ms fade only.
+*/
+
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  cn(
+    "relative inline-flex items-center justify-center whitespace-nowrap capitalize",
+    "h-button-visual min-w-button gap-2.5 rounded px-3 text-button font-semibold",
+    "transition-colors duration-fade",
+    // 48px hit target: 44px visual + 2px per side
+    "before:absolute before:-inset-0.5 before:content-['']",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+    "[&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0",
+  ),
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+        primary: "bg-primary text-primary-foreground active:brightness-90",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
+          "bg-secondary text-secondary-foreground shadow-secondary-inner active:brightness-95",
+        quiet: "bg-transparent text-foreground active:bg-foreground/10",
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "primary",
     },
   },
 );
@@ -41,11 +51,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, className }))}
         ref={ref}
         {...props}
       />
