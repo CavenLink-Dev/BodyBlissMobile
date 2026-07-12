@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sora, DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -13,20 +13,21 @@ export const metadata: Metadata = {
     "Book a vetted massage therapist to come to your home, hotel or workplace in Adelaide.",
 };
 
-// Self-hosted via next/font (downloaded at build, served from our origin —
-// no runtime requests to Google). No light weights per design guardrails.
-const sora = Sora({
+// Self-hosted variable fonts (files committed in app/fonts — no external
+// requests at build or runtime). Use weights 400+ only; no light weights
+// per design guardrails. SIL OFL licences alongside the files.
+const sora = localFont({
+  src: "./fonts/sora-latin-wght-normal.woff2",
   variable: "--font-sora",
   display: "swap",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: "100 800",
 });
 
-const dmSans = DM_Sans({
+const dmSans = localFont({
+  src: "./fonts/dm-sans-latin-wght-normal.woff2",
   variable: "--font-dm-sans",
   display: "swap",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "100 1000",
 });
 
 export default function RootLayout({
