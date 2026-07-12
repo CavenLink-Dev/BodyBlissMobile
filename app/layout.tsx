@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import { Sora, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -9,14 +8,25 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Body Bliss Mobile Massage",
+  description:
+    "Book a vetted massage therapist to come to your home, hotel or workplace in Adelaide.",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Self-hosted via next/font (downloaded at build, served from our origin —
+// no runtime requests to Google). No light weights per design guardrails.
+const sora = Sora({
+  variable: "--font-sora",
   display: "swap",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  display: "swap",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export default function RootLayout({
@@ -25,16 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en-AU">
+      <body className={`${sora.variable} ${dmSans.variable} font-sans antialiased`}>
+        {children}
       </body>
     </html>
   );
