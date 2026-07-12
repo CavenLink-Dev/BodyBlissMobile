@@ -1,7 +1,13 @@
 import type { Config } from "tailwindcss";
 
+/*
+  Body Bliss Mobile Massage — Tailwind theme wired to the approved design tokens.
+  Source of truth: Body_Bliss_Organised_Responsive.tokens.json (values unchanged;
+  #EAC005 owner correction applied in app/globals.css).
+  Breakpoints per tokens: phone <640 · tablet 640–1007 · desktop ≥1008.
+*/
+
 export default {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,6 +15,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    // Token breakpoints (mobile-first): tablet 640, desktop 1008.
+    screens: {
+      tablet: "640px",
+      desktop: "1008px",
+    },
     extend: {
       colors: {
         background: "hsl(var(--background))",
@@ -41,21 +52,81 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+        // Body Bliss token roles
+        "bb-text": {
+          display: "hsl(var(--bb-text-display))",
+          title: "hsl(var(--bb-text-title))",
+          subtitle: "hsl(var(--bb-text-subtitle))",
+          description: "hsl(var(--bb-text-description))",
+          caption: "hsl(var(--bb-text-caption))",
         },
+        "bb-nav": {
+          DEFAULT: "hsl(var(--bb-nav-default))",
+          selected: "hsl(var(--bb-nav-selected-text))",
+          accent: "hsl(var(--bb-nav-accent))",
+        },
+        "bb-star": "hsl(var(--bb-star))",
+        "bb-social": "hsl(var(--bb-social-icon))",
+      },
+      fontFamily: {
+        // Sora: display/title/subtitle + selected nav · DM Sans: body, captions, buttons, nav
+        heading: ["var(--font-sora)", "sans-serif"],
+        sans: ["var(--font-dm-sans)", "sans-serif"],
+      },
+      // typography/styles_preserved — sizes in rem so user text-size settings scale everything
+      fontSize: {
+        display: ["2.75rem", { lineHeight: "2.875rem", fontWeight: "700" }], // 44/46 Sora 700
+        title: ["2rem", { lineHeight: "2.125rem" }], // 32/34 Sora — weight open item (600 proposed)
+        subtitle: ["1.375rem", { lineHeight: "1.5rem", fontWeight: "400" }], // 22/24 Sora
+        description: ["1rem", { lineHeight: "1.125rem", fontWeight: "400" }], // 16/18 DM Sans
+        caption: ["0.75rem", { lineHeight: "1.125rem", fontWeight: "400" }], // 12/18 — never essential info
+        button: ["1.125rem", { lineHeight: "1.25rem" }], // 18/20 DM Sans — weight open item (600 proposed)
+        nav: ["1rem", { lineHeight: "1.125rem" }], // 16/18
+      },
+      spacing: {
+        // spacing/base_scale 4/8/12/16/24/32/48/64 map to Tailwind 1/2/3/4/6/8/12/16 (rem).
+        // Semantic responsive values from tokens:
+        "page-inline": "var(--bb-page-padding-inline)",
+        "page-block": "var(--bb-page-padding-block)",
+        section: "var(--bb-gap-section)",
+        "card-gap": "var(--bb-gap-card)",
+        component: "var(--bb-gap-component)",
+        compact: "var(--bb-gap-compact)",
+        "card-padding": "var(--bb-card-padding)",
+        "nav-gap": "var(--bb-nav-item-gap)",
+        // component/interaction: 48px universal hit target, 44px visual button height
+        "hit-target": "3rem",
+        "button-visual": "2.75rem",
+      },
+      maxWidth: {
+        content: "75rem", // page/content_maximum_width 1200
+      },
+      minWidth: {
+        button: "8.25rem", // button visual default_width 132
+      },
+      minHeight: {
+        "hit-target": "3rem",
       },
       borderRadius: {
+        DEFAULT: "var(--radius)", // button corner radius 8
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        // component/button/effect/secondary_inner_shadow_if_needed
+        "secondary-inner": "inset 0px 0px 8px rgba(127, 127, 127, 0.08)",
+      },
+      transitionDuration: {
+        // Motion rule: 150–200ms fades only
+        fade: "150ms",
       },
     },
   },

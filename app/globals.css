@@ -2,59 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Body Bliss Mobile Massage — design tokens as CSS variables.
+  Source of truth: Body_Bliss_Organised_Responsive.tokens.json (+ foundation-design-direction.md v5).
+  Owner correction applied: single system yellow is #EAC005 everywhere (supersedes token file's #EDC516).
+  Values in shadcn HSL-triplet form so existing components/ui/* keep working.
+  Light theme only — the approved design system has no dark mode.
+*/
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* colour/background/page #F4F4EE · colour/text/display #252525 */
+    --background: 60 21.4% 94.5%;
+    --foreground: 0 0% 14.5%;
+
+    /* Card surface: white with display-charcoal text (neutral surface on #F4F4EE page) */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 0 0% 14.5%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --popover-foreground: 0 0% 14.5%;
+
+    /* colour/action/primary: #3D3B36 bg + white label (11.2:1) */
+    --primary: 43 6.1% 22.5%;
+    --primary-foreground: 0 0% 100%;
+
+    /* colour/action/secondary: #EAC005 bg + charcoal #252525 label (8.79:1).
+       Yellow rule: white-on-yellow (1.74:1) is banned; yellow surfaces always carry charcoal text/icons. */
+    --secondary: 49 95.8% 46.9%;
+    --secondary-foreground: 0 0% 14.5%;
+
+    /* Muted surface + colour/text/description #4E4E4E (7.5:1 on page bg) */
+    --muted: 0 0% 89.4%;
+    --muted-foreground: 0 0% 30.6%;
+
+    /* Accent mirrors secondary; same charcoal-text pairing rule applies */
+    --accent: 49 95.8% 46.9%;
+    --accent-foreground: 0 0% 14.5%;
+
+    /* Status: error #9E2B25 / success #2E6B4F — always paired with text/icon, never colour alone */
+    --destructive: 3 62.1% 38.2%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 39.9% 30%;
+    --success-foreground: 0 0% 100%;
+
+    /* colour/utility/subtle_stroke #E4E4E4 — decorative hairlines only (1.15:1 vs page).
+       OPEN ITEM (design doc §7.4): must never be the only boundary of a meaningful control;
+       a darker input border token is pending owner approval — until then inputs need
+       an additional affordance (label + background difference). */
+    --border: 0 0% 89.4%;
+    --input: 0 0% 89.4%;
+
+    /* Focus ring: 2px #252525, 2px offset, never clipped (design doc §5) */
+    --ring: 0 0% 14.5%;
+
+    /* Text roles (token paths colour/text/*) */
+    --bb-text-display: 0 0% 14.5%;   /* #252525 (13.9:1) */
+    --bb-text-title: 0 0% 25.9%;     /* #424242 (9.1:1)  */
+    --bb-text-subtitle: 60 4.5% 21.8%; /* #3A3A35 (10.4:1) */
+    --bb-text-description: 0 0% 30.6%; /* #4E4E4E (7.5:1) */
+    --bb-text-caption: 0 0% 30.6%;   /* #4E4E4E — 12px captions never carry essential info */
+
+    /* Navigation (token paths colour/navigation/*) */
+    --bb-nav-default: 0 0.8% 25.3%;  /* #414040 (9.4:1) */
+    --bb-nav-selected-text: 0 0% 14.5%; /* selected = bold #252525 label + thick yellow underline */
+    --bb-nav-accent: 49 95.8% 46.9%; /* #EAC005 underline/accent — never text, never sole indicator */
+
+    /* Utility */
+    --bb-star: 49 95.8% 46.9%;       /* #EAC005 stars — always beside a numeric rating in text */
+    --bb-social-icon: 0 5.6% 7.1%;   /* #131111 */
+
+    /* component/button/visual: radius 8 */
     --radius: 0.5rem;
+
+    /* Responsive page metrics (spacing/responsive/*) — mobile-first */
+    --bb-page-padding-inline: 1rem;  /* 16 */
+    --bb-page-padding-block: 1.5rem; /* 24 */
+    --bb-gap-section: 2rem;          /* 32 */
+    --bb-gap-card: 1rem;             /* 16 */
+    --bb-gap-component: 0.75rem;     /* 12 */
+    --bb-gap-compact: 0.5rem;        /* 8 */
+    --bb-card-padding: 1rem;         /* 16 */
+    --bb-nav-item-gap: 1rem;         /* 16 */
   }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+
+  /* tablet 640–1007 */
+  @media (min-width: 640px) {
+    :root {
+      --bb-page-padding-inline: 1.5rem; /* 24 */
+      --bb-page-padding-block: 2rem;    /* 32 */
+      --bb-gap-section: 3rem;           /* 48 */
+      --bb-gap-card: 1.5rem;            /* 24 */
+      --bb-gap-component: 1rem;         /* 16 */
+      --bb-card-padding: 1.5rem;        /* 24 */
+      --bb-nav-item-gap: 1.5rem;        /* 24 */
+    }
+  }
+
+  /* desktop ≥1008 */
+  @media (min-width: 1008px) {
+    :root {
+      --bb-page-padding-inline: 4rem;   /* 64 */
+      --bb-page-padding-block: 3rem;    /* 48 */
+      --bb-gap-section: 4rem;           /* 64 */
+      --bb-nav-item-gap: 2rem;          /* 32 */
+    }
   }
 }
 
@@ -64,5 +115,16 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Motion: 150–200ms fades only; honour prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
