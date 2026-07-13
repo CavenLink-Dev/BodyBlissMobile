@@ -1,19 +1,30 @@
 import type { Metadata } from "next";
 
 import { BookingFlow } from "@/components/booking/booking-flow";
+import { getServicesWithPricing } from "@/lib/catalogue";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Book a massage — Body Bliss Mobile Massage",
   description:
-    "Start your Body Bliss mobile massage booking: share your location and access details, then choose your massage and therapist.",
+    "Start your Body Bliss mobile massage booking: share your location and access details, choose your massage and time, then send your request.",
 };
 
-/*
-  Booking page — hosts the multi-step BookingFlow. This is a working preview
-  of the flow; online payment and confirmation are added when booking opens.
-*/
+export default async function BookPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ service?: string }>;
+}) {
+  const [{ service }, services, supabase] = await Promise.all([
+    searchParams,
+    getServicesWithPricing(),
+    createClient(),
+  ]);
 
-export default function BookPage() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <main className="px-page-inline py-page-block">
       <div className="mx-auto flex max-w-3xl flex-col gap-card-gap">
@@ -23,10 +34,14 @@ export default function BookPage() {
           </h1>
           <p className="max-w-prose text-description text-bb-text-description">
             It takes a couple of minutes. Start with where you&apos;d like your
-            massage, then choose your therapist.
+            massage, then choose your time.
           </p>
         </div>
-        <BookingFlow />
+        <BookingFlow
+          services={services}
+          initialServiceCode={service}
+          isAuthed={Boolean(user)}
+        />
       </div>
     </main>
   );

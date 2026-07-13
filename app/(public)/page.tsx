@@ -6,7 +6,7 @@ import {
   ShieldCheck,
   BadgeCheck,
   CreditCard,
-  HeartHandshake,
+  Lock,
   ArrowRight,
 } from "lucide-react";
 
@@ -15,74 +15,101 @@ import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { BookNowBar } from "@/components/book-now-bar";
-import { SERVICES } from "@/lib/content";
+import { getServicesWithPricing } from "@/lib/catalogue";
+import { formatAud } from "@/lib/format";
 
 /*
-  Home — mobile-first. Order mirrors the brief: hero (prominent Book Now) →
-  How It Works → testimonials carousel → why trust Body Bliss → services →
-  repeated Book Now. No invented pricing, policy wording or availability
-  claims. The nine-years signal is used in the hero + About only.
+  Home — mobile-first, adapted from the service-booking layout in the Figma
+  reference. Order: hero (prominent Book Now) → trust strip → services + live
+  pricing → how it works → why choose → therapist preview (honest, no fake
+  profiles) → reviews (clearly-labelled sample) → preparation → FAQ → final CTA.
+  No invented safety claims; pricing is indicative and labelled.
 */
 
 const STEPS = [
   {
     icon: CalendarCheck,
-    title: "Tell us what you need",
-    body: "Choose your massage, when you'd like it, and where — home, hotel or workplace.",
+    title: "Choose your massage",
+    body: "Pick the massage, length and time that suits you.",
   },
   {
     icon: MapPin,
-    title: "Share the details",
-    body: "Add your address, parking, stairs and any access notes so your therapist arrives ready.",
+    title: "Tell us where",
+    body: "Add your address, parking and access notes so your therapist arrives ready.",
   },
   {
     icon: Sparkles,
     title: "Relax at your place",
-    body: "A vetted therapist brings everything needed. Afterwards you can review and rebook.",
+    body: "A vetted therapist brings everything needed. Afterwards you can rebook in seconds.",
   },
 ];
 
 const TRUST = [
   {
     icon: BadgeCheck,
-    title: "Vetted therapists",
-    body: "Every therapist is qualified and checked before they can take a booking.",
+    title: "Reviewed & approved therapists",
+    body: "Therapists are reviewed and approved before they can take bookings — only approved therapists ever appear.",
   },
   {
     icon: CreditCard,
-    title: "Pay after it's confirmed",
-    body: "You're only charged once your booking is confirmed — no surprises.",
+    title: "Confirmed before you pay",
+    body: "You see the price up front and it's confirmed before payment. No hidden fees.",
+  },
+  {
+    icon: Lock,
+    title: "Your details stay private",
+    body: "Your exact address is only shared with your therapist once your booking is confirmed.",
   },
   {
     icon: ShieldCheck,
-    title: "Your details stay private",
-    body: "Your address is only shared with your therapist once your booking is confirmed.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Nine years of Body Bliss care",
-    body: "The mobile service of Body Bliss Massage & Day Spa, caring for Adelaide since day one.",
+    title: "Support if you need it",
+    body: "Real support and a way to report any concern about a booking.",
   },
 ];
 
-export default function Home() {
+const PREP = [
+  "A quiet room with a little space to set up a massage table.",
+  "Somewhere to park, or a note on where to park nearby.",
+  "Let us know about pets, stairs or access ahead of time.",
+];
+
+const FAQS = [
+  {
+    q: "Where do you operate?",
+    a: "Across the Adelaide metro area. You can check your suburb when you book.",
+  },
+  {
+    q: "Do I need my own massage table?",
+    a: "No. Your therapist brings a professional massage table, linens and everything needed.",
+  },
+  {
+    q: "Can I choose my therapist?",
+    a: "Yes. You can let us match you with the best available therapist, or choose one yourself during booking.",
+  },
+  {
+    q: "When am I charged?",
+    a: "Prices are indicative until your booking is confirmed. For now bookings are sent as a request and payment is arranged on confirmation.",
+  },
+  {
+    q: "What if I need to cancel?",
+    a: "You can manage or cancel a booking from your account. Cancellation terms are shown before you confirm.",
+  },
+];
+
+export default async function Home() {
+  const services = await getServicesWithPricing();
+
   return (
     <>
       <main className="px-page-inline py-page-block">
         <div className="mx-auto flex max-w-content flex-col gap-section">
           {/* Hero */}
-          <section
-            className="flex flex-col gap-card-gap"
-            aria-labelledby="hero-heading"
-          >
+          <section className="flex flex-col gap-card-gap" aria-labelledby="hero-heading">
             <span className="inline-flex w-fit items-center gap-compact rounded-full border border-border bg-card px-3 py-1 text-description font-medium text-bb-text-description">
               <MapPin aria-hidden="true" className="size-4 text-primary" />
               Mobile massage across Adelaide
             </span>
-            <h1
-              id="hero-heading"
-              className="font-heading text-display text-bb-text-display"
-            >
+            <h1 id="hero-heading" className="font-heading text-display text-bb-text-display">
               Massage That Comes To You
             </h1>
             <p className="max-w-prose text-subtitle text-bb-text-subtitle">
@@ -97,13 +124,72 @@ export default function Home() {
                 <Link href="/gift-cards">Buy a Gift Card</Link>
               </Button>
             </div>
+            {/* quick trust strip */}
+            <ul className="mt-1 flex flex-wrap gap-compact">
+              {["Reviewed therapists", "Confirmed before you pay", "Adelaide metro"].map(
+                (t) => (
+                  <li
+                    key={t}
+                    className="inline-flex items-center gap-compact rounded-full bg-muted px-3 py-1 text-description text-bb-text-description"
+                  >
+                    <BadgeCheck aria-hidden="true" className="size-4 text-primary" />
+                    {t}
+                  </li>
+                ),
+              )}
+            </ul>
+          </section>
+
+          {/* Services + live pricing */}
+          <section className="flex flex-col gap-card-gap" aria-labelledby="services-heading">
+            <div className="flex items-end justify-between gap-component">
+              <h2
+                id="services-heading"
+                className="font-heading text-title font-semibold text-bb-text-title"
+              >
+                Our Massages
+              </h2>
+              <Link
+                href="/services"
+                className="inline-flex min-h-hit-target items-center gap-compact text-nav font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                All prices
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </Link>
+            </div>
+            {services.length === 0 ? (
+              <Card>
+                <CardDescription>
+                  Our services are being finalised and will appear here shortly.
+                </CardDescription>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-3">
+                {services.map((s) => (
+                  <Card key={s.id} className="flex h-full flex-col gap-component">
+                    <div className="flex items-start justify-between gap-component">
+                      <CardTitle className="text-subtitle">{s.name}</CardTitle>
+                      {s.fromPriceCents != null ? (
+                        <Badge variant="secondary">from {formatAud(s.fromPriceCents)}</Badge>
+                      ) : null}
+                    </div>
+                    <CardDescription className="flex-1">{s.description}</CardDescription>
+                    <div>
+                      <Button asChild variant="secondary">
+                        <Link href={`/book?service=${s.code}`}>Book Now</Link>
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+            <p className="text-caption text-bb-text-caption">
+              Prices are indicative and confirmed before you pay.
+            </p>
           </section>
 
           {/* How It Works */}
-          <section
-            className="flex flex-col gap-card-gap"
-            aria-labelledby="how-heading"
-          >
+          <section className="flex flex-col gap-card-gap" aria-labelledby="how-heading">
             <h2
               id="how-heading"
               className="font-heading text-title font-semibold text-bb-text-title"
@@ -131,27 +217,10 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-            <div>
-              <Button asChild variant="secondary">
-                <Link href="/book">Book Now</Link>
-              </Button>
-            </div>
           </section>
 
-          {/* Testimonials carousel */}
-          <div className="flex flex-col gap-compact">
-            <TestimonialsCarousel />
-            <p className="text-caption text-bb-text-caption">
-              Sample reviews shown for layout — real customer reviews appear here
-              once booking opens.
-            </p>
-          </div>
-
-          {/* Why trust Body Bliss */}
-          <section
-            className="flex flex-col gap-card-gap"
-            aria-labelledby="trust-heading"
-          >
+          {/* Why choose */}
+          <section className="flex flex-col gap-card-gap" aria-labelledby="trust-heading">
             <h2
               id="trust-heading"
               className="font-heading text-title font-semibold text-bb-text-title"
@@ -176,53 +245,90 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Services */}
-          <section
-            className="flex flex-col gap-card-gap"
-            aria-labelledby="services-heading"
-          >
-            <div className="flex items-end justify-between gap-component">
+          {/* Therapist preview — honest, no fabricated profiles */}
+          <section aria-labelledby="therapists-heading">
+            <Card className="flex flex-col items-start gap-component">
               <h2
-                id="services-heading"
+                id="therapists-heading"
                 className="font-heading text-title font-semibold text-bb-text-title"
               >
-                Our Massages
+                Our Therapists
               </h2>
-              <Link
-                href="/services"
-                className="inline-flex min-h-hit-target items-center gap-compact text-nav font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                See all
-                <ArrowRight aria-hidden="true" className="size-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-3">
-              {SERVICES.map((s) => (
-                <Card key={s.slug} className="flex h-full flex-col gap-component">
-                  <div className="flex items-center justify-between gap-component">
-                    <CardTitle className="text-subtitle">{s.name}</CardTitle>
-                    <Badge variant="secondary">{s.duration}</Badge>
-                  </div>
-                  <CardDescription className="flex-1">{s.blurb}</CardDescription>
-                  <div>
-                    <Button asChild variant="quiet">
-                      <Link href="/book">Book this</Link>
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-            <p className="text-caption text-bb-text-caption">
-              Prices are announced when booking opens.
-            </p>
+              <p className="max-w-prose text-description text-bb-text-description">
+                Every therapist is reviewed and approved before they can take
+                bookings. When you book, you can see who&apos;s available and
+                choose for yourself, or let us match you.
+              </p>
+              <Button asChild variant="quiet">
+                <Link href="/therapists">Learn about our therapists</Link>
+              </Button>
+            </Card>
           </section>
 
-          {/* Closing CTA */}
-          <section aria-labelledby="cta-heading">
-            <Card
-              variant="highlight"
-              className="flex flex-col items-start gap-card-gap"
+          {/* Reviews (labelled sample) */}
+          <div className="flex flex-col gap-compact">
+            <TestimonialsCarousel />
+            <p className="text-caption text-bb-text-caption">
+              Sample reviews shown for layout — real customer reviews appear here
+              once booking opens.
+            </p>
+          </div>
+
+          {/* Preparation guidance */}
+          <section className="flex flex-col gap-card-gap" aria-labelledby="prep-heading">
+            <h2
+              id="prep-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
             >
+              Getting Ready
+            </h2>
+            <Card variant="row" className="items-start">
+              <ul className="flex flex-col gap-component">
+                {PREP.map((p) => (
+                  <li key={p} className="flex items-start gap-component">
+                    <BadgeCheck
+                      aria-hidden="true"
+                      className="mt-0.5 size-5 shrink-0 text-success"
+                    />
+                    <span className="text-description text-bb-text-description">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </section>
+
+          {/* FAQ — accessible native accordion */}
+          <section className="flex flex-col gap-card-gap" aria-labelledby="faq-heading">
+            <h2
+              id="faq-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              Frequently Asked Questions
+            </h2>
+            <div className="flex flex-col gap-component">
+              {FAQS.map((f) => (
+                <details
+                  key={f.q}
+                  className="group rounded border border-border bg-card p-card-padding"
+                >
+                  <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between gap-component font-heading text-subtitle text-bb-text-subtitle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    {f.q}
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="size-5 shrink-0 transition-transform duration-fade group-open:rotate-90"
+                    />
+                  </summary>
+                  <p className="mt-component text-description text-bb-text-description">
+                    {f.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          {/* Final CTA */}
+          <section aria-labelledby="cta-heading">
+            <Card variant="highlight" className="flex flex-col items-start gap-card-gap">
               <h2
                 id="cta-heading"
                 className="font-heading text-title font-semibold text-primary-foreground"

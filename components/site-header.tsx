@@ -35,6 +35,7 @@ const NAV_ITEMS = [
   { href: "/gift-cards", label: "Gift cards" },
   { href: "/about", label: "About us" },
   { href: "/help", label: "Help & safety" },
+  { href: "/account", label: "My account" },
 ] as const;
 
 export function SiteHeader() {

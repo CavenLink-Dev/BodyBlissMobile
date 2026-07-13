@@ -2,44 +2,34 @@
 
 import * as React from "react";
 import Link from "next/link";
-import {
-  Check,
-  ChevronLeft,
-  Lock,
-  Star,
-  ShieldCheck,
-  Users,
-} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Check, ChevronLeft, Lock, ShieldCheck, Users } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldTextarea } from "@/components/ui/field";
 import { SelectField } from "@/components/ui/select";
-import { SERVICES, THERAPISTS_SAMPLE } from "@/lib/content";
+import { formatAud } from "@/lib/format";
+import type { ServiceWithPricing } from "@/lib/catalogue-types";
+import { createBookingRequest } from "@/app/(public)/book/actions";
 
 /*
-  Booking flow — UI-only, client-side state (structured so it maps cleanly
-  to the Supabase booking tables later). Follows the brief's order:
-    Step 1  Location & access details
-    Step 2  Booking options + therapist profiles ("Let us match you" first
-            and largest, per the design foundation)
-    Step 3  Review the request (clearly a preview — no price is invented and
-            nothing is charged; online payment/confirmation opens later)
-  Accessibility: one <form> per step, labelled fields, required-field
-  validation with focus moved to the first error, a visible step indicator,
-  and back/continue controls with 48px hit targets.
+  Booking flow — request-to-book (no payment). Driven by the live service
+  catalogue; on submit it calls the createBookingRequest server action which
+  writes the booking, its location and consent server-side. Steps:
+    1  Location & access
+    2  Massage, time & therapist (auto-match for now)
+    3  Review, accept terms, send request
 */
 
-const STEPS = ["Location & access", "Choose therapist", "Review request"] as const;
+const STEPS = ["Location & access", "Massage & time", "Review & send"] as const;
 
 const LOCATION_TYPES = [
-  "House",
-  "Apartment or unit",
-  "Hotel",
-  "Workplace",
-  "Other",
+  { value: "home", label: "My home" },
+  { value: "hotel", label: "A hotel" },
+  { value: "workplace", label: "A workplace" },
 ] as const;
 
 const STAIRS_OPTIONS = [
@@ -50,42 +40,59 @@ const STAIRS_OPTIONS = [
 ] as const;
 
 type BookingState = {
-  // Step 1 — location & access
-  address: string;
-  locationType: string;
+  locationType: "home" | "hotel" | "workplace";
+  streetAddress: string;
+  suburb: string;
+  postcode: string;
   parking: string;
   stairs: string;
   accessibility: string;
   otherInfo: string;
   locationNotes: string;
   therapistNotes: string;
-  // Step 2 — booking options
-  service: string;
-  preferredDate: string;
-  preferredTime: string;
-  therapistId: string; // "match" = let us match you
+  serviceCode: string;
+  variantId: string;
+  date: string;
+  time: string;
+  acceptTerms: boolean;
 };
 
-const INITIAL: BookingState = {
-  address: "",
-  locationType: "House",
-  parking: "",
-  stairs: STAIRS_OPTIONS[0],
-  accessibility: "",
-  otherInfo: "",
-  locationNotes: "",
-  therapistNotes: "",
-  service: SERVICES[0].slug,
-  preferredDate: "",
-  preferredTime: "",
-  therapistId: "match",
-};
+export function BookingFlow({
+  services,
+  initialServiceCode,
+  isAuthed,
+}: {
+  services: ServiceWithPricing[];
+  initialServiceCode?: string;
+  isAuthed: boolean;
+}) {
+  const router = useRouter();
 
-export function BookingFlow() {
+  const firstService =
+    services.find((s) => s.code === initialServiceCode) ?? services[0];
+  const firstVariant = firstService?.variants[0];
+
   const [step, setStep] = React.useState(0);
-  const [data, setData] = React.useState<BookingState>(INITIAL);
+  const [data, setData] = React.useState<BookingState>({
+    locationType: "home",
+    streetAddress: "",
+    suburb: "",
+    postcode: "",
+    parking: "",
+    stairs: STAIRS_OPTIONS[0],
+    accessibility: "",
+    otherInfo: "",
+    locationNotes: "",
+    therapistNotes: "",
+    serviceCode: firstService?.code ?? "",
+    variantId: firstVariant?.id ?? "",
+    date: "",
+    time: "",
+    acceptTerms: false,
+  });
   const [errors, setErrors] = React.useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = React.useState(false);
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | undefined>();
   const topRef = React.useRef<HTMLDivElement>(null);
 
   const set = <K extends keyof BookingState>(key: K, value: BookingState[K]) =>
@@ -94,17 +101,43 @@ export function BookingFlow() {
   const focusTop = () =>
     topRef.current?.scrollIntoView({ block: "start", behavior: "auto" });
 
+  const selectedService = services.find((s) => s.code === data.serviceCode);
+  const selectedVariant = selectedService?.variants.find(
+    (v) => v.id === data.variantId,
+  );
+
+  function onServiceChange(code: string) {
+    const svc = services.find((s) => s.code === code);
+    setData((d) => ({
+      ...d,
+      serviceCode: code,
+      variantId: svc?.variants[0]?.id ?? "",
+    }));
+  }
+
   function validateStep1() {
     const e: Record<string, string> = {};
-    if (data.address.trim().length < 5) {
-      e.address = "Please enter the street address where the massage will take place.";
-    }
+    if (data.streetAddress.trim().length < 5)
+      e.streetAddress = "Please enter the street address for the massage.";
+    if (data.suburb.trim().length < 2) e.suburb = "Please enter your suburb.";
+    if (!/^\d{4}$/.test(data.postcode.trim()))
+      e.postcode = "Please enter a 4-digit postcode.";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  function validateStep2() {
+    const e: Record<string, string> = {};
+    if (!data.variantId) e.variantId = "Please choose a length.";
+    if (!data.date) e.date = "Please choose a date.";
+    if (!data.time) e.time = "Please choose a time.";
     setErrors(e);
     return Object.keys(e).length === 0;
   }
 
   function next() {
     if (step === 0 && !validateStep1()) return;
+    if (step === 1 && !validateStep2()) return;
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
     focusTop();
   }
@@ -114,12 +147,66 @@ export function BookingFlow() {
     focusTop();
   }
 
-  const selectedTherapist =
-    data.therapistId === "match"
-      ? null
-      : THERAPISTS_SAMPLE.find((t) => t.id === data.therapistId) ?? null;
+  function composeAccessNotes() {
+    return [
+      data.stairs ? `Stairs: ${data.stairs}` : "",
+      data.accessibility ? `Accessibility: ${data.accessibility}` : "",
+      data.otherInfo ? `Other: ${data.otherInfo}` : "",
+      data.locationNotes ? `Entry/location: ${data.locationNotes}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
 
-  const selectedService = SERVICES.find((s) => s.slug === data.service);
+  async function submit() {
+    if (!data.acceptTerms) {
+      setSubmitError("Please accept the booking terms to send your request.");
+      return;
+    }
+    setSubmitting(true);
+    setSubmitError(undefined);
+    const result = await createBookingRequest({
+      serviceVariantId: data.variantId,
+      locationType: data.locationType,
+      date: data.date,
+      time: data.time,
+      streetAddress: data.streetAddress.trim(),
+      suburb: data.suburb.trim(),
+      postcode: data.postcode.trim(),
+      state: "SA",
+      parkingNotes: data.parking,
+      accessNotes: composeAccessNotes(),
+      customerNotes: data.therapistNotes,
+      therapistPreference: "match",
+      acceptTerms: true,
+    });
+
+    if (result.ok) {
+      router.push(`/book/confirmation/${result.bookingId}`);
+      return;
+    }
+    if (result.error === "auth") {
+      router.push("/login?next=/book");
+      return;
+    }
+    setSubmitting(false);
+    setSubmitError(
+      result.error === "unavailable"
+        ? "That massage option isn't available. Please choose another."
+        : "Something went wrong sending your request. Please try again.",
+    );
+  }
+
+  if (!firstService) {
+    return (
+      <Card>
+        <CardDescription>
+          Booking is briefly unavailable while we finalise our services. Please
+          check back shortly.
+        </CardDescription>
+      </Card>
+    );
+  }
 
   return (
     <div ref={topRef} className="flex flex-col gap-card-gap scroll-mt-24">
@@ -136,10 +223,7 @@ export function BookingFlow() {
           aria-labelledby="step1-heading"
         >
           <div className="flex flex-col gap-compact">
-            <h2
-              id="step1-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
+            <h2 id="step1-heading" className="font-heading text-title font-semibold text-bb-text-title">
               Where should we come?
             </h2>
             <p className="text-description text-bb-text-description">
@@ -147,31 +231,53 @@ export function BookingFlow() {
             </p>
           </div>
 
-          <Field
-            id="address"
-            name="address"
-            label="Address"
-            hint="Street address where the massage will take place."
-            autoComplete="street-address"
-            required
-            value={data.address}
-            error={errors.address}
-            onChange={(e) => set("address", e.target.value)}
-          />
-
           <SelectField
             id="locationType"
-            label="Location details"
-            hint="What kind of place is it?"
+            label="Where is the massage?"
             value={data.locationType}
-            onChange={(e) => set("locationType", e.target.value)}
+            onChange={(e) =>
+              set("locationType", e.target.value as BookingState["locationType"])
+            }
           >
             {LOCATION_TYPES.map((t) => (
-              <option key={t} value={t}>
-                {t}
+              <option key={t.value} value={t.value}>
+                {t.label}
               </option>
             ))}
           </SelectField>
+
+          <Field
+            id="streetAddress"
+            label="Street address"
+            hint="Where the massage will take place."
+            autoComplete="street-address"
+            required
+            value={data.streetAddress}
+            error={errors.streetAddress}
+            onChange={(e) => set("streetAddress", e.target.value)}
+          />
+
+          <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
+            <Field
+              id="suburb"
+              label="Suburb"
+              autoComplete="address-level2"
+              required
+              value={data.suburb}
+              error={errors.suburb}
+              onChange={(e) => set("suburb", e.target.value)}
+            />
+            <Field
+              id="postcode"
+              label="Postcode"
+              inputMode="numeric"
+              autoComplete="postal-code"
+              required
+              value={data.postcode}
+              error={errors.postcode}
+              onChange={(e) => set("postcode", e.target.value)}
+            />
+          </div>
 
           <FieldTextarea
             id="parking"
@@ -213,7 +319,7 @@ export function BookingFlow() {
 
           <FieldTextarea
             id="locationNotes"
-            label="Location notes"
+            label="Entry & location notes"
             hint="Which entrance, buzzer or gate code, unit number, landmarks."
             value={data.locationNotes}
             onChange={(e) => set("locationNotes", e.target.value)}
@@ -230,13 +336,10 @@ export function BookingFlow() {
           <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
             <Lock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
             <span>
-              You don&apos;t have to share health information. Anything you add
-              here is only used to prepare for your appointment and is shared
-              with your therapist once your booking is confirmed. See our{" "}
-              <Link
-                href="/help"
-                className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
+              You don&apos;t have to share health information. Anything you add is
+              only used to prepare for your appointment and is shared with your
+              therapist once your booking is confirmed. See our{" "}
+              <Link href="/help" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 privacy &amp; safety information
               </Link>
               .
@@ -254,111 +357,93 @@ export function BookingFlow() {
       {step === 1 && (
         <div className="flex flex-col gap-card-gap" aria-labelledby="step2-heading">
           <div className="flex flex-col gap-compact">
-            <h2
-              id="step2-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Your massage &amp; therapist
+            <h2 id="step2-heading" className="font-heading text-title font-semibold text-bb-text-title">
+              Your massage &amp; time
             </h2>
             <p className="text-description text-bb-text-description">
-              Pick your massage and preferred time, then let us match you or
-              choose a therapist yourself.
+              Choose your massage and preferred time. We&apos;ll match you with a
+              vetted therapist.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
-            <SelectField
-              id="service"
-              label="Massage"
-              value={data.service}
-              onChange={(e) => set("service", e.target.value)}
-            >
-              {SERVICES.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {s.name}
-                </option>
-              ))}
-            </SelectField>
+          <SelectField
+            id="service"
+            label="Massage"
+            value={data.serviceCode}
+            onChange={(e) => onServiceChange(e.target.value)}
+          >
+            {services.map((s) => (
+              <option key={s.code} value={s.code}>
+                {s.name}
+              </option>
+            ))}
+          </SelectField>
+
+          <SelectField
+            id="variant"
+            label="Length"
+            value={data.variantId}
+            error={errors.variantId}
+            onChange={(e) => set("variantId", e.target.value)}
+          >
+            {selectedService?.variants.map((v) => (
+              <option key={v.id} value={v.id}>
+                {v.durationMinutes} min
+                {v.priceCents != null ? ` — ${formatAud(v.priceCents)}` : ""}
+              </option>
+            ))}
+          </SelectField>
+
+          <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
             <Field
-              id="preferredDate"
+              id="date"
               label="Preferred date"
               type="date"
-              value={data.preferredDate}
-              onChange={(e) => set("preferredDate", e.target.value)}
+              required
+              value={data.date}
+              error={errors.date}
+              onChange={(e) => set("date", e.target.value)}
             />
             <Field
-              id="preferredTime"
+              id="time"
               label="Preferred time"
               type="time"
-              value={data.preferredTime}
-              onChange={(e) => set("preferredTime", e.target.value)}
+              required
+              value={data.time}
+              error={errors.time}
+              onChange={(e) => set("time", e.target.value)}
             />
           </div>
 
-          <fieldset className="flex flex-col gap-component">
-            <legend className="mb-compact font-heading text-subtitle text-bb-text-subtitle">
-              Choose your therapist
-            </legend>
+          <Card variant="row" className="items-start">
+            <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+              <Users className="size-6 text-primary" />
+            </span>
+            <div className="flex flex-col gap-compact">
+              <CardTitle className="text-subtitle">We&apos;ll match you</CardTitle>
+              <CardDescription>
+                We&apos;ll assign the best available vetted therapist for your
+                massage and time. Choosing a specific therapist becomes available
+                as our therapist team comes online.
+              </CardDescription>
+            </div>
+          </Card>
 
-            {/* "Let us match you" — first and largest */}
-            <TherapistOption
-              selected={data.therapistId === "match"}
-              onSelect={() => set("therapistId", "match")}
-              title="Let us match you"
-              recommended
-              description="We'll assign the best available vetted therapist for your massage and time. The quickest way to book."
-              icon={<Users aria-hidden="true" className="size-6 text-primary" />}
-            />
-
-            <p className="mt-compact text-description font-medium text-bb-text-description">
-              Or choose someone yourself
+          {selectedVariant ? (
+            <p className="text-description text-bb-text-description">
+              Indicative price:{" "}
+              <span className="font-medium text-bb-text-display">
+                {formatAud(selectedVariant.priceCents)}
+              </span>{" "}
+              — confirmed before you pay.
             </p>
-
-            {THERAPISTS_SAMPLE.map((t) => (
-              <TherapistOption
-                key={t.id}
-                selected={data.therapistId === t.id}
-                onSelect={() => set("therapistId", t.id)}
-                title={t.firstName}
-                description={`${t.headline} · ${t.experience}`}
-                meta={
-                  <span className="flex flex-wrap items-center gap-compact">
-                    <span className="inline-flex items-center gap-1 text-description text-bb-text-description">
-                      <Star
-                        aria-hidden="true"
-                        className="size-4 fill-bb-star text-bb-star"
-                      />
-                      {t.rating.toFixed(1)}
-                      <span className="text-caption text-bb-text-caption">
-                        (new)
-                      </span>
-                    </span>
-                    {t.focus.map((f) => (
-                      <Badge key={f} variant="secondary">
-                        {f}
-                      </Badge>
-                    ))}
-                  </span>
-                }
-              />
-            ))}
-          </fieldset>
+          ) : null}
 
           <div className="flex flex-col gap-component tablet:flex-row-reverse tablet:justify-start">
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full tablet:w-auto"
-              onClick={next}
-            >
+            <Button type="button" variant="secondary" className="w-full tablet:w-auto" onClick={next}>
               Continue
             </Button>
-            <Button
-              type="button"
-              variant="quiet"
-              className="w-full tablet:w-auto"
-              onClick={back}
-            >
+            <Button type="button" variant="quiet" className="w-full tablet:w-auto" onClick={back}>
               <ChevronLeft aria-hidden="true" className="size-5" />
               Back
             </Button>
@@ -369,10 +454,7 @@ export function BookingFlow() {
       {step === 2 && (
         <div className="flex flex-col gap-card-gap" aria-labelledby="step3-heading">
           <div className="flex flex-col gap-compact">
-            <h2
-              id="step3-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
+            <h2 id="step3-heading" className="font-heading text-title font-semibold text-bb-text-title">
               Review your request
             </h2>
             <p className="text-description text-bb-text-description">
@@ -383,97 +465,84 @@ export function BookingFlow() {
           <Card className="flex flex-col gap-card-gap">
             <ReviewRow label="Massage" value={selectedService?.name ?? "—"} />
             <ReviewRow
-              label="Preferred date"
-              value={data.preferredDate || "No preference"}
+              label="Length"
+              value={selectedVariant ? `${selectedVariant.durationMinutes} min` : "—"}
+            />
+            <ReviewRow label="Date" value={data.date || "—"} />
+            <ReviewRow label="Time" value={data.time || "—"} />
+            <ReviewRow label="Therapist" value="Automatic match" />
+            <ReviewRow
+              label="Address"
+              value={`${data.streetAddress}, ${data.suburb} ${data.postcode}`}
             />
             <ReviewRow
-              label="Preferred time"
-              value={data.preferredTime || "No preference"}
+              label="Indicative price"
+              value={selectedVariant ? formatAud(selectedVariant.priceCents) : "—"}
             />
-            <ReviewRow
-              label="Therapist"
-              value={
-                selectedTherapist
-                  ? selectedTherapist.firstName
-                  : "Let us match you"
-              }
-            />
-            <ReviewRow label="Address" value={data.address || "—"} />
-            <ReviewRow label="Location" value={data.locationType} />
-            <ReviewRow label="Stairs" value={data.stairs} />
-            {data.parking ? (
-              <ReviewRow label="Parking" value={data.parking} />
-            ) : null}
-            {data.accessibility ? (
-              <ReviewRow label="Accessibility" value={data.accessibility} />
-            ) : null}
-            {data.locationNotes ? (
-              <ReviewRow label="Location notes" value={data.locationNotes} />
-            ) : null}
-            {data.therapistNotes ? (
-              <ReviewRow label="Notes for therapist" value={data.therapistNotes} />
-            ) : null}
           </Card>
 
-          {!submitted ? (
+          <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
+            <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
+            <span>
+              This sends a booking request. We&apos;ll confirm a therapist and the
+              final price before any payment is taken — nothing is charged now.
+            </span>
+          </p>
+
+          {isAuthed ? (
             <>
-              <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
-                <ShieldCheck
-                  aria-hidden="true"
-                  className="mt-0.5 size-5 shrink-0 text-success"
+              <label className="flex items-start gap-component">
+                <Checkbox
+                  checked={data.acceptTerms}
+                  onCheckedChange={(v) => set("acceptTerms", v === true)}
+                  aria-describedby="terms-text"
+                  className="mt-0.5"
                 />
-                <span>
-                  This is a preview of the booking experience. Online payment
-                  and confirmation open soon — no payment is taken and nothing
-                  is booked yet.
+                <span id="terms-text" className="text-description text-bb-text-description">
+                  I agree to the{" "}
+                  <Link href="/help" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    booking terms
+                  </Link>{" "}
+                  and understand my request will be confirmed before payment.
                 </span>
-              </p>
+              </label>
+
+              {submitError ? (
+                <p className="text-description font-medium text-destructive" role="alert">
+                  {submitError}
+                </p>
+              ) : null}
+
               <div className="flex flex-col gap-component tablet:flex-row-reverse tablet:justify-start">
                 <Button
                   type="button"
                   variant="secondary"
                   className="w-full tablet:w-auto"
-                  onClick={() => {
-                    setSubmitted(true);
-                    focusTop();
-                  }}
+                  disabled={submitting}
+                  onClick={submit}
                 >
-                  Send request
+                  {submitting ? "Sending…" : "Send request"}
                 </Button>
-                <Button
-                  type="button"
-                  variant="quiet"
-                  className="w-full tablet:w-auto"
-                  onClick={back}
-                >
+                <Button type="button" variant="quiet" className="w-full tablet:w-auto" onClick={back}>
                   <ChevronLeft aria-hidden="true" className="size-5" />
                   Back
                 </Button>
               </div>
             </>
           ) : (
-            <Card
-              variant="highlight"
-              className="flex flex-col items-start gap-component"
-              role="status"
-            >
-              <span
-                className="inline-flex size-12 items-center justify-center rounded-full bg-secondary"
-                aria-hidden="true"
-              >
-                <Check className="size-6 text-secondary-foreground" />
-              </span>
-              <CardTitle className="text-primary-foreground">
-                Thanks — this is where your request would go
-              </CardTitle>
-              <CardDescription className="text-primary-foreground">
-                In the live service we&apos;d confirm a therapist and time, then
-                take payment only once your booking is confirmed. For now, this
-                is a preview of the flow.
+            <Card variant="row" className="flex-col items-start gap-component">
+              <CardDescription>
+                Create a free account or sign in to send your booking request and
+                manage it afterwards.
               </CardDescription>
-              <Button asChild variant="secondary">
-                <Link href="/">Back to home</Link>
-              </Button>
+              <div className="flex flex-col gap-component tablet:flex-row">
+                <Button asChild variant="secondary" className="w-full tablet:w-auto">
+                  <Link href="/login?next=/book">Sign in</Link>
+                </Button>
+                <Button asChild variant="quiet" className="w-full tablet:w-auto">
+                  <Link href="/signup?next=/book">Create account</Link>
+                </Button>
+              </div>
             </Card>
           )}
         </div>
@@ -486,8 +555,7 @@ function StepIndicator({ current }: { current: number }) {
   return (
     <ol className="flex items-center gap-compact" aria-label="Booking progress">
       {STEPS.map((label, i) => {
-        const state =
-          i < current ? "done" : i === current ? "current" : "upcoming";
+        const state = i < current ? "done" : i === current ? "current" : "upcoming";
         return (
           <li key={label} className="flex flex-1 items-center gap-compact">
             <span
@@ -499,18 +567,12 @@ function StepIndicator({ current }: { current: number }) {
               )}
               aria-current={state === "current" ? "step" : undefined}
             >
-              {state === "done" ? (
-                <Check aria-hidden="true" className="size-4" />
-              ) : (
-                i + 1
-              )}
+              {state === "done" ? <Check aria-hidden="true" className="size-4" /> : i + 1}
             </span>
             <span
               className={cn(
                 "hidden text-description tablet:inline",
-                state === "current"
-                  ? "font-semibold text-bb-text-display"
-                  : "text-bb-text-description",
+                state === "current" ? "font-semibold text-bb-text-display" : "text-bb-text-description",
               )}
             >
               {label}
@@ -518,73 +580,13 @@ function StepIndicator({ current }: { current: number }) {
             {i < STEPS.length - 1 ? (
               <span
                 aria-hidden="true"
-                className={cn(
-                  "h-0.5 flex-1 rounded",
-                  i < current ? "bg-primary" : "bg-border",
-                )}
+                className={cn("h-0.5 flex-1 rounded", i < current ? "bg-primary" : "bg-border")}
               />
             ) : null}
           </li>
         );
       })}
     </ol>
-  );
-}
-
-function TherapistOption({
-  selected,
-  onSelect,
-  title,
-  description,
-  meta,
-  icon,
-  recommended,
-}: {
-  selected: boolean;
-  onSelect: () => void;
-  title: string;
-  description: string;
-  meta?: React.ReactNode;
-  icon?: React.ReactNode;
-  recommended?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onSelect}
-      aria-pressed={selected}
-      className={cn(
-        "flex w-full items-start gap-component rounded border p-card-padding text-left",
-        "transition-colors duration-fade",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-        selected
-          ? "border-primary bg-card ring-2 ring-primary"
-          : "border-border bg-card hover:bg-foreground/5",
-      )}
-    >
-      <span
-        className={cn(
-          "mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full border-2",
-          selected ? "border-primary bg-primary" : "border-border",
-        )}
-        aria-hidden="true"
-      >
-        {selected ? <Check className="size-4 text-primary-foreground" /> : null}
-      </span>
-      <span className="flex flex-1 flex-col gap-compact">
-        <span className="flex flex-wrap items-center gap-compact">
-          {icon}
-          <span className="font-heading text-subtitle text-bb-text-subtitle">
-            {title}
-          </span>
-          {recommended ? <Badge variant="secondary">Recommended</Badge> : null}
-        </span>
-        <span className="text-description text-bb-text-description">
-          {description}
-        </span>
-        {meta}
-      </span>
-    </button>
   );
 }
 
