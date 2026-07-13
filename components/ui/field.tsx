@@ -3,6 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 /*
   Field = label + input + optional hint + error, wired for accessibility:
@@ -53,4 +54,47 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
 );
 Field.displayName = "Field";
 
-export { Field };
+export interface FieldTextareaProps
+  extends React.ComponentProps<"textarea"> {
+  id: string;
+  label: string;
+  hint?: string;
+  error?: string;
+}
+
+const FieldTextarea = React.forwardRef<
+  HTMLTextAreaElement,
+  FieldTextareaProps
+>(({ id, label, hint, error, className, ...props }, ref) => {
+  const hintId = hint ? `${id}-hint` : undefined;
+  const errorId = error ? `${id}-error` : undefined;
+  return (
+    <div className={cn("flex w-full flex-col gap-compact", className)}>
+      <Label htmlFor={id} className="text-description font-medium text-foreground">
+        {label}
+      </Label>
+      {hint ? (
+        <p id={hintId} className="text-description text-bb-text-description">
+          {hint}
+        </p>
+      ) : null}
+      <Textarea
+        id={id}
+        ref={ref}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={
+          [hintId, errorId].filter(Boolean).join(" ") || undefined
+        }
+        {...props}
+      />
+      {error ? (
+        <p id={errorId} className="text-description font-medium text-destructive">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  );
+});
+FieldTextarea.displayName = "FieldTextarea";
+
+export { Field, FieldTextarea };

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -11,6 +11,20 @@ export const metadata: Metadata = {
   title: "Body Bliss Mobile Massage",
   description:
     "Book a vetted massage therapist to come to your home, hotel or workplace in Adelaide.",
+  appleWebApp: {
+    capable: true,
+    title: "Body Bliss",
+    statusBarStyle: "default",
+  },
+};
+
+// iPhone-first: fit content into the safe area (notch / home indicator) and
+// keep the browser chrome on-brand. Page background #F4F4EE.
+export const viewport: Viewport = {
+  themeColor: "#F4F4EE",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 // Self-hosted variable fonts (files committed in app/fonts — no external

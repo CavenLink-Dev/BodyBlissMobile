@@ -1,4 +1,4 @@
-import { SiteNav } from "@/components/site-nav";
+import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
 export default function PublicLayout({
@@ -6,7 +6,7 @@ export default function PublicLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteNav />
+      <SiteHeader />
       <div className="flex-1">{children}</div>
       <SiteFooter />
     </div>
