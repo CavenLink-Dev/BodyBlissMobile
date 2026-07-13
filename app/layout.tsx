@@ -2,6 +2,10 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+import { CookieNotice } from "@/components/cookie-notice";
+
+import { CookieConsent } from "@/components/cookie-consent";
+
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -53,6 +57,7 @@ export default function RootLayout({
     <html lang="en-AU">
       <body className={`${sora.variable} ${dmSans.variable} font-sans antialiased`}>
         {children}
+        <CookieNotice />
       </body>
     </html>
   );

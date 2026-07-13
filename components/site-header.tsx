@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -35,7 +35,6 @@ const NAV_ITEMS = [
   { href: "/gift-cards", label: "Gift cards" },
   { href: "/about", label: "About us" },
   { href: "/help", label: "Help & safety" },
-  { href: "/account", label: "My account" },
 ] as const;
 
 export function SiteHeader() {
@@ -63,10 +62,22 @@ export function SiteHeader() {
           />
         </Link>
 
-        <div className="flex items-center gap-component">
+        <div className="flex items-center gap-compact tablet:gap-component">
           <Button asChild variant="secondary" className="hidden tablet:inline-flex">
             <Link href="/book">Book Now</Link>
           </Button>
+
+          <Link
+            href="/account"
+            aria-label="My account"
+            className={cn(
+              "inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded",
+              "text-foreground transition-colors duration-fade hover:bg-foreground/10",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            )}
+          >
+            <User aria-hidden="true" className="size-6" />
+          </Link>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>

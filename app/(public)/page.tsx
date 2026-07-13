@@ -12,11 +12,11 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
+import { ServicesCarousel } from "@/components/services-carousel";
 import { BookNowBar } from "@/components/book-now-bar";
+import { Reveal } from "@/components/reveal";
 import { getServicesWithPricing } from "@/lib/catalogue";
-import { formatAud } from "@/lib/format";
 
 /*
   Home — mobile-first, adapted from the service-booking layout in the Figma
@@ -141,6 +141,7 @@ export default async function Home() {
           </section>
 
           {/* Services + live pricing */}
+          <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="services-heading">
             <div className="flex items-end justify-between gap-component">
               <h2
@@ -164,31 +165,16 @@ export default async function Home() {
                 </CardDescription>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-3">
-                {services.map((s) => (
-                  <Card key={s.id} className="flex h-full flex-col gap-component">
-                    <div className="flex items-start justify-between gap-component">
-                      <CardTitle className="text-subtitle">{s.name}</CardTitle>
-                      {s.fromPriceCents != null ? (
-                        <Badge variant="secondary">from {formatAud(s.fromPriceCents)}</Badge>
-                      ) : null}
-                    </div>
-                    <CardDescription className="flex-1">{s.description}</CardDescription>
-                    <div>
-                      <Button asChild variant="secondary">
-                        <Link href={`/book?service=${s.code}`}>Book Now</Link>
-                      </Button>
-                    </div>
-                  </Card>
-                ))}
-              </div>
+              <ServicesCarousel services={services} />
             )}
             <p className="text-caption text-bb-text-caption">
               Prices are indicative and confirmed before you pay.
             </p>
           </section>
+          </Reveal>
 
           {/* How It Works */}
+          <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="how-heading">
             <h2
               id="how-heading"
@@ -218,8 +204,10 @@ export default async function Home() {
               ))}
             </ol>
           </section>
+          </Reveal>
 
           {/* Why choose */}
+          <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="trust-heading">
             <h2
               id="trust-heading"
@@ -244,8 +232,10 @@ export default async function Home() {
               ))}
             </div>
           </section>
+          </Reveal>
 
           {/* Therapist preview — honest, no fabricated profiles */}
+          <Reveal>
           <section aria-labelledby="therapists-heading">
             <Card className="flex flex-col items-start gap-component">
               <h2
@@ -264,8 +254,10 @@ export default async function Home() {
               </Button>
             </Card>
           </section>
+          </Reveal>
 
           {/* Reviews (labelled sample) */}
+          <Reveal>
           <div className="flex flex-col gap-compact">
             <TestimonialsCarousel />
             <p className="text-caption text-bb-text-caption">
@@ -273,8 +265,10 @@ export default async function Home() {
               once booking opens.
             </p>
           </div>
+          </Reveal>
 
           {/* Preparation guidance */}
+          <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="prep-heading">
             <h2
               id="prep-heading"
@@ -296,8 +290,10 @@ export default async function Home() {
               </ul>
             </Card>
           </section>
+          </Reveal>
 
           {/* FAQ — accessible native accordion */}
+          <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="faq-heading">
             <h2
               id="faq-heading"
@@ -325,8 +321,10 @@ export default async function Home() {
               ))}
             </div>
           </section>
+          </Reveal>
 
           {/* Final CTA */}
+          <Reveal>
           <section aria-labelledby="cta-heading">
             <Card variant="highlight" className="flex flex-col items-start gap-card-gap">
               <h2
@@ -353,6 +351,7 @@ export default async function Home() {
               </div>
             </Card>
           </section>
+          </Reveal>
         </div>
       </main>
 
