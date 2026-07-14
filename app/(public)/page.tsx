@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   CalendarCheck,
   MapPin,
@@ -16,7 +17,8 @@ import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { ServicesCarousel } from "@/components/services-carousel";
 import { BookNowBar } from "@/components/book-now-bar";
 import { Reveal } from "@/components/reveal";
-import { getServicesWithPricing } from "@/lib/catalogue";
+import { getServicesWithPricing, getActiveSuburbs } from "@/lib/catalogue";
+import lotusWhite from "@/assets/body_bliss_lotus_white.png";
 
 /*
   Home — mobile-first, adapted from the service-booking layout in the Figma
@@ -97,47 +99,69 @@ const FAQS = [
 ];
 
 export default async function Home() {
-  const services = await getServicesWithPricing();
+  const [services, suburbs] = await Promise.all([
+    getServicesWithPricing(),
+    getActiveSuburbs(),
+  ]);
 
   return (
     <>
       <main className="px-page-inline py-page-block">
         <div className="mx-auto flex max-w-content flex-col gap-section">
-          {/* Hero */}
-          <section className="flex flex-col gap-card-gap" aria-labelledby="hero-heading">
-            <span className="inline-flex w-fit items-center gap-compact rounded-full border border-border bg-card px-3 py-1 text-description font-medium text-bb-text-description">
-              <MapPin aria-hidden="true" className="size-4 text-primary" />
-              Mobile massage across Adelaide
-            </span>
-            <h1 id="hero-heading" className="font-heading text-display text-bb-text-display">
-              Massage That Comes To You
-            </h1>
-            <p className="max-w-prose text-subtitle text-bb-text-subtitle">
-              Book a vetted massage therapist to your home, hotel or workplace —
-              backed by nine years of Body Bliss massage and wellness experience.
-            </p>
-            <div className="mt-1 flex flex-col gap-component tablet:flex-row">
-              <Button asChild variant="secondary" className="w-full tablet:w-auto">
-                <Link href="/book">Book Now</Link>
-              </Button>
-              <Button asChild variant="quiet" className="w-full tablet:w-auto">
-                <Link href="/gift-cards">Buy a Gift Card</Link>
-              </Button>
-            </div>
-            {/* quick trust strip */}
-            <ul className="mt-1 flex flex-wrap gap-compact">
-              {["Reviewed therapists", "Confirmed before you pay", "Adelaide metro"].map(
-                (t) => (
-                  <li
-                    key={t}
-                    className="inline-flex items-center gap-compact rounded-full bg-muted px-3 py-1 text-description text-bb-text-description"
+          {/* Hero — charcoal band (documented dark-surface pattern: white text
+              11.2:1, yellow strictly as accent 6.4:1, white lotus watermark) */}
+          <section aria-labelledby="hero-heading">
+            <div className="relative overflow-hidden rounded bg-primary p-card-padding tablet:p-12">
+              <Image
+                src={lotusWhite}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-4 -top-4 h-36 w-auto opacity-10 tablet:h-56"
+              />
+              <div className="relative flex flex-col gap-card-gap">
+                <span className="inline-flex w-fit items-center gap-compact rounded-full border border-primary-foreground/30 px-3 py-1 text-description font-medium text-primary-foreground">
+                  <MapPin aria-hidden="true" className="size-4 text-secondary" />
+                  Mobile massage across Adelaide
+                </span>
+                <h1
+                  id="hero-heading"
+                  className="font-heading text-display text-primary-foreground"
+                >
+                  Massage That Comes To You
+                </h1>
+                <span aria-hidden="true" className="h-1.5 w-16 rounded bg-secondary" />
+                <p className="max-w-prose text-subtitle text-primary-foreground">
+                  Book a vetted massage therapist to your home, hotel or
+                  workplace — backed by nine years of Body Bliss massage and
+                  wellness experience.
+                </p>
+                <div className="mt-1 flex flex-col gap-component tablet:flex-row">
+                  <Button asChild variant="secondary" className="w-full tablet:w-auto">
+                    <Link href="/book">Book Now</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="quiet"
+                    className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
                   >
-                    <BadgeCheck aria-hidden="true" className="size-4 text-primary" />
-                    {t}
-                  </li>
-                ),
-              )}
-            </ul>
+                    <Link href="/gift-cards">Buy a Gift Card</Link>
+                  </Button>
+                </div>
+                <ul className="mt-1 flex flex-wrap gap-compact">
+                  {["Reviewed therapists", "Confirmed before you pay", "Adelaide metro"].map(
+                    (t) => (
+                      <li
+                        key={t}
+                        className="inline-flex items-center gap-compact rounded-full bg-primary-foreground/10 px-3 py-1 text-description text-primary-foreground"
+                      >
+                        <BadgeCheck aria-hidden="true" className="size-4 text-secondary" />
+                        {t}
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </div>
+            </div>
           </section>
 
           {/* Services + live pricing */}
@@ -322,6 +346,34 @@ export default async function Home() {
             </div>
           </section>
           </Reveal>
+
+          {/* Service areas — live from the database */}
+          {suburbs.length > 0 ? (
+            <Reveal>
+              <section className="flex flex-col gap-card-gap" aria-labelledby="areas-heading">
+                <h2
+                  id="areas-heading"
+                  className="font-heading text-title font-semibold text-bb-text-title"
+                >
+                  Where We Go
+                </h2>
+                <ul className="flex flex-wrap gap-compact">
+                  {suburbs.map((s) => (
+                    <li
+                      key={s}
+                      className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1.5 text-description text-bb-text-description"
+                    >
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-caption text-bb-text-caption">
+                  …and nearby. Enter your suburb when you book and we&apos;ll
+                  confirm coverage.
+                </p>
+              </section>
+            </Reveal>
+          ) : null}
 
           {/* Final CTA */}
           <Reveal>

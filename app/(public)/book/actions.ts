@@ -37,6 +37,16 @@ export type BookingActionResult =
 export async function createBookingRequest(
   raw: unknown,
 ): Promise<BookingActionResult> {
+  try {
+    return await createBookingRequestInner(raw);
+  } catch {
+    return { ok: false, error: "server" };
+  }
+}
+
+async function createBookingRequestInner(
+  raw: unknown,
+): Promise<BookingActionResult> {
   const parsed = InputSchema.safeParse(raw);
   if (!parsed.success) return { ok: false, error: "validation" };
   const input = parsed.data;
@@ -148,6 +158,14 @@ export async function createBookingRequest(
 
 /* Cancel a booking the signed-in customer owns. */
 export async function cancelBooking(bookingId: string): Promise<BookingActionResult> {
+  try {
+    return await cancelBookingInner(bookingId);
+  } catch {
+    return { ok: false, error: "server" };
+  }
+}
+
+async function cancelBookingInner(bookingId: string): Promise<BookingActionResult> {
   const supabase = await createClient();
   const {
     data: { user },

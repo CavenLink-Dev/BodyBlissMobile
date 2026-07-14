@@ -41,16 +41,22 @@ function currentPriceCents(
 }
 
 export async function getServicesWithPricing(): Promise<ServiceWithPricing[]> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("services")
-    .select(
-      "id, code, name, description, sort_order, service_variants(id, duration_minutes, active, base_prices(price_cents, effective_from, effective_to))",
-    )
-    .eq("active", true)
-    .order("sort_order");
-
-  if (error || !data) return [];
+  let data: Row[] | null = null;
+  try {
+    const supabase = await createClient();
+    const res = await supabase
+      .from("services")
+      .select(
+        "id, code, name, description, sort_order, service_variants(id, duration_minutes, active, base_prices(price_cents, effective_from, effective_to))",
+      )
+      .eq("active", true)
+      .order("sort_order");
+    if (res.error) return [];
+    data = res.data as Row[];
+  } catch {
+    return [];
+  }
+  if (!data) return [];
 
   return (data as Row[]).map((s) => {
     const variants: ServiceVariant[] = s.service_variants
@@ -75,4 +81,20 @@ export async function getServicesWithPricing(): Promise<ServiceWithPricing[]> {
       fromPriceCents: prices.length ? Math.min(...prices) : null,
     };
   });
+}
+
+/* Active service-area suburbs (public read via RLS). Fail-soft to []. */
+export async function getActiveSuburbs(): Promise<string[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("suburbs")
+      .select("name")
+      .eq("active", true)
+      .order("name");
+    if (error || !data) return [];
+    return data.map((s) => s.name as string);
+  } catch {
+    return [];
+  }
 }

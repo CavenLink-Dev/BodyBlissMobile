@@ -29,20 +29,26 @@ export async function getMyBookings(): Promise<{
   upcoming: MyBooking[];
   past: MyBooking[];
 }> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return { upcoming: [], past: [] };
+  let data;
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return { upcoming: [], past: [] };
 
-  const { data, error } = await supabase
-    .from("bookings")
-    .select(
-      "id, status, requested_start, location_type, service_name_snapshot, duration_minutes_snapshot, price_cents_snapshot",
-    )
-    .order("requested_start", { ascending: false });
-
-  if (error || !data) return { upcoming: [], past: [] };
+    const res = await supabase
+      .from("bookings")
+      .select(
+        "id, status, requested_start, location_type, service_name_snapshot, duration_minutes_snapshot, price_cents_snapshot",
+      )
+      .order("requested_start", { ascending: false });
+    if (res.error) return { upcoming: [], past: [] };
+    data = res.data;
+  } catch {
+    return { upcoming: [], past: [] };
+  }
+  if (!data) return { upcoming: [], past: [] };
 
   const now = Date.now();
   const rows: MyBooking[] = data.map((b) => ({
@@ -66,13 +72,19 @@ export async function getMyBookings(): Promise<{
 }
 
 export async function getMyAddresses(): Promise<MyAddress[]> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("customer_addresses")
-    .select("id, label, street_address, suburb, postcode")
-    .order("created_at", { ascending: false });
-
-  if (error || !data) return [];
+  let data;
+  try {
+    const supabase = await createClient();
+    const res = await supabase
+      .from("customer_addresses")
+      .select("id, label, street_address, suburb, postcode")
+      .order("created_at", { ascending: false });
+    if (res.error) return [];
+    data = res.data;
+  } catch {
+    return [];
+  }
+  if (!data) return [];
   return data.map((a) => ({
     id: a.id as string,
     label: (a.label as string) || "Saved address",

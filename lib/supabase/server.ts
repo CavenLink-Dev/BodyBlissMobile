@@ -9,10 +9,15 @@ import { cookies } from "next/headers";
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-    {
+  // Fall back to a placeholder rather than throwing: if the env vars are
+  // missing (e.g. not yet configured on the host), queries return errors that
+  // pages handle with empty states instead of crashing the whole render.
+  const url =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://placeholder.supabase.co";
+  const key =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? "public-key-not-set";
+
+  return createServerClient(url, key, {
       cookies: {
         getAll() {
           return cookieStore.getAll();
