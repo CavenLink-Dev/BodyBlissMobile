@@ -49,7 +49,7 @@ export function CookieNotice() {
           We only use essential cookies — they keep you signed in and make
           bookings work. No advertising or tracking cookies.{" "}
           <Link
-            href="/help"
+            href="/privacy"
             className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             Learn more

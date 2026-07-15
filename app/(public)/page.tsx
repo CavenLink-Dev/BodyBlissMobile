@@ -16,6 +16,7 @@ import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { ServicesCarousel } from "@/components/services-carousel";
 import { BookNowBar } from "@/components/book-now-bar";
+import { HeroIllustration } from "@/components/hero-illustration";
 import { Reveal } from "@/components/reveal";
 import { getServicesWithPricing, getActiveSuburbs } from "@/lib/catalogue";
 import lotusWhite from "@/assets/body_bliss_lotus_white.png";
@@ -25,7 +26,7 @@ import lotusWhite from "@/assets/body_bliss_lotus_white.png";
   reference. Order: hero (prominent Book Now) → trust strip → services + live
   pricing → how it works → why choose → therapist preview (honest, no fake
   profiles) → reviews (clearly-labelled sample) → preparation → FAQ → final CTA.
-  No invented safety claims; pricing is indicative and labelled.
+  No invented safety claims; prices are all-inclusive and shown upfront.
 */
 
 const STEPS = [
@@ -54,8 +55,8 @@ const TRUST = [
   },
   {
     icon: CreditCard,
-    title: "Confirmed before you pay",
-    body: "You see the price up front and it's confirmed before payment. No hidden fees.",
+    title: "Upfront pricing",
+    body: "The price you see is the price you pay — travel, table and equipment included. No hidden fees.",
   },
   {
     icon: Lock,
@@ -90,11 +91,11 @@ const FAQS = [
   },
   {
     q: "When am I charged?",
-    a: "Prices are indicative until your booking is confirmed. For now bookings are sent as a request and payment is arranged on confirmation.",
+    a: "You pay by card at checkout when you book — the price shown includes travel, the massage table and all equipment. Cancellation is free until your therapist is on the way.",
   },
   {
     q: "What if I need to cancel?",
-    a: "You can manage or cancel a booking from your account. Cancellation terms are shown before you confirm.",
+    a: "You can manage or cancel a booking from your account. Cancellation is free until your therapist is on the way, with a full refund.",
   },
 ];
 
@@ -118,7 +119,8 @@ export default async function Home() {
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-4 -top-4 h-36 w-auto opacity-10 tablet:h-56"
               />
-              <div className="relative flex flex-col gap-card-gap">
+              <div className="relative grid grid-cols-1 items-center gap-card-gap desktop:grid-cols-[3fr_2fr]">
+              <div className="flex flex-col gap-card-gap">
                 <span className="inline-flex w-fit items-center gap-compact rounded-full border border-primary-foreground/30 px-3 py-1 text-description font-medium text-primary-foreground">
                   <MapPin aria-hidden="true" className="size-4 text-secondary" />
                   Mobile massage across Adelaide
@@ -148,7 +150,7 @@ export default async function Home() {
                   </Button>
                 </div>
                 <ul className="mt-1 flex flex-wrap gap-compact">
-                  {["Reviewed therapists", "Confirmed before you pay", "Adelaide metro"].map(
+                  {["Reviewed therapists", "Upfront pricing", "Adelaide metro"].map(
                     (t) => (
                       <li
                         key={t}
@@ -160,6 +162,10 @@ export default async function Home() {
                     ),
                   )}
                 </ul>
+              </div>
+
+              {/* Original at-home massage illustration (decorative) */}
+              <HeroIllustration className="mx-auto mt-2 w-full max-w-md desktop:mt-0" />
               </div>
             </div>
           </section>
@@ -192,7 +198,7 @@ export default async function Home() {
               <ServicesCarousel services={services} />
             )}
             <p className="text-caption text-bb-text-caption">
-              Prices are indicative and confirmed before you pay.
+              Prices include travel, table and equipment — no hidden fees.
             </p>
           </section>
           </Reveal>
@@ -280,13 +286,13 @@ export default async function Home() {
           </section>
           </Reveal>
 
-          {/* Reviews (labelled sample) */}
+          {/* Reviews — adapted from real day-spa Google reviews */}
           <Reveal>
           <div className="flex flex-col gap-compact">
             <TestimonialsCarousel />
             <p className="text-caption text-bb-text-caption">
-              Sample reviews shown for layout — real customer reviews appear here
-              once booking opens.
+              Reviews from Body Bliss Massage &amp; Day Spa — the Adelaide team
+              behind this mobile service.
             </p>
           </div>
           </Reveal>

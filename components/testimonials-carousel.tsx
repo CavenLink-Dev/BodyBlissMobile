@@ -97,7 +97,8 @@ export function TestimonialsCarousel() {
               ))}
             </div>
             <p className="text-description font-medium text-bb-text-description">
-              {TESTIMONIALS[index].name} · {TESTIMONIALS[index].suburb}
+              <span className="text-bb-text-display">5.0</span> ·{" "}
+              {TESTIMONIALS[index].attribution}
             </p>
           </div>
         </Card>

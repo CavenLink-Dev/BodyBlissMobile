@@ -58,11 +58,26 @@ export function ServicesCarousel({ services }: { services: ServiceWithPricing[] 
                   <Badge variant="secondary">from {formatAud(s.fromPriceCents)}</Badge>
                 ) : null}
               </div>
-              <CardTitle className="text-subtitle">{s.name}</CardTitle>
+              <CardTitle className="text-subtitle">
+                <Link
+                  href={`/services/${s.code}`}
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  {s.name}
+                </Link>
+              </CardTitle>
               <CardDescription className="flex-1">{s.description}</CardDescription>
-              <div>
+              <div className="flex flex-wrap gap-compact">
                 <Button asChild variant="secondary">
                   <Link href={`/book?service=${s.code}`}>Book Now</Link>
+                </Button>
+                <Button asChild variant="quiet">
+                  <Link
+                    href={`/services/${s.code}`}
+                    aria-label={`Learn more about ${s.name}`}
+                  >
+                    Details
+                  </Link>
                 </Button>
               </div>
             </Card>

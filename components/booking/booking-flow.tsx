@@ -11,20 +11,24 @@ import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldTextarea } from "@/components/ui/field";
 import { SelectField } from "@/components/ui/select";
+import { PaymentForm } from "@/components/payment/payment-form";
 import { formatAud } from "@/lib/format";
 import type { ServiceWithPricing } from "@/lib/catalogue-types";
-import { createBookingRequest } from "@/app/(public)/book/actions";
+import { useDemoUser, addDemoBooking } from "@/lib/demo-store";
 
 /*
-  Booking flow — request-to-book (no payment). Driven by the live service
-  catalogue; on submit it calls the createBookingRequest server action which
-  writes the booking, its location and consent server-side. Steps:
-    1  Location & access
-    2  Massage, time & therapist (auto-match for now)
-    3  Review, accept terms, send request
+  Booking flow — DEMO MODE. Fully clickable checkout: the booking and its
+  "payment" are stored only in this browser (lib/demo-store) and the payment
+  step is a simulated card form. REAL: restore the createBookingRequest
+  server action + a payment provider — DEMO-MODE.md §3–4. Steps (service
+  first — customers arrive from a service page with massage/length chosen):
+    1  Massage, time & therapist (auto-match for now)
+    2  Location & access
+    3  Review & accept terms
+    4  Payment (test mode)
 */
 
-const STEPS = ["Location & access", "Massage & time", "Review & send"] as const;
+const STEPS = ["Massage & time", "Location", "Review", "Payment"] as const;
 
 const LOCATION_TYPES = [
   { value: "home", label: "My home" },
@@ -60,17 +64,21 @@ type BookingState = {
 export function BookingFlow({
   services,
   initialServiceCode,
-  isAuthed,
+  initialVariantId,
 }: {
   services: ServiceWithPricing[];
   initialServiceCode?: string;
-  isAuthed: boolean;
+  initialVariantId?: string;
 }) {
   const router = useRouter();
+  const { user } = useDemoUser();
+  const isAuthed = Boolean(user);
 
   const firstService =
     services.find((s) => s.code === initialServiceCode) ?? services[0];
-  const firstVariant = firstService?.variants[0];
+  const firstVariant =
+    firstService?.variants.find((v) => v.id === initialVariantId) ??
+    firstService?.variants[0];
 
   const [step, setStep] = React.useState(0);
   const [data, setData] = React.useState<BookingState>({
@@ -91,7 +99,6 @@ export function BookingFlow({
     acceptTerms: false,
   });
   const [errors, setErrors] = React.useState<Record<string, string>>({});
-  const [submitting, setSubmitting] = React.useState(false);
   const [submitError, setSubmitError] = React.useState<string | undefined>();
   const topRef = React.useRef<HTMLDivElement>(null);
 
@@ -115,7 +122,18 @@ export function BookingFlow({
     }));
   }
 
-  function validateStep1() {
+  function validateMassageStep() {
+    const e: Record<string, string> = {};
+    if (!data.variantId) e.variantId = "Please choose a length.";
+    if (!data.date) e.date = "Please choose a date.";
+    else if (data.date < new Date().toISOString().slice(0, 10))
+      e.date = "Please choose today or a future date.";
+    if (!data.time) e.time = "Please choose a time.";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  }
+
+  function validateLocationStep() {
     const e: Record<string, string> = {};
     if (data.streetAddress.trim().length < 5)
       e.streetAddress = "Please enter the street address for the massage.";
@@ -126,18 +144,9 @@ export function BookingFlow({
     return Object.keys(e).length === 0;
   }
 
-  function validateStep2() {
-    const e: Record<string, string> = {};
-    if (!data.variantId) e.variantId = "Please choose a length.";
-    if (!data.date) e.date = "Please choose a date.";
-    if (!data.time) e.time = "Please choose a time.";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  }
-
   function next() {
-    if (step === 0 && !validateStep1()) return;
-    if (step === 1 && !validateStep2()) return;
+    if (step === 0 && !validateMassageStep()) return;
+    if (step === 1 && !validateLocationStep()) return;
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
     focusTop();
   }
@@ -158,43 +167,43 @@ export function BookingFlow({
       .join("\n");
   }
 
-  async function submit() {
+  /* Review → Payment (terms must be accepted first). */
+  function goToPayment() {
     if (!data.acceptTerms) {
-      setSubmitError("Please accept the booking terms to send your request.");
+      setSubmitError("Please accept the booking terms to continue to payment.");
       return;
     }
-    setSubmitting(true);
     setSubmitError(undefined);
-    const result = await createBookingRequest({
-      serviceVariantId: data.variantId,
-      locationType: data.locationType,
+    setStep(3);
+    focusTop();
+  }
+
+  /* DEMO MODE — after the simulated payment, store the booking in this
+     browser and show the confirmation. REAL: createBookingRequest server
+     action + payment provider — DEMO-MODE.md §3–4. */
+  function onPaid() {
+    const notes = [
+      data.parking ? `Parking: ${data.parking}` : "",
+      composeAccessNotes(),
+      data.therapistNotes ? `For therapist: ${data.therapistNotes}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const booking = addDemoBooking({
+      serviceCode: data.serviceCode,
+      serviceName: selectedService?.name ?? "Massage",
+      durationMinutes: selectedVariant?.durationMinutes ?? 0,
+      priceCents: selectedVariant?.priceCents ?? 0,
       date: data.date,
       time: data.time,
+      locationType: data.locationType,
       streetAddress: data.streetAddress.trim(),
       suburb: data.suburb.trim(),
       postcode: data.postcode.trim(),
-      state: "SA",
-      parkingNotes: data.parking,
-      accessNotes: composeAccessNotes(),
-      customerNotes: data.therapistNotes,
-      therapistPreference: "match",
-      acceptTerms: true,
+      notes,
     });
-
-    if (result.ok) {
-      router.push(`/book/confirmation/${result.bookingId}`);
-      return;
-    }
-    if (result.error === "auth") {
-      router.push("/login?next=/book");
-      return;
-    }
-    setSubmitting(false);
-    setSubmitError(
-      result.error === "unavailable"
-        ? "That massage option isn't available. Please choose another."
-        : "Something went wrong sending your request. Please try again.",
-    );
+    router.push(`/book/confirmation/${booking.id}`);
   }
 
   if (!firstService) {
@@ -212,7 +221,7 @@ export function BookingFlow({
     <div ref={topRef} className="flex flex-col gap-card-gap scroll-mt-24">
       <StepIndicator current={step} />
 
-      {step === 0 && (
+      {step === 1 && (
         <form
           noValidate
           onSubmit={(e) => {
@@ -220,10 +229,10 @@ export function BookingFlow({
             next();
           }}
           className="flex flex-col gap-card-gap"
-          aria-labelledby="step1-heading"
+          aria-labelledby="step-location-heading"
         >
           <div className="flex flex-col gap-compact">
-            <h2 id="step1-heading" className="font-heading text-title font-semibold text-bb-text-title">
+            <h2 id="step-location-heading" className="font-heading text-title font-semibold text-bb-text-title">
               Where should we come?
             </h2>
             <p className="text-description text-bb-text-description">
@@ -339,8 +348,8 @@ export function BookingFlow({
               You don&apos;t have to share health information. Anything you add is
               only used to prepare for your appointment and is shared with your
               therapist once your booking is confirmed. See our{" "}
-              <Link href="/help" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                privacy &amp; safety information
+              <Link href="/privacy" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                privacy policy
               </Link>
               .
             </span>
@@ -350,14 +359,26 @@ export function BookingFlow({
             <Button type="submit" variant="secondary" className="w-full tablet:w-auto">
               Continue
             </Button>
+            <Button type="button" variant="quiet" className="w-full tablet:w-auto" onClick={back}>
+              <ChevronLeft aria-hidden="true" className="size-5" />
+              Back
+            </Button>
           </div>
         </form>
       )}
 
-      {step === 1 && (
-        <div className="flex flex-col gap-card-gap" aria-labelledby="step2-heading">
+      {step === 0 && (
+        <form
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            next();
+          }}
+          className="flex flex-col gap-card-gap"
+          aria-labelledby="step-massage-heading"
+        >
           <div className="flex flex-col gap-compact">
-            <h2 id="step2-heading" className="font-heading text-title font-semibold text-bb-text-title">
+            <h2 id="step-massage-heading" className="font-heading text-title font-semibold text-bb-text-title">
               Your massage &amp; time
             </h2>
             <p className="text-description text-bb-text-description">
@@ -399,6 +420,7 @@ export function BookingFlow({
               id="date"
               label="Preferred date"
               type="date"
+              min={new Date().toISOString().slice(0, 10)}
               required
               value={data.date}
               error={errors.date}
@@ -431,34 +453,30 @@ export function BookingFlow({
 
           {selectedVariant ? (
             <p className="text-description text-bb-text-description">
-              Indicative price:{" "}
+              Total:{" "}
               <span className="font-medium text-bb-text-display">
                 {formatAud(selectedVariant.priceCents)}
               </span>{" "}
-              — confirmed before you pay.
+              — includes travel, table and equipment.
             </p>
           ) : null}
 
           <div className="flex flex-col gap-component tablet:flex-row-reverse tablet:justify-start">
-            <Button type="button" variant="secondary" className="w-full tablet:w-auto" onClick={next}>
+            <Button type="submit" variant="secondary" className="w-full tablet:w-auto">
               Continue
             </Button>
-            <Button type="button" variant="quiet" className="w-full tablet:w-auto" onClick={back}>
-              <ChevronLeft aria-hidden="true" className="size-5" />
-              Back
-            </Button>
           </div>
-        </div>
+        </form>
       )}
 
       {step === 2 && (
         <div className="flex flex-col gap-card-gap" aria-labelledby="step3-heading">
           <div className="flex flex-col gap-compact">
             <h2 id="step3-heading" className="font-heading text-title font-semibold text-bb-text-title">
-              Review your request
+              Review your booking
             </h2>
             <p className="text-description text-bb-text-description">
-              Check the details below before you send your request.
+              Check the details below before you continue to payment.
             </p>
           </div>
 
@@ -476,7 +494,7 @@ export function BookingFlow({
               value={`${data.streetAddress}, ${data.suburb} ${data.postcode}`}
             />
             <ReviewRow
-              label="Indicative price"
+              label="Total"
               value={selectedVariant ? formatAud(selectedVariant.priceCents) : "—"}
             />
           </Card>
@@ -484,8 +502,8 @@ export function BookingFlow({
           <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
             <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
             <span>
-              This sends a booking request. We&apos;ll confirm a therapist and the
-              final price before any payment is taken — nothing is charged now.
+              Free cancellation until your therapist is on the way. Payment is
+              simulated in this demo — nothing is ever charged.
             </span>
           </p>
 
@@ -500,10 +518,14 @@ export function BookingFlow({
                 />
                 <span id="terms-text" className="text-description text-bb-text-description">
                   I agree to the{" "}
-                  <Link href="/help" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <Link href="/terms" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     booking terms
                   </Link>{" "}
-                  and understand my request will be confirmed before payment.
+                  and{" "}
+                  <Link href="/privacy" className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    privacy policy
+                  </Link>
+                  .
                 </span>
               </label>
 
@@ -518,10 +540,9 @@ export function BookingFlow({
                   type="button"
                   variant="secondary"
                   className="w-full tablet:w-auto"
-                  disabled={submitting}
-                  onClick={submit}
+                  onClick={goToPayment}
                 >
-                  {submitting ? "Sending…" : "Send request"}
+                  Continue to payment
                 </Button>
                 <Button type="button" variant="quiet" className="w-full tablet:w-auto" onClick={back}>
                   <ChevronLeft aria-hidden="true" className="size-5" />
@@ -532,7 +553,7 @@ export function BookingFlow({
           ) : (
             <Card variant="row" className="flex-col items-start gap-component">
               <CardDescription>
-                Create a free account or sign in to send your booking request and
+                Create a free account or sign in to complete your booking and
                 manage it afterwards.
               </CardDescription>
               <div className="flex flex-col gap-component tablet:flex-row">
@@ -545,6 +566,32 @@ export function BookingFlow({
               </div>
             </Card>
           )}
+        </div>
+      )}
+
+      {step === 3 && (
+        <div className="flex flex-col gap-card-gap" aria-labelledby="step4-heading">
+          <div className="flex flex-col gap-compact">
+            <h2 id="step4-heading" className="font-heading text-title font-semibold text-bb-text-title">
+              Payment
+            </h2>
+            <p className="text-description text-bb-text-description">
+              {selectedService?.name}, {selectedVariant?.durationMinutes} min ·{" "}
+              {data.date} at {data.time}
+            </p>
+          </div>
+
+          <PaymentForm
+            amountCents={selectedVariant?.priceCents ?? 0}
+            onPaid={onPaid}
+          />
+
+          <div>
+            <Button type="button" variant="quiet" onClick={back}>
+              <ChevronLeft aria-hidden="true" className="size-5" />
+              Back to review
+            </Button>
+          </div>
         </div>
       )}
     </div>

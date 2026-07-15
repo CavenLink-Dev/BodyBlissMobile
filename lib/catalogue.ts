@@ -1,100 +1,123 @@
-import { createClient } from "@/lib/supabase/server";
 import type {
   ServiceVariant,
   ServiceWithPricing,
 } from "@/lib/catalogue-types";
 
 /*
-  Read-side data access for the public service catalogue. RLS allows anyone
-  (even signed-out) to read active services + variants and all base prices,
-  so the standard SSR client is fine here — no service-role key involved.
+  DEMO MODE — static catalogue.
+
+  The site currently runs as a fully clickable demo with no backend, so the
+  service catalogue lives here as plain data (same shapes the Supabase reads
+  returned). When the real backend is wired up, restore the Supabase queries
+  (see DEMO-MODE.md) — every page consumes these two functions, so nothing
+  else needs to change.
 */
 
 export type { ServiceVariant, ServiceWithPricing } from "@/lib/catalogue-types";
 
-type Row = {
-  id: string;
+type StaticService = {
   code: string;
   name: string;
   description: string;
-  sort_order: number;
-  service_variants: {
-    id: string;
-    duration_minutes: number;
-    active: boolean;
-    base_prices: {
-      price_cents: number;
-      effective_from: string;
-      effective_to: string | null;
-    }[];
-  }[];
+  variants: [number, number][]; // [durationMinutes, priceCents]
 };
 
-function currentPriceCents(
-  prices: Row["service_variants"][number]["base_prices"],
-): number | null {
-  const today = new Date().toISOString().slice(0, 10);
-  const current = prices
-    .filter((p) => p.effective_from <= today && (!p.effective_to || p.effective_to >= today))
-    .sort((a, b) => (a.effective_from < b.effective_from ? 1 : -1));
-  return current.length ? current[0].price_cents : null;
+const STATIC_SERVICES: StaticService[] = [
+  {
+    code: "relaxation",
+    name: "Relaxation Massage",
+    description: "Gentle, flowing massage to calm the nervous system and unwind.",
+    variants: [
+      [60, 11900],
+      [90, 16900],
+      [120, 21900],
+    ],
+  },
+  {
+    code: "deep_tissue",
+    name: "Deep Tissue Massage",
+    description: "Firmer, focused pressure for deeper muscle tension and knots.",
+    variants: [
+      [60, 12900],
+      [90, 17900],
+    ],
+  },
+  {
+    code: "pregnancy",
+    name: "Pregnancy Massage",
+    description: "Adapted for each trimester, with suitably experienced therapists.",
+    variants: [
+      [60, 12900],
+      [90, 17900],
+    ],
+  },
+  {
+    code: "couples",
+    name: "Couples Massage",
+    description: "Two therapists, side by side, in the comfort of your own space.",
+    variants: [
+      [60, 23800],
+      [90, 33800],
+    ],
+  },
+  {
+    code: "hotel",
+    name: "Hotel Massage",
+    description: "In-room massage for hotel guests staying in Adelaide.",
+    variants: [
+      [60, 11900],
+      [90, 16900],
+    ],
+  },
+  {
+    code: "corporate",
+    name: "Corporate Chair Massage",
+    description: "Seated, fully-clothed massage for workplaces and events.",
+    variants: [
+      [30, 5900],
+      [60, 11500],
+    ],
+  },
+];
+
+const SUBURBS = [
+  "Adelaide",
+  "Burnside",
+  "Glenelg",
+  "Henley Beach",
+  "Kensington",
+  "Marion",
+  "Mile End",
+  "North Adelaide",
+  "Norwood",
+  "Prospect",
+  "Unley",
+  "Walkerville",
+];
+
+function toService(s: StaticService): ServiceWithPricing {
+  const variants: ServiceVariant[] = s.variants.map(([minutes, cents]) => ({
+    id: `${s.code}-${minutes}`,
+    durationMinutes: minutes,
+    priceCents: cents,
+  }));
+  return {
+    id: s.code,
+    code: s.code,
+    name: s.name,
+    description: s.description,
+    variants,
+    fromPriceCents: Math.min(...s.variants.map(([, cents]) => cents)),
+  };
 }
 
+export const SERVICES: ServiceWithPricing[] = STATIC_SERVICES.map(toService);
+
+/* Async signatures preserved so pages don't change when the backend returns. */
 export async function getServicesWithPricing(): Promise<ServiceWithPricing[]> {
-  let data: Row[] | null = null;
-  try {
-    const supabase = await createClient();
-    const res = await supabase
-      .from("services")
-      .select(
-        "id, code, name, description, sort_order, service_variants(id, duration_minutes, active, base_prices(price_cents, effective_from, effective_to))",
-      )
-      .eq("active", true)
-      .order("sort_order");
-    if (res.error) return [];
-    data = res.data as Row[];
-  } catch {
-    return [];
-  }
-  if (!data) return [];
-
-  return (data as Row[]).map((s) => {
-    const variants: ServiceVariant[] = s.service_variants
-      .filter((v) => v.active)
-      .sort((a, b) => a.duration_minutes - b.duration_minutes)
-      .map((v) => ({
-        id: v.id,
-        durationMinutes: v.duration_minutes,
-        priceCents: currentPriceCents(v.base_prices),
-      }));
-
-    const prices = variants
-      .map((v) => v.priceCents)
-      .filter((p): p is number => p != null);
-
-    return {
-      id: s.id,
-      code: s.code,
-      name: s.name,
-      description: s.description,
-      variants,
-      fromPriceCents: prices.length ? Math.min(...prices) : null,
-    };
-  });
+  return SERVICES;
 }
 
-/* Active service-area suburbs (public read via RLS). Fail-soft to []. */
 export async function getActiveSuburbs(): Promise<string[]> {
-  try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("suburbs")
-      .select("name")
-      .eq("active", true)
-      .order("name");
-    if (error || !data) return [];
-    return data.map((s) => s.name as string);
-  } catch {
-    return [];
-  }
+  return SUBURBS;
 }

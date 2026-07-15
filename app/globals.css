@@ -12,64 +12,84 @@
 
 @layer base {
   :root {
-    /* colour/background/page #F4F4EE · colour/text/display #252525 */
-    --background: 60 21.4% 94.5%;
-    --foreground: 0 0% 14.5%;
+    /* ------------------------------------------------------------------
+       NAMED BRAND PALETTE — the single place raw colour values live.
+       Every semantic token below references one of these by name.
+       (HSL triplets, consumed as hsl(var(--x)) via tailwind.config.ts)
+       ------------------------------------------------------------------ */
+    --porcelain: 60 21.4% 94.5%;   /* #F4F4EE — page background */
+    --white: 0 0% 100%;            /* #FFFFFF — card surfaces, labels on dark */
+    --charcoal: 0 0% 14.5%;        /* #252525 — display text, focus ring */
+    --espresso: 43 6.1% 22.5%;     /* #3D3B36 — primary action, dark bands */
+    --bliss-gold: 49 95.8% 46.9%;  /* #EAC005 — the single system yellow */
+    --graphite: 0 0% 25.9%;        /* #424242 — titles */
+    --olive-ink: 60 4.5% 21.8%;    /* #3A3A35 — subtitles */
+    --slate-ink: 0 0% 30.6%;       /* #4E4E4E — body & captions */
+    --smoke-ink: 0 0.8% 25.3%;     /* #414040 — navigation */
+    --mist: 0 0% 89.4%;            /* #E4E4E4 — hairlines, muted surface */
+    --clay-red: 3 62.1% 38.2%;     /* #9E2B25 — errors (always with text/icon) */
+    --forest: 152 39.9% 30%;       /* #2E6B4F — success (always with text/icon) */
+    --soot: 0 5.6% 7.1%;           /* #131111 — social icons */
 
-    /* Card surface: white with display-charcoal text (neutral surface on #F4F4EE page) */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 14.5%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 14.5%;
+    /* ------------------------------------------------------------------
+       SEMANTIC TOKENS — roles mapped onto the named palette.
+       ------------------------------------------------------------------ */
+    --background: var(--porcelain);
+    --foreground: var(--charcoal);
 
-    /* colour/action/primary: #3D3B36 bg + white label (11.2:1) */
-    --primary: 43 6.1% 22.5%;
-    --primary-foreground: 0 0% 100%;
+    /* Card surface: white with charcoal text (neutral surface on porcelain) */
+    --card: var(--white);
+    --card-foreground: var(--charcoal);
+    --popover: var(--white);
+    --popover-foreground: var(--charcoal);
 
-    /* colour/action/secondary: #EAC005 bg + charcoal #252525 label (8.79:1).
-       Yellow rule: white-on-yellow (1.74:1) is banned; yellow surfaces always carry charcoal text/icons. */
-    --secondary: 49 95.8% 46.9%;
-    --secondary-foreground: 0 0% 14.5%;
+    /* Primary action: espresso bg + white label (11.2:1) */
+    --primary: var(--espresso);
+    --primary-foreground: var(--white);
 
-    /* Muted surface + colour/text/description #4E4E4E (7.5:1 on page bg) */
-    --muted: 0 0% 89.4%;
-    --muted-foreground: 0 0% 30.6%;
+    /* Secondary action: bliss-gold bg + charcoal label (8.79:1).
+       Gold rule: white-on-gold (1.74:1) is banned; gold surfaces always carry charcoal text/icons. */
+    --secondary: var(--bliss-gold);
+    --secondary-foreground: var(--charcoal);
+
+    /* Muted surface + slate-ink text (7.5:1 on page bg) */
+    --muted: var(--mist);
+    --muted-foreground: var(--slate-ink);
 
     /* Accent mirrors secondary; same charcoal-text pairing rule applies */
-    --accent: 49 95.8% 46.9%;
-    --accent-foreground: 0 0% 14.5%;
+    --accent: var(--bliss-gold);
+    --accent-foreground: var(--charcoal);
 
-    /* Status: error #9E2B25 / success #2E6B4F — always paired with text/icon, never colour alone */
-    --destructive: 3 62.1% 38.2%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 152 39.9% 30%;
-    --success-foreground: 0 0% 100%;
+    /* Status: clay-red / forest — always paired with text/icon, never colour alone */
+    --destructive: var(--clay-red);
+    --destructive-foreground: var(--white);
+    --success: var(--forest);
+    --success-foreground: var(--white);
 
-    /* colour/utility/subtle_stroke #E4E4E4 — decorative hairlines only (1.15:1 vs page).
-       OPEN ITEM (design doc §7.4): must never be the only boundary of a meaningful control;
-       a darker input border token is pending owner approval — until then inputs need
-       an additional affordance (label + background difference). */
-    --border: 0 0% 89.4%;
-    --input: 0 0% 89.4%;
+    /* Mist hairlines — decorative only (1.15:1 vs page).
+       Must never be the only boundary of a meaningful control; inputs pair
+       label + surface difference. */
+    --border: var(--mist);
+    --input: var(--mist);
 
-    /* Focus ring: 2px #252525, 2px offset, never clipped (design doc §5) */
-    --ring: 0 0% 14.5%;
+    /* Focus ring: 2px charcoal, 2px offset, never clipped */
+    --ring: var(--charcoal);
 
-    /* Text roles (token paths colour/text/*) */
-    --bb-text-display: 0 0% 14.5%;   /* #252525 (13.9:1) */
-    --bb-text-title: 0 0% 25.9%;     /* #424242 (9.1:1)  */
-    --bb-text-subtitle: 60 4.5% 21.8%; /* #3A3A35 (10.4:1) */
-    --bb-text-description: 0 0% 30.6%; /* #4E4E4E (7.5:1) */
-    --bb-text-caption: 0 0% 30.6%;   /* #4E4E4E — 12px captions never carry essential info */
+    /* Text roles */
+    --bb-text-display: var(--charcoal);     /* 13.9:1 */
+    --bb-text-title: var(--graphite);       /* 9.1:1  */
+    --bb-text-subtitle: var(--olive-ink);   /* 10.4:1 */
+    --bb-text-description: var(--slate-ink);/* 7.5:1  */
+    --bb-text-caption: var(--slate-ink);    /* 12px captions never carry essential info */
 
-    /* Navigation (token paths colour/navigation/*) */
-    --bb-nav-default: 0 0.8% 25.3%;  /* #414040 (9.4:1) */
-    --bb-nav-selected-text: 0 0% 14.5%; /* selected = bold #252525 label + thick yellow underline */
-    --bb-nav-accent: 49 95.8% 46.9%; /* #EAC005 underline/accent — never text, never sole indicator */
+    /* Navigation */
+    --bb-nav-default: var(--smoke-ink);         /* 9.4:1 */
+    --bb-nav-selected-text: var(--charcoal);    /* selected = bold charcoal + thick gold underline */
+    --bb-nav-accent: var(--bliss-gold);         /* never text, never sole indicator */
 
     /* Utility */
-    --bb-star: 49 95.8% 46.9%;       /* #EAC005 stars — always beside a numeric rating in text */
-    --bb-social-icon: 0 5.6% 7.1%;   /* #131111 */
+    --bb-star: var(--bliss-gold);   /* stars — always beside a numeric rating in text */
+    --bb-social-icon: var(--soot);
 
     /* component/button/visual: radius 8 */
     --radius: 0.5rem;

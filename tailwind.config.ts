@@ -23,6 +23,19 @@ export default {
     },
     extend: {
       colors: {
+        // Named brand palette (raw values live in app/globals.css)
+        porcelain: "hsl(var(--porcelain))",
+        charcoal: "hsl(var(--charcoal))",
+        espresso: "hsl(var(--espresso))",
+        "bliss-gold": "hsl(var(--bliss-gold))",
+        graphite: "hsl(var(--graphite))",
+        "olive-ink": "hsl(var(--olive-ink))",
+        "slate-ink": "hsl(var(--slate-ink))",
+        "smoke-ink": "hsl(var(--smoke-ink))",
+        mist: "hsl(var(--mist))",
+        "clay-red": "hsl(var(--clay-red))",
+        forest: "hsl(var(--forest))",
+        // Semantic roles
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

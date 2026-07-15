@@ -3,8 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import { CookieNotice } from "@/components/cookie-notice";
-
-import { CookieConsent } from "@/components/cookie-consent";
+import { TestModeBanner } from "@/components/test-mode-banner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -56,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en-AU">
       <body className={`${sora.variable} ${dmSans.variable} font-sans antialiased`}>
+        <TestModeBanner />
         {children}
         <CookieNotice />
       </body>

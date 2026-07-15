@@ -1,46 +1,74 @@
 /*
-  Clearly-labelled sample content for pre-launch layout only.
-
-  These testimonials are illustrative placeholders and are shown with a visible
-  "sample" label in the UI. Replace with real, consented reviews before launch.
-  No fabricated therapist profiles, ratings or verification claims live here —
-  therapist data comes only from approved records in the database.
+  Customer reviews — adapted from real Google reviews of Body Bliss Massage
+  & Day Spa (the bricks-and-mortar business behind this mobile service).
+  Reviewer and therapist names removed; wording lightly edited for length.
+  The UI attributes them to the day spa, not to the mobile service.
 */
 
 export type Testimonial = {
   id: string;
   quote: string;
-  name: string;
-  suburb: string;
+  attribution: string;
+  rating: 5;
 };
+
+const SOURCE = "Google review · Body Bliss Massage & Day Spa";
 
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t1",
     quote:
-      "Booking took two minutes and my therapist arrived right on time with everything set up. I didn't have to lift a finger.",
-    name: "Sample review",
-    suburb: "Norwood, SA",
+      "One of the best massages I've had yet. Feeling so refreshed — my body feels like it's been given another life. So lovely and professional.",
+    attribution: SOURCE,
+    rating: 5,
   },
   {
     id: "t2",
     quote:
-      "Being able to say exactly where to park and which door to use made it completely stress-free.",
-    name: "Sample review",
-    suburb: "Prospect, SA",
+      "I was looking for a proper pregnancy massage and this is exactly what I needed. Very relaxing — my first visit and I'll surely be back.",
+    attribution: SOURCE,
+    rating: 5,
   },
   {
     id: "t3",
     quote:
-      "I loved being able to read the details before confirming. It felt safe and professional.",
-    name: "Sample review",
-    suburb: "Glenelg, SA",
+      "Booked a 60-minute relaxation massage and it was so relaxing I almost fell asleep.",
+    attribution: SOURCE,
+    rating: 5,
   },
   {
     id: "t4",
     quote:
-      "A proper deep-tissue massage in my own lounge room after a long week — I've already rebooked.",
-    name: "Sample review",
-    suburb: "Unley, SA",
+      "I've had massage here twice and both were a really great experience — one of the best I've ever had, and I've had a lot because of my back. Great price for the quality.",
+    attribution: SOURCE,
+    rating: 5,
+  },
+  {
+    id: "t5",
+    quote:
+      "Excellent customer service. I was running late and they still made sure everything was looked after. Lovely staff and a calm, refreshing atmosphere — 5/5, will be back.",
+    attribution: SOURCE,
+    rating: 5,
+  },
+  {
+    id: "t6",
+    quote:
+      "They really thought of all the details — the aromas, the textures in the towels and linen. The massage was very thorough and left me feeling brand new.",
+    attribution: SOURCE,
+    rating: 5,
+  },
+  {
+    id: "t7",
+    quote:
+      "Absolutely loved my massage — amazing therapist and great value for money. Very relaxed after my 90-minute treatment, and I've already started telling friends to book.",
+    attribution: SOURCE,
+    rating: 5,
+  },
+  {
+    id: "t8",
+    quote:
+      "Gift vouchers are my go-to gift for family. Can't go wrong.",
+    attribution: SOURCE,
+    rating: 5,
   },
 ];

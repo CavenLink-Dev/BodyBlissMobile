@@ -1,46 +1,57 @@
-import type { Metadata } from "next";
+"use client";
+
+import * as React from "react";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Check, FlaskConical } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/supabase/server";
+import { getDemoBooking, type DemoBooking } from "@/lib/demo-store";
 import { statusLabel, formatDateTime } from "@/lib/booking";
 import { formatAud } from "@/lib/format";
 
-export const metadata: Metadata = {
-  title: "Booking request sent — Body Bliss Mobile Massage",
-  robots: { index: false },
-};
+/*
+  DEMO MODE — confirmation reads the booking from browser storage and says
+  plainly that this was a test-mode checkout. REAL: Supabase booking read +
+  payment receipt — DEMO-MODE.md §3–4.
+*/
 
-export default async function ConfirmationPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const supabase = await createClient();
-  const { data: booking } = await supabase
-    .from("bookings")
-    .select(
-      "id, status, requested_start, location_type, service_name_snapshot, duration_minutes_snapshot, price_cents_snapshot",
-    )
-    .eq("id", id)
-    .maybeSingle();
+export default function ConfirmationPage() {
+  const params = useParams<{ id: string }>();
+  const [booking, setBooking] = React.useState<DemoBooking | null | undefined>(
+    undefined,
+  );
 
-  if (!booking) {
+  React.useEffect(() => {
+    setBooking(getDemoBooking(params.id));
+  }, [params.id]);
+
+  if (booking === undefined) {
+    return (
+      <main className="px-page-inline py-page-block" aria-busy="true">
+        <div className="mx-auto max-w-md">
+          <p className="text-description text-bb-text-description" role="status">
+            Loading your booking…
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  if (booking === null) {
     return (
       <main className="px-page-inline py-page-block">
-        <div className="mx-auto flex max-w-md flex-col gap-card-gap">
+        <div className="mx-auto flex max-w-md flex-col items-start gap-card-gap">
           <h1 className="font-heading text-title font-semibold text-bb-text-title">
             Booking not found
           </h1>
           <p className="text-description text-bb-text-description">
-            We couldn&apos;t find this booking. You may need to sign in.
+            We couldn&apos;t find this booking in this browser.
           </p>
           <Button asChild variant="secondary">
-            <Link href="/account">Go to my account</Link>
+            <Link href="/book">Start a new booking</Link>
           </Button>
         </div>
       </main>
@@ -58,40 +69,57 @@ export default async function ConfirmationPage({
             <Check className="size-6 text-secondary-foreground" />
           </span>
           <h1 className="font-heading text-display text-bb-text-display">
-            Request Sent
+            Booking Confirmed
           </h1>
           <p className="text-description text-bb-text-description">
-            Thanks — your booking request is in. We&apos;ll confirm a therapist
-            and the final price before any payment is taken.
+            You&apos;re all set — your therapist will arrive with everything
+            needed. A confirmation email would normally arrive shortly.
           </p>
         </div>
 
+        <p
+          className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
+          role="note"
+        >
+          <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+          <span>
+            <span className="font-medium text-bb-text-display">Test mode.</span>{" "}
+            This was a demonstration checkout — no payment was taken and no
+            real booking was made.
+          </span>
+        </p>
+
         <Card className="flex flex-col gap-card-gap">
           <div className="flex items-center justify-between gap-component">
-            <CardTitle className="text-subtitle">
-              {booking.service_name_snapshot ?? "Massage booking"}
-            </CardTitle>
-            <Badge variant="secondary">{statusLabel(booking.status as string)}</Badge>
+            <CardTitle className="text-subtitle">{booking.serviceName}</CardTitle>
+            <Badge variant="secondary">{statusLabel(booking.status)}</Badge>
           </div>
           <CardDescription>
-            {formatDateTime(booking.requested_start as string)}
-            {booking.duration_minutes_snapshot
-              ? ` · ${booking.duration_minutes_snapshot} min`
-              : ""}
+            {formatDateTime(`${booking.date}T${booking.time}`)} ·{" "}
+            {booking.durationMinutes} min
           </CardDescription>
-          {booking.price_cents_snapshot != null ? (
-            <p className="text-description text-bb-text-description">
-              Indicative price:{" "}
-              <span className="font-medium text-bb-text-display">
-                {formatAud(booking.price_cents_snapshot as number)}
-              </span>
-            </p>
-          ) : null}
+          <CardDescription>
+            {booking.streetAddress}, {booking.suburb} {booking.postcode}
+          </CardDescription>
+          <p className="text-description text-bb-text-description">
+            Paid (test mode):{" "}
+            <span className="font-medium text-bb-text-display">
+              {formatAud(booking.priceCents)}
+            </span>
+          </p>
+          <p className="text-caption text-bb-text-caption">
+            Booking ref: {booking.id}
+          </p>
         </Card>
 
-        <Button asChild variant="secondary">
-          <Link href="/account">View my bookings</Link>
-        </Button>
+        <div className="flex flex-col gap-component tablet:flex-row">
+          <Button asChild variant="secondary" className="w-full tablet:w-auto">
+            <Link href="/account">View my bookings</Link>
+          </Button>
+          <Button asChild variant="quiet" className="w-full tablet:w-auto">
+            <Link href="/">Back to home</Link>
+          </Button>
+        </div>
       </div>
     </main>
   );

@@ -10,10 +10,10 @@ import { formatAud } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Services & prices — Body Bliss Mobile Massage",
   description:
-    "Mobile massage options and indicative prices for Body Bliss across Adelaide. A vetted therapist comes to you.",
+    "Mobile massage options and prices for Body Bliss across Adelaide. A vetted therapist comes to you.",
 };
 
-// Live catalogue from Supabase; pricing is indicative until finalised.
+// Catalogue from lib/catalogue (static in demo mode — see DEMO-MODE.md §6).
 export default async function ServicesPage() {
   const services = await getServicesWithPricing();
 
@@ -28,8 +28,8 @@ export default async function ServicesPage() {
             Every massage is delivered by a vetted therapist who comes to you.
           </p>
           <p className="text-caption text-bb-text-caption">
-            Prices shown are indicative and confirmed before you pay. No hidden
-            fees.
+            Prices include travel, the massage table and all equipment. No
+            hidden fees.
           </p>
         </div>
 
@@ -44,7 +44,14 @@ export default async function ServicesPage() {
             {services.map((s) => (
               <Card key={s.id} className="flex h-full flex-col gap-component">
                 <div className="flex items-start justify-between gap-component">
-                  <CardTitle className="text-subtitle">{s.name}</CardTitle>
+                  <CardTitle className="text-subtitle">
+                    <Link
+                      href={`/services/${s.code}`}
+                      className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      {s.name}
+                    </Link>
+                  </CardTitle>
                   {s.fromPriceCents != null ? (
                     <Badge variant="secondary">
                       from {formatAud(s.fromPriceCents)}
@@ -71,9 +78,17 @@ export default async function ServicesPage() {
                   ))}
                 </ul>
 
-                <div>
+                <div className="flex flex-wrap gap-component">
                   <Button asChild variant="secondary">
                     <Link href={`/book?service=${s.code}`}>Book Now</Link>
+                  </Button>
+                  <Button asChild variant="quiet">
+                    <Link
+                      href={`/services/${s.code}`}
+                      aria-label={`Learn more about ${s.name}`}
+                    >
+                      Learn More
+                    </Link>
                   </Button>
                 </div>
               </Card>

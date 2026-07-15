@@ -4,10 +4,15 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { createClient } from "@/lib/supabase/client";
+import { signInDemo } from "@/lib/demo-store";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
-import { Card, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+
+/*
+  DEMO MODE — creates a local demo session immediately (no email
+  confirmation). REAL: supabase.auth.signUp — see DEMO-MODE.md §1.
+*/
 
 export function SignupForm() {
   const router = useRouter();
@@ -18,52 +23,27 @@ export function SignupForm() {
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState<string | undefined>();
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [loading, setLoading] = React.useState(false);
-  const [checkEmail, setCheckEmail] = React.useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (password.length < 8) {
-      setError("Please choose a password of at least 8 characters.");
-      return;
-    }
-    setLoading(true);
-    setError(undefined);
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { first_name: firstName, last_name: lastName },
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
-      },
-    });
-    if (error) {
-      setError("We couldn't create your account. That email may already be registered.");
-      setLoading(false);
-      return;
-    }
-    // If email confirmation is off, a session is returned immediately.
-    if (data.session) {
-      router.push(next);
-      router.refresh();
-      return;
-    }
-    setCheckEmail(true);
-    setLoading(false);
-  }
+    const errs: Record<string, string> = {};
+    if (firstName.trim().length < 1) errs.firstName = "Please enter your first name.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      errs.email = "Please enter a valid email address.";
+    if (password.length < 8)
+      errs.password = "Please choose a password of at least 8 characters.";
+    setErrors(errs);
+    if (Object.keys(errs).length) return;
 
-  if (checkEmail) {
-    return (
-      <Card className="flex flex-col gap-component" role="status">
-        <CardTitle className="text-subtitle">Check your email</CardTitle>
-        <CardDescription>
-          We&apos;ve sent a confirmation link to {email}. Open it to finish
-          creating your account, then you can sign in.
-        </CardDescription>
-      </Card>
-    );
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 600));
+    signInDemo({
+      name: `${firstName.trim()}${lastName.trim() ? ` ${lastName.trim()}` : ""}`,
+      email: email.trim(),
+    });
+    router.push(next);
   }
 
   return (
@@ -77,6 +57,7 @@ export function SignupForm() {
             autoComplete="given-name"
             required
             value={firstName}
+            error={errors.firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
           <Field
@@ -97,6 +78,7 @@ export function SignupForm() {
           inputMode="email"
           required
           value={email}
+          error={errors.email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Field
@@ -108,7 +90,7 @@ export function SignupForm() {
           autoComplete="new-password"
           required
           value={password}
-          error={error}
+          error={errors.password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit" variant="secondary" disabled={loading} className="w-full">

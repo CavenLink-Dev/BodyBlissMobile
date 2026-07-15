@@ -1,45 +1,76 @@
-import type { Metadata } from "next";
+"use client";
+
+import * as React from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { createClient } from "@/lib/supabase/server";
+import {
+  getDemoBooking,
+  cancelDemoBooking,
+  type DemoBooking,
+} from "@/lib/demo-store";
 import { statusLabel, formatDateTime } from "@/lib/booking";
 import { formatAud } from "@/lib/format";
-import { CancelBookingButton } from "@/components/booking/cancel-booking-button";
 
-export const metadata: Metadata = { title: "Booking — Body Bliss Mobile Massage" };
+/*
+  DEMO MODE — booking detail reads from browser storage; cancelling flips the
+  stored status with a confirm step. REAL: Supabase bookings +
+  booking_locations reads and the cancel_booking flow — DEMO-MODE.md §3.
+*/
 
-const CANCELLABLE = ["requested", "matched", "confirmed"];
+export default function BookingDetailPage() {
+  const params = useParams<{ id: string }>();
+  const [booking, setBooking] = React.useState<DemoBooking | null | undefined>(
+    undefined,
+  );
+  const [confirming, setConfirming] = React.useState(false);
+  const [cancelling, setCancelling] = React.useState(false);
 
-export default async function BookingDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-  const supabase = await createClient();
+  React.useEffect(() => {
+    setBooking(getDemoBooking(params.id));
+  }, [params.id]);
 
-  const { data: booking } = await supabase
-    .from("bookings")
-    .select(
-      "id, status, requested_start, location_type, customer_notes, service_name_snapshot, duration_minutes_snapshot, price_cents_snapshot",
-    )
-    .eq("id", id)
-    .maybeSingle();
+  if (booking === undefined) {
+    return (
+      <main className="px-page-inline py-page-block" aria-busy="true">
+        <div className="mx-auto max-w-3xl">
+          <p className="text-description text-bb-text-description" role="status">
+            Loading booking…
+          </p>
+        </div>
+      </main>
+    );
+  }
 
-  if (!booking) notFound();
+  if (booking === null) {
+    return (
+      <main className="px-page-inline py-page-block">
+        <div className="mx-auto flex max-w-3xl flex-col items-start gap-card-gap">
+          <h1 className="font-heading text-title font-semibold text-bb-text-title">
+            Booking not found
+          </h1>
+          <p className="text-description text-bb-text-description">
+            We couldn&apos;t find this booking in this browser.
+          </p>
+          <Button asChild variant="secondary">
+            <Link href="/account">Back to my account</Link>
+          </Button>
+        </div>
+      </main>
+    );
+  }
 
-  // Owner can read the exact location via RLS.
-  const { data: loc } = await supabase
-    .from("booking_locations")
-    .select("street_address, suburb, postcode, state, parking_notes, access_notes")
-    .eq("booking_id", id)
-    .maybeSingle();
-
-  const status = booking.status as string;
+  async function onCancel() {
+    setCancelling(true);
+    await new Promise((r) => setTimeout(r, 600)); // simulated round-trip
+    cancelDemoBooking(booking!.id);
+    setBooking(getDemoBooking(booking!.id));
+    setCancelling(false);
+    setConfirming(false);
+  }
 
   return (
     <main className="px-page-inline py-page-block">
@@ -53,42 +84,68 @@ export default async function BookingDetailPage({
 
         <div className="flex flex-wrap items-center justify-between gap-component">
           <h1 className="font-heading text-display text-bb-text-display">
-            {booking.service_name_snapshot ?? "Massage booking"}
+            {booking.serviceName}
           </h1>
-          <Badge variant="secondary">{statusLabel(status)}</Badge>
+          <Badge variant="secondary">{statusLabel(booking.status)}</Badge>
         </div>
 
         <Card className="flex flex-col gap-card-gap">
-          <Row label="When" value={formatDateTime(booking.requested_start as string)} />
-          {booking.duration_minutes_snapshot ? (
-            <Row label="Length" value={`${booking.duration_minutes_snapshot} min`} />
-          ) : null}
-          <Row label="Location" value={String(booking.location_type)} />
-          {loc ? (
-            <Row
-              label="Address"
-              value={`${loc.street_address}, ${loc.suburb} ${loc.postcode} ${loc.state}`}
-            />
-          ) : null}
-          {loc?.parking_notes ? <Row label="Parking" value={loc.parking_notes} /> : null}
-          {loc?.access_notes ? <Row label="Access notes" value={loc.access_notes} /> : null}
-          {booking.customer_notes ? (
-            <Row label="Notes for therapist" value={booking.customer_notes as string} />
-          ) : null}
-          {booking.price_cents_snapshot != null ? (
-            <Row
-              label="Indicative price"
-              value={formatAud(booking.price_cents_snapshot as number)}
-            />
-          ) : null}
+          <Row label="Booking ref" value={booking.id} />
+          <Row label="When" value={formatDateTime(`${booking.date}T${booking.time}`)} />
+          <Row label="Length" value={`${booking.durationMinutes} min`} />
+          <Row label="Location" value={booking.locationType} />
+          <Row
+            label="Address"
+            value={`${booking.streetAddress}, ${booking.suburb} ${booking.postcode} SA`}
+          />
+          {booking.notes ? <Row label="Notes" value={booking.notes} /> : null}
+          <Row label="Paid (test mode)" value={formatAud(booking.priceCents)} />
         </Card>
 
-        {CANCELLABLE.includes(status) ? (
+        {booking.status !== "cancelled" ? (
           <Card className="flex flex-col gap-component">
             <CardTitle className="text-subtitle">Manage booking</CardTitle>
-            <CancelBookingButton bookingId={id} />
+            {confirming ? (
+              <>
+                <CardDescription>
+                  Cancel this booking? This can&apos;t be undone.
+                </CardDescription>
+                <div className="flex flex-col gap-component tablet:flex-row">
+                  <Button
+                    type="button"
+                    variant="primary"
+                    disabled={cancelling}
+                    onClick={onCancel}
+                    className="w-full tablet:w-auto"
+                  >
+                    {cancelling ? "Cancelling…" : "Yes, cancel booking"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="quiet"
+                    disabled={cancelling}
+                    onClick={() => setConfirming(false)}
+                    className="w-full tablet:w-auto"
+                  >
+                    Keep booking
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div>
+                <Button type="button" variant="quiet" onClick={() => setConfirming(true)}>
+                  Cancel this booking
+                </Button>
+              </div>
+            )}
           </Card>
-        ) : null}
+        ) : (
+          <Card role="status">
+            <CardDescription>
+              This booking has been cancelled. Nothing was charged (test mode).
+            </CardDescription>
+          </Card>
+        )}
       </div>
     </main>
   );
@@ -97,7 +154,7 @@ export default async function BookingDetailPage({
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-compact border-b border-border pb-component last:border-0 last:pb-0 tablet:flex-row tablet:gap-card-gap">
-      <span className="text-description font-medium text-bb-text-display tablet:w-40 tablet:shrink-0 capitalize">
+      <span className="text-description font-medium capitalize text-bb-text-display tablet:w-40 tablet:shrink-0">
         {label}
       </span>
       <span className="whitespace-pre-line text-description text-bb-text-description">

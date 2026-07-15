@@ -4,10 +4,15 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { createClient } from "@/lib/supabase/client";
+import { signInDemo } from "@/lib/demo-store";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Card } from "@/components/ui/card";
+
+/*
+  DEMO MODE — any valid-looking email + any password signs in.
+  REAL: supabase.auth.signInWithPassword — see DEMO-MODE.md §1.
+*/
 
 export function LoginForm() {
   const router = useRouter();
@@ -16,22 +21,26 @@ export function LoginForm() {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState<string | undefined>();
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [loading, setLoading] = React.useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const errs: Record<string, string> = {};
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      errs.email = "Please enter a valid email address.";
+    if (password.length < 1) errs.password = "Please enter your password.";
+    setErrors(errs);
+    if (Object.keys(errs).length) return;
+
     setLoading(true);
-    setError(undefined);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setError("We couldn't sign you in. Check your email and password and try again.");
-      setLoading(false);
-      return;
-    }
+    // Simulate a network round-trip so the loading state is visible.
+    await new Promise((r) => setTimeout(r, 600));
+    signInDemo({
+      name: email.split("@")[0].replace(/[._-]+/g, " "),
+      email: email.trim(),
+    });
     router.push(next);
-    router.refresh();
   }
 
   return (
@@ -46,6 +55,7 @@ export function LoginForm() {
           inputMode="email"
           required
           value={email}
+          error={errors.email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <Field
@@ -56,9 +66,17 @@ export function LoginForm() {
           autoComplete="current-password"
           required
           value={password}
-          error={error}
+          error={errors.password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div className="flex justify-end">
+          <Link
+            href="/forgot-password"
+            className="inline-flex min-h-hit-target items-center text-description font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Forgot password?
+          </Link>
+        </div>
         <Button type="submit" variant="secondary" disabled={loading} className="w-full">
           {loading ? "Signing in…" : "Sign in"}
         </Button>
