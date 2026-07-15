@@ -12,8 +12,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Book a vetted massage therapist to your home, hotel or workplace in Adelaide.",
     start_url: "/",
     display: "standalone",
-    background_color: "#C9AC7C",
-    theme_color: "#C9AC7C",
+    background_color: "#F7F3EC",
+    theme_color: "#b7a85a",
     icons: [
       {
         src: "/icon.png",
