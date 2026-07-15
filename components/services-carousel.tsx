@@ -49,10 +49,10 @@ export function ServicesCarousel({ services }: { services: ServiceWithPricing[] 
             <Card className="flex h-full flex-col gap-component">
               <div className="flex items-start justify-between gap-component">
                 <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
+                  className="inline-flex size-11 items-center justify-center rounded-full bg-secondary"
                   aria-hidden="true"
                 >
-                  <Icon className="size-6 text-primary" />
+                  <Icon className="size-6 text-secondary-foreground" />
                 </span>
                 {s.fromPriceCents != null ? (
                   <Badge variant="secondary">from {formatAud(s.fromPriceCents)}</Badge>

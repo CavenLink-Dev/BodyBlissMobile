@@ -17,6 +17,7 @@ import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { ServicesCarousel } from "@/components/services-carousel";
 import { BookNowBar } from "@/components/book-now-bar";
 import { HeroIllustration } from "@/components/hero-illustration";
+import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { getServicesWithPricing, getActiveSuburbs } from "@/lib/catalogue";
 import lotusWhite from "@/assets/body_bliss_lotus_white.png";
@@ -170,24 +171,44 @@ export default async function Home() {
             </div>
           </section>
 
+          {/* At a glance — factual stats band */}
+          <section aria-label="Body Bliss at a glance" className="-mt-4">
+            <dl className="grid grid-cols-3 divide-x divide-border rounded border border-border bg-card">
+              {[
+                { value: "9", label: "Years in Adelaide" },
+                { value: "6", label: "Massage styles" },
+                { value: "100%", label: "Mobile — we come to you" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="flex flex-col-reverse items-center gap-compact px-2 py-card-gap text-center"
+                >
+                  <dt className="text-caption text-bb-text-caption">{stat.label}</dt>
+                  <dd className="font-heading text-title font-semibold text-bb-text-display">
+                    {stat.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
           {/* Services + live pricing */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="services-heading">
-            <div className="flex items-end justify-between gap-component">
-              <h2
-                id="services-heading"
-                className="font-heading text-title font-semibold text-bb-text-title"
-              >
-                Our Massages
-              </h2>
-              <Link
-                href="/services"
-                className="inline-flex min-h-hit-target items-center gap-compact text-nav font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                All prices
-                <ArrowRight aria-hidden="true" className="size-4" />
-              </Link>
-            </div>
+            <SectionHeading
+              id="services-heading"
+              eyebrow="Services"
+              title="Our Massages"
+              action={
+                <Link
+                  href="/services"
+                  className="inline-flex min-h-hit-target items-center gap-compact text-nav font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  All prices
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              }
+            />
             {services.length === 0 ? (
               <Card>
                 <CardDescription>
@@ -206,30 +227,39 @@ export default async function Home() {
           {/* How It Works */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="how-heading">
-            <h2
+            <SectionHeading
               id="how-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              How It Works
-            </h2>
-            <ol className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
+              eyebrow="Simple as"
+              title="How It Works"
+            />
+            {/* De-boxed numbered timeline: vertical rail on phone,
+                three columns on tablet+. Calmer than three identical cards. */}
+            <ol className="flex flex-col tablet:grid tablet:grid-cols-3 tablet:gap-card-gap">
               {STEPS.map((step, i) => (
-                <li key={step.title}>
-                  <Card className="flex h-full flex-col gap-component">
-                    <div className="flex items-center gap-component">
+                <li key={step.title} className="relative flex gap-component tablet:flex-col">
+                  <div className="flex flex-col items-center tablet:flex-row tablet:items-center tablet:gap-component">
+                    <span
+                      className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary font-heading text-subtitle font-semibold text-secondary-foreground"
+                      aria-hidden="true"
+                    >
+                      {i + 1}
+                    </span>
+                    {i < STEPS.length - 1 ? (
                       <span
-                        className="inline-flex size-12 items-center justify-center rounded-full bg-secondary"
                         aria-hidden="true"
-                      >
-                        <step.icon className="size-6 text-secondary-foreground" />
-                      </span>
-                      <span className="font-heading text-subtitle text-bb-text-subtitle">
-                        Step {i + 1}
-                      </span>
-                    </div>
-                    <CardTitle>{step.title}</CardTitle>
-                    <CardDescription>{step.body}</CardDescription>
-                  </Card>
+                        className="w-0.5 flex-1 bg-border tablet:h-0.5 tablet:w-auto tablet:flex-1"
+                      />
+                    ) : null}
+                  </div>
+                  <div className="flex flex-col gap-compact pb-card-gap tablet:pb-0 tablet:pr-card-gap">
+                    <p className="flex items-center gap-compact font-heading text-subtitle text-bb-text-subtitle">
+                      <step.icon aria-hidden="true" className="size-5 text-primary" />
+                      {step.title}
+                    </p>
+                    <p className="text-description text-bb-text-description">
+                      {step.body}
+                    </p>
+                  </div>
                 </li>
               ))}
             </ol>
@@ -239,20 +269,19 @@ export default async function Home() {
           {/* Why choose */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="trust-heading">
-            <h2
+            <SectionHeading
               id="trust-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Why Choose Body Bliss
-            </h2>
+              eyebrow="Trust"
+              title="Why Choose Body Bliss"
+            />
             <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
               {TRUST.map((item) => (
                 <Card key={item.title} variant="row" className="items-start">
                   <span
-                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-muted"
+                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary"
                     aria-hidden="true"
                   >
-                    <item.icon className="size-6 text-primary" />
+                    <item.icon className="size-6 text-secondary-foreground" />
                   </span>
                   <div className="flex flex-col gap-compact">
                     <CardTitle className="text-subtitle">{item.title}</CardTitle>
@@ -300,12 +329,11 @@ export default async function Home() {
           {/* Preparation guidance */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="prep-heading">
-            <h2
+            <SectionHeading
               id="prep-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Getting Ready
-            </h2>
+              eyebrow="Be ready"
+              title="Getting Ready"
+            />
             <Card variant="row" className="items-start">
               <ul className="flex flex-col gap-component">
                 {PREP.map((p) => (
@@ -325,12 +353,11 @@ export default async function Home() {
           {/* FAQ — accessible native accordion */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="faq-heading">
-            <h2
+            <SectionHeading
               id="faq-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Frequently Asked Questions
-            </h2>
+              eyebrow="Answers"
+              title="Frequently Asked Questions"
+            />
             <div className="flex flex-col gap-component">
               {FAQS.map((f) => (
                 <details
@@ -357,12 +384,11 @@ export default async function Home() {
           {suburbs.length > 0 ? (
             <Reveal>
               <section className="flex flex-col gap-card-gap" aria-labelledby="areas-heading">
-                <h2
+                <SectionHeading
                   id="areas-heading"
-                  className="font-heading text-title font-semibold text-bb-text-title"
-                >
-                  Where We Go
-                </h2>
+                  eyebrow="Service areas"
+                  title="Where We Go"
+                />
                 <ul className="flex flex-wrap gap-compact">
                   {suburbs.map((s) => (
                     <li
@@ -384,7 +410,16 @@ export default async function Home() {
           {/* Final CTA */}
           <Reveal>
           <section aria-labelledby="cta-heading">
-            <Card variant="highlight" className="flex flex-col items-start gap-card-gap">
+            <Card
+              variant="highlight"
+              className="relative flex flex-col items-start gap-card-gap overflow-hidden"
+            >
+              <Image
+                src={lotusWhite}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-6 -right-4 h-32 w-auto opacity-10"
+              />
               <h2
                 id="cta-heading"
                 className="font-heading text-title font-semibold text-primary-foreground"
