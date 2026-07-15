@@ -22,9 +22,9 @@ export const metadata: Metadata = {
 };
 
 // iPhone-first: fit content into the safe area (notch / home indicator) and
-// keep the browser chrome on-brand with camel accent #C9AC7C.
+// keep the browser chrome on-brand with bronze accent #bb8c41.
 export const viewport: Viewport = {
-  themeColor: "#C9AC7C",
+  themeColor: "#bb8c41",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
