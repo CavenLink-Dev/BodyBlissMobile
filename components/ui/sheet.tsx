@@ -28,7 +28,7 @@ const SheetContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-lg bg-card p-card-padding",
+        "fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-lg bg-card p-card-padding shadow-raised",
         "tablet:inset-x-auto tablet:inset-y-0 tablet:right-0 tablet:max-h-none tablet:w-full tablet:max-w-md tablet:rounded-none",
         "duration-fade data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0",
         className,

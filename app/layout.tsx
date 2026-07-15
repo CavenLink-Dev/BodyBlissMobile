@@ -22,9 +22,9 @@ export const metadata: Metadata = {
 };
 
 // iPhone-first: fit content into the safe area (notch / home indicator) and
-// keep the browser chrome on-brand. Page background #F4F4EE.
+// keep the browser chrome on-brand. Page background #F7F3EC warm ivory.
 export const viewport: Viewport = {
-  themeColor: "#F4F4EE",
+  themeColor: "#F7F3EC",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",

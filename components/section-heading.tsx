@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 
 /*
-  Section heading with an "eyebrow" overline — a short yellow rule + small
+  Section heading with an "eyebrow" overline — a short camel rule + small
   tracked label above the title. Gives every section a consistent, designed
   entry point and improves scanning rhythm. The eyebrow is supportive only
-  (caption size never carries essential info) and the yellow rule is purely
-  decorative, per the yellow rule.
+  (caption size never carries essential info) and the camel rule is purely
+  decorative, per the accent rule.
 */
 
 export function SectionHeading({

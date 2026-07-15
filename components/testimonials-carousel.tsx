@@ -4,12 +4,14 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
 import { TESTIMONIALS } from "@/lib/content";
 
 /*
-  Customer-experience carousel that moves on its own but never traps the
-  user:
+  Customer-experience carousel on a charcoal band — the mid-page dark
+  moment in the page rhythm (ivory → white cards → charcoal → ivory).
+  Dark-surface pairings (verified): white text 11.19:1, linen attribution
+  8.57:1, camel stars 5.15:1 (decorative, always beside the "5.0" figure
+  in white). It moves on its own but never traps the user:
   - Auto-advances every 6s, but pauses on hover, on focus within, and when
     the tab is hidden.
   - Fully honours prefers-reduced-motion: if the user prefers reduced
@@ -22,6 +24,13 @@ import { TESTIMONIALS } from "@/lib/content";
 */
 
 const AUTO_MS = 6000;
+
+const arrowButton = cn(
+  "inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded",
+  "border border-primary-foreground/30 text-primary-foreground",
+  "transition-colors duration-fade hover:bg-primary-foreground/10",
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-primary",
+);
 
 export function TestimonialsCarousel() {
   const [index, setIndex] = React.useState(0);
@@ -46,20 +55,29 @@ export function TestimonialsCarousel() {
   }, [paused, count]);
 
   return (
-    <section aria-labelledby="testimonials-heading" className="flex flex-col gap-card-gap">
+    <section
+      aria-labelledby="testimonials-heading"
+      className="flex flex-col gap-card-gap rounded bg-primary p-card-padding shadow-rest tablet:p-8"
+    >
       <div className="flex items-end justify-between gap-component">
-        <h2
-          id="testimonials-heading"
-          className="font-heading text-title font-semibold text-bb-text-title"
-        >
-          What Customers Say
-        </h2>
+        <div className="flex flex-col gap-compact">
+          <p className="flex items-center gap-compact text-caption font-medium uppercase tracking-[0.14em] text-primary-foreground/80">
+            <span aria-hidden="true" className="h-0.5 w-6 rounded bg-secondary" />
+            Reviews
+          </p>
+          <h2
+            id="testimonials-heading"
+            className="font-heading text-title font-semibold text-primary-foreground"
+          >
+            What Customers Say
+          </h2>
+        </div>
         <div className="flex items-center gap-compact">
           <button
             type="button"
             onClick={() => go(index - 1)}
             aria-label="Previous testimonial"
-            className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded border border-border bg-card transition-colors duration-fade hover:bg-foreground/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className={arrowButton}
           >
             <ChevronLeft aria-hidden="true" className="size-5" />
           </button>
@@ -67,7 +85,7 @@ export function TestimonialsCarousel() {
             type="button"
             onClick={() => go(index + 1)}
             aria-label="Next testimonial"
-            className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded border border-border bg-card transition-colors duration-fade hover:bg-foreground/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className={arrowButton}
           >
             <ChevronRight aria-hidden="true" className="size-5" />
           </button>
@@ -83,10 +101,10 @@ export function TestimonialsCarousel() {
         onFocusCapture={() => setPaused(true)}
         onBlurCapture={() => setPaused(false)}
       >
-        <Card className="flex min-h-[13rem] flex-col justify-between gap-card-gap">
+        <div className="flex min-h-[13rem] flex-col justify-between gap-card-gap rounded border border-primary-foreground/15 p-card-padding">
           <div className="flex flex-col gap-component" aria-live="polite">
             <Quote aria-hidden="true" className="size-8 text-secondary" />
-            <p className="text-subtitle text-bb-text-subtitle">
+            <p className="text-subtitle text-primary-foreground">
               {TESTIMONIALS[index].quote}
             </p>
           </div>
@@ -96,12 +114,12 @@ export function TestimonialsCarousel() {
                 <Star key={i} className="size-4 fill-bb-star text-bb-star" />
               ))}
             </div>
-            <p className="text-description font-medium text-bb-text-description">
-              <span className="text-bb-text-display">5.0</span> ·{" "}
+            <p className="text-description font-medium text-linen">
+              <span className="font-semibold text-primary-foreground">5.0</span> ·{" "}
               {TESTIMONIALS[index].attribution}
             </p>
           </div>
-        </Card>
+        </div>
       </div>
 
       <div className="flex items-center justify-center gap-compact">
@@ -112,12 +130,12 @@ export function TestimonialsCarousel() {
             onClick={() => go(i)}
             aria-label={`Show testimonial ${i + 1} of ${count}`}
             aria-current={i === index ? "true" : undefined}
-            className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >
             <span
               className={cn(
                 "h-2 rounded-full transition-all duration-fade",
-                i === index ? "w-6 bg-primary" : "w-2 bg-border",
+                i === index ? "w-6 bg-secondary" : "w-2 bg-primary-foreground/30",
               )}
             />
           </button>

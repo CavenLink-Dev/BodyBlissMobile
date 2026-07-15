@@ -6,8 +6,8 @@ import wholeLogoWhite from "@/assets/body_bliss_whole_logo_white.png";
 /*
   Footer — dark charcoal band (white logo variant belongs here). Three
   groups: brand, explore, legal — stacked on phone, columns on tablet+.
-  All links are ≥48px hit targets with visible focus (yellow ring works
-  on charcoal, 6.4:1). External day-spa URL is pending owner confirmation
+  All links are ≥48px hit targets with visible focus (camel ring works
+  on charcoal, 5.2:1). External day-spa URL is pending owner confirmation
   (domain decision gate) — rendered as text until confirmed.
 */
 

@@ -2,10 +2,10 @@ import animate from "tailwindcss-animate";
 import type { Config } from "tailwindcss";
 
 /*
-  Body Bliss Mobile Massage — Tailwind theme wired to the approved design tokens.
-  Source of truth: Body_Bliss_Organised_Responsive.tokens.json (values unchanged;
-  #EAC005 owner correction applied in app/globals.css).
-  Breakpoints per tokens: phone <640 · tablet 640–1007 · desktop ≥1008.
+  Body Bliss Mobile Massage — Tailwind theme wired to the design tokens in
+  app/globals.css. Palette: charcoal + layered warm neutrals (owner decision,
+  July 2026 — supersedes the token file's yellow accent). Typography/spacing/
+  breakpoints per tokens: phone <640 · tablet 640–1007 · desktop ≥1008.
 */
 
 export default {
@@ -24,15 +24,19 @@ export default {
     extend: {
       colors: {
         // Named brand palette (raw values live in app/globals.css)
-        porcelain: "hsl(var(--porcelain))",
+        ivory: "hsl(var(--ivory))",
+        cream: "hsl(var(--cream))",
+        linen: "hsl(var(--linen))",
+        sand: "hsl(var(--sand))",
+        camel: "hsl(var(--camel))",
+        taupe: "hsl(var(--taupe))",
+        stone: "hsl(var(--stone))",
         charcoal: "hsl(var(--charcoal))",
         espresso: "hsl(var(--espresso))",
-        "bliss-gold": "hsl(var(--bliss-gold))",
         graphite: "hsl(var(--graphite))",
         "olive-ink": "hsl(var(--olive-ink))",
         "slate-ink": "hsl(var(--slate-ink))",
         "smoke-ink": "hsl(var(--smoke-ink))",
-        mist: "hsl(var(--mist))",
         "clay-red": "hsl(var(--clay-red))",
         forest: "hsl(var(--forest))",
         // Semantic roles
@@ -137,6 +141,9 @@ export default {
       boxShadow: {
         // component/button/effect/secondary_inner_shadow_if_needed
         "secondary-inner": "inset 0px 0px 8px rgba(127, 127, 127, 0.08)",
+        // Elevation scale — 2 steps only (rest / raised), warm-tinted
+        rest: "var(--shadow-rest)",
+        raised: "var(--shadow-raised)",
       },
       transitionDuration: {
         // Motion rule: 150–200ms fades only

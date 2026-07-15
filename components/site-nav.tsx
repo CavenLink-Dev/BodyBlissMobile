@@ -11,7 +11,7 @@ import wholeLogoCharcoal from "@/assets/body_bliss_whole_logo_charcoal.png";
 /*
   Public navigation — four items, always visible (wraps on phone; no
   hamburger-only navigation). Selected = bold charcoal #252525 label in Sora
-  + thick #EAC005 underline: weight + position carry the meaning, yellow is
+  + thick #C9AC7C camel underline: weight + position carry the meaning, camel is
   reinforcement only, never the sole indicator. Item hit targets ≥48px,
   gaps 16/24/32 per breakpoint.
 */

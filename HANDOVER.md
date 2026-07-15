@@ -52,13 +52,20 @@ committed).
   `app/auth/*` — the real wiring, ready and unused.
 - `app/styleguide/page.tsx` — living styleguide of tokens/components.
 
-## 4. Non-negotiable design rules (from the token file)
+## 4. Non-negotiable design rules
 
-- Single yellow `#EAC005`. Yellow surfaces **always** carry charcoal
-  `#252525` text/icons (8.79:1). **White-on-yellow is banned** (1.74:1).
-  Yellow is never text and never the sole indicator.
-- Charcoal surfaces (`#3D3B36`) carry white text; yellow works there as an
-  accent only (6.4:1).
+- **Palette (owner decision, July 2026 — supersedes the token file's yellow):**
+  charcoal anchor + layered warm neutrals. Ivory `#F7F3EC` page · cream
+  `#F1EAE0` wash · linen `#EAE0D1` chips/muted · sand `#DDCFB9` hairlines ·
+  camel `#C9AC7C` accent · taupe `#8C7351` deep accent · stone `#8A8172`
+  input borders. All values live ONLY in `app/globals.css` (+ names in
+  `tailwind.config.ts`).
+- Camel surfaces **always** carry charcoal `#252525` text/icons (7.06:1).
+  **White-on-camel is banned** (2.17:1). Camel is never text and never the
+  sole indicator. Taupe is never a text surface (white-on-taupe 4.48:1
+  fails AA).
+- Charcoal surfaces (`#3D3B36`) carry white text (11.2:1); camel (5.2:1)
+  and sand (7.3:1) work there as accents only.
 - Sora for display/title/subtitle; DM Sans for body/buttons/nav. Sizes in rem.
 - 48px hit targets everywhere; visible 2px charcoal focus ring, 2px offset.
 - Motion: 150–200ms fades only; `prefers-reduced-motion` fully honoured.
@@ -70,12 +77,22 @@ committed).
 
 ## 5. What just changed (design elevation pass)
 
-- `components/section-heading.tsx` — consistent section entry: yellow rule +
+- **Palette migration (July 2026):** yellow accent → charcoal + beige family
+  (see §4). Done entirely in `app/globals.css` / `tailwind.config.ts` tokens,
+  plus the three hard-coded spots: `hero-illustration.tsx`, `app/manifest.ts`
+  and `app/layout.tsx` themeColor. Roadmap item "elevation scale" shipped:
+  `shadow-rest` / `shadow-raised` tokens on cards and sheets. Button press =
+  0.98 scale ≤200ms (reduced-motion safe). Reviews moved onto a charcoal
+  band (camel stars, linen attribution) for mid-page rhythm; passive icon
+  chips are linen (camel reserved for actions/emphasis); stats band and
+  Getting Ready sit on cream. Inputs now use the stone border (≥3:1),
+  closing design-doc open item 4. Styleguide gained a palette section.
+- `components/section-heading.tsx` — consistent section entry: camel rule +
   tracked eyebrow + title + optional lead/action. Used across the homepage.
 - Homepage: factual stats band under the hero (9 years · 6 styles · 100%
   mobile); How It Works de-boxed into a numbered timeline (vertical rail on
-  phone, 3 columns on tablet+); trust/service icon chips switched to yellow
-  with charcoal icons; final CTA carries the white lotus watermark echoing
+  phone, 3 columns on tablet+); trust/service icon chips are linen with
+  charcoal icons; final CTA carries the white lotus watermark echoing
   the hero.
 - Earlier passes: charcoal hero band with original SVG illustration, services
   scroll-snap carousel, cookie notice, scroll reveal (fade-only), PWA

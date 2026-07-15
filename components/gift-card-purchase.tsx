@@ -81,7 +81,7 @@ export function GiftCardPurchase() {
           </span>
         </p>
 
-        {/* The gift card itself — charcoal, gold accent, like the brand */}
+        {/* The gift card itself — charcoal, camel accent, like the brand */}
         <div className="rounded bg-primary p-card-padding text-primary-foreground">
           <div className="flex flex-col gap-component">
             <span className="font-heading text-subtitle">Body Bliss Gift Card</span>

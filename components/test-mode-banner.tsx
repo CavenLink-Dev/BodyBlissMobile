@@ -3,7 +3,7 @@ import { FlaskConical } from "lucide-react";
 /*
   Sitewide test-mode notice — this build is a fully clickable demo with no
   real bookings, payments or emails. Charcoal band so it reads as part of
-  the brand, gold icon as the accent (6.4:1 on charcoal). Deliberately not
+  the brand, camel icon as the accent (5.2:1 on charcoal). Deliberately not
   dismissible: while the site is in demo mode, people should always know.
   Remove this component from app/layout.tsx when the site goes live.
 */

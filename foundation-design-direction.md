@@ -1,5 +1,15 @@
 # Body Bliss Mobile Massage — Foundation Design Direction (v5)
 
+> **v6 note (July 2026, owner decision):** the `#EAC005` yellow-accent
+> system described below has been replaced by a charcoal + warm-neutral
+> (beige) palette — ivory `#F7F3EC` page, cream `#F1EAE0`, linen `#EAE0D1`,
+> sand `#DDCFB9`, camel `#C9AC7C` accent, taupe `#8C7351`, stone `#8A8172`
+> input borders. The charcoal family, typography, spacing, motion and
+> accessibility rules below are unchanged. Current values + verified
+> contrast ratios: `app/globals.css` and `HANDOVER.md` §4; the "yellow rule"
+> now applies to camel (charcoal text on camel surfaces, 7.06:1; camel never
+> text, never sole indicator). The stone input border resolves open item 4.
+
 Source of truth: **`Body_Bliss_Organised_Responsive.tokens.json`** (owner-approved Figma variables) + the Body Bliss logo (serif wordmark with lotus mark). This document records how the tokens are applied, the verified accessibility pairings, and the small set of usage rules required to meet WCAG 2.2 AA without changing any approved colour or typography values. Owner corrections applied: the single system yellow is **`#EAC005`** (supersedes the token file's `#EDC516` on the secondary button).
 
 Brand: **Body Bliss** (never all-caps in text; the logo's own lettering is the only exception). Service: **Body Bliss Mobile Massage**. Nine years of Adelaide massage and wellness experience — used in homepage hero + About section only. Original design throughout; no imitation of Blys or any competitor.

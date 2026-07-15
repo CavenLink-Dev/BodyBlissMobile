@@ -37,6 +37,34 @@ export default function Styleguide() {
 
           <section className="flex flex-col gap-component">
             <h2 className="font-heading text-title font-semibold text-bb-text-title">
+              Palette
+            </h2>
+            <p className="text-description text-bb-text-description">
+              Charcoal anchor + layered warm neutrals. Text ratios verified
+              against WCAG 2.2 AA (noted per swatch, vs the surface shown).
+            </p>
+            <ul className="grid grid-cols-2 gap-card-gap tablet:grid-cols-4">
+              {[
+                { name: "Ivory", hex: "#F7F3EC", note: "Page background", cls: "bg-ivory border border-border" },
+                { name: "Cream", hex: "#F1EAE0", note: "Wash bands · charcoal 12.8:1", cls: "bg-cream" },
+                { name: "Linen", hex: "#EAE0D1", note: "Chips, muted · charcoal 11.7:1", cls: "bg-linen" },
+                { name: "Sand", hex: "#DDCFB9", note: "Hairlines · charcoal 10.0:1", cls: "bg-sand" },
+                { name: "Camel", hex: "#C9AC7C", note: "The accent · charcoal 7.1:1", cls: "bg-camel" },
+                { name: "Taupe", hex: "#8C7351", note: "Deep accent — never a text surface", cls: "bg-taupe" },
+                { name: "Espresso", hex: "#3D3B36", note: "Primary · white 11.2:1", cls: "bg-espresso" },
+                { name: "Charcoal", hex: "#252525", note: "Display text · white 15.3:1", cls: "bg-charcoal" },
+              ].map((s) => (
+                <li key={s.name} className="flex flex-col gap-compact">
+                  <span aria-hidden="true" className={`block h-16 rounded shadow-rest ${s.cls}`} />
+                  <p className="text-description font-semibold text-bb-text-display">{s.name}</p>
+                  <p className="text-caption text-bb-text-caption">{s.hex} — {s.note}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="flex flex-col gap-component">
+            <h2 className="font-heading text-title font-semibold text-bb-text-title">
               Buttons
             </h2>
             <div className="flex flex-wrap items-center gap-component">
@@ -63,7 +91,7 @@ export default function Styleguide() {
               <Card variant="highlight">
                 <CardTitle>Highlight card</CardTitle>
                 <CardDescription className="text-primary-foreground">
-                  Charcoal surface for emphasis. Yellow works as an accent here.
+                  Charcoal surface for emphasis. Camel and sand work as accents here.
                 </CardDescription>
               </Card>
               <Card variant="row">

@@ -5,22 +5,23 @@ import { cn } from "@/lib/utils";
 
 /*
   Body Bliss cards — Rule of Three:
-  - plain:     white surface on the #F4F4EE page, subtle hairline stroke
+  - plain:     white surface on the #F7F3EC ivory page, rest shadow + hairline
   - row:       horizontal list row (therapist lists, bookings) — same surface,
                laid out as a flex row with component gap
   - highlight: charcoal surface + white text (documented dark-surface pattern;
-               yellow works as an accent on charcoal, 6.4:1)
+               sand/camel work as accents on charcoal, 7.3:1 / 5.2:1)
   Padding via --bb-card-padding (16 phone / 24 tablet+desktop). Radius 8.
-  The #E4E4E4 hairline is decorative only — cards also separate by surface
-  colour, never by the stroke alone.
+  Elevation: shadow-rest (2-step warm scale) so cards sit gently above the
+  page. The sand hairline is decorative only — cards also separate by
+  surface colour + shadow, never by the stroke alone.
 */
 
 const cardVariants = cva("rounded border border-border p-card-padding", {
   variants: {
     variant: {
-      plain: "bg-card text-card-foreground",
-      row: "flex items-center gap-component bg-card text-card-foreground",
-      highlight: "bg-primary text-primary-foreground border-transparent",
+      plain: "bg-card text-card-foreground shadow-rest",
+      row: "flex items-center gap-component bg-card text-card-foreground shadow-rest",
+      highlight: "bg-primary text-primary-foreground border-transparent shadow-rest",
     },
   },
   defaultVariants: {

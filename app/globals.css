@@ -4,8 +4,11 @@
 
 /*
   Body Bliss Mobile Massage — design tokens as CSS variables.
-  Source of truth: Body_Bliss_Organised_Responsive.tokens.json (+ foundation-design-direction.md v5).
-  Owner correction applied: single system yellow is #EAC005 everywhere (supersedes token file's #EDC516).
+  Palette: charcoal + layered warm neutrals (owner decision, July 2026 —
+  supersedes the previous #EAC005 yellow-accent system from the token file).
+  The charcoal family is unchanged; the accent family is a tonal beige ramp
+  from warm ivory through sand to a camel/taupe accent. Every text/surface
+  pairing below is WCAG 2.2 AA verified (ratios noted inline).
   Values in shadcn HSL-triplet form so existing components/ui/* keep working.
   Light theme only — the approved design system has no dark mode.
 */
@@ -17,27 +20,33 @@
        Every semantic token below references one of these by name.
        (HSL triplets, consumed as hsl(var(--x)) via tailwind.config.ts)
        ------------------------------------------------------------------ */
-    --porcelain: 60 21.4% 94.5%;   /* #F4F4EE — page background */
+    /* Warm-neutral (beige) family — light → deep */
+    --ivory: 38 41% 95%;           /* #F7F3EC — page background */
+    --cream: 35 38% 91%;           /* #F1EAE0 — tinted wash surfaces */
+    --linen: 36 37% 87%;           /* #EAE0D1 — chips, muted surfaces, skeletons */
+    --sand: 37 35% 80%;            /* #DDCFB9 — hairlines, decorative rules */
+    --camel: 37 42% 64%;           /* #C9AC7C — THE accent: secondary actions, badges (charcoal text: 7.06:1) */
+    --taupe: 35 27% 43%;           /* #8C7351 — deep accent details, pressed reinforcement */
+    --stone: 38 10% 49%;           /* #8A8172 — functional input borders (3.47:1 vs ivory, 3.84:1 vs white) */
+    /* Charcoal family — unchanged anchor */
     --white: 0 0% 100%;            /* #FFFFFF — card surfaces, labels on dark */
     --charcoal: 0 0% 14.5%;        /* #252525 — display text, focus ring */
     --espresso: 43 6.1% 22.5%;     /* #3D3B36 — primary action, dark bands */
-    --bliss-gold: 49 95.8% 46.9%;  /* #EAC005 — the single system yellow */
     --graphite: 0 0% 25.9%;        /* #424242 — titles */
     --olive-ink: 60 4.5% 21.8%;    /* #3A3A35 — subtitles */
     --slate-ink: 0 0% 30.6%;       /* #4E4E4E — body & captions */
     --smoke-ink: 0 0.8% 25.3%;     /* #414040 — navigation */
-    --mist: 0 0% 89.4%;            /* #E4E4E4 — hairlines, muted surface */
-    --clay-red: 3 62.1% 38.2%;     /* #9E2B25 — errors (always with text/icon) */
-    --forest: 152 39.9% 30%;       /* #2E6B4F — success (always with text/icon) */
+    --clay-red: 3 62.1% 38.2%;     /* #9E2B25 — errors (6.72:1 on ivory, 5.69:1 on linen; always with text/icon) */
+    --forest: 152 39.9% 30%;       /* #2E6B4F — success (5.70:1 on ivory, 4.83:1 on linen; always with text/icon) */
     --soot: 0 5.6% 7.1%;           /* #131111 — social icons */
 
     /* ------------------------------------------------------------------
        SEMANTIC TOKENS — roles mapped onto the named palette.
        ------------------------------------------------------------------ */
-    --background: var(--porcelain);
+    --background: var(--ivory);
     --foreground: var(--charcoal);
 
-    /* Card surface: white with charcoal text (neutral surface on porcelain) */
+    /* Card surface: white with charcoal text (neutral surface on ivory) */
     --card: var(--white);
     --card-foreground: var(--charcoal);
     --popover: var(--white);
@@ -47,17 +56,17 @@
     --primary: var(--espresso);
     --primary-foreground: var(--white);
 
-    /* Secondary action: bliss-gold bg + charcoal label (8.79:1).
-       Gold rule: white-on-gold (1.74:1) is banned; gold surfaces always carry charcoal text/icons. */
-    --secondary: var(--bliss-gold);
+    /* Secondary action: camel bg + charcoal label (7.06:1).
+       Accent rule: white-on-camel (2.17:1) is banned; camel surfaces always carry charcoal text/icons. */
+    --secondary: var(--camel);
     --secondary-foreground: var(--charcoal);
 
-    /* Muted surface + slate-ink text (7.5:1 on page bg) */
-    --muted: var(--mist);
+    /* Muted surface + slate-ink text (6.37:1 on linen) */
+    --muted: var(--linen);
     --muted-foreground: var(--slate-ink);
 
     /* Accent mirrors secondary; same charcoal-text pairing rule applies */
-    --accent: var(--bliss-gold);
+    --accent: var(--camel);
     --accent-foreground: var(--charcoal);
 
     /* Status: clay-red / forest — always paired with text/icon, never colour alone */
@@ -66,29 +75,35 @@
     --success: var(--forest);
     --success-foreground: var(--white);
 
-    /* Mist hairlines — decorative only (1.15:1 vs page).
-       Must never be the only boundary of a meaningful control; inputs pair
-       label + surface difference. */
-    --border: var(--mist);
-    --input: var(--mist);
+    /* Sand hairlines — decorative only (1.39:1 vs page).
+       Must never be the only boundary of a meaningful control. Inputs use
+       the darker stone border (--input, ≥3:1 non-text contrast — resolves
+       the "too-faint input boundary" open item). */
+    --border: var(--sand);
+    --input: var(--stone);
 
     /* Focus ring: 2px charcoal, 2px offset, never clipped */
     --ring: var(--charcoal);
 
-    /* Text roles */
-    --bb-text-display: var(--charcoal);     /* 13.9:1 */
-    --bb-text-title: var(--graphite);       /* 9.1:1  */
-    --bb-text-subtitle: var(--olive-ink);   /* 10.4:1 */
-    --bb-text-description: var(--slate-ink);/* 7.5:1  */
+    /* Elevation — 2-step warm shadow scale (rest / raised). Espresso-tinted
+       so depth reads warm on the ivory page; subtle by design. */
+    --shadow-rest: 0 1px 2px hsl(43 6% 22% / 0.06), 0 1px 3px hsl(43 6% 22% / 0.05);
+    --shadow-raised: 0 4px 12px hsl(43 6% 22% / 0.1), 0 2px 4px hsl(43 6% 22% / 0.06);
+
+    /* Text roles (ratios vs ivory page) */
+    --bb-text-display: var(--charcoal);     /* 13.86:1 */
+    --bb-text-title: var(--graphite);       /* 9.09:1  */
+    --bb-text-subtitle: var(--olive-ink);   /* 10.34:1 */
+    --bb-text-description: var(--slate-ink);/* 7.52:1  */
     --bb-text-caption: var(--slate-ink);    /* 12px captions never carry essential info */
 
     /* Navigation */
-    --bb-nav-default: var(--smoke-ink);         /* 9.4:1 */
-    --bb-nav-selected-text: var(--charcoal);    /* selected = bold charcoal + thick gold underline */
-    --bb-nav-accent: var(--bliss-gold);         /* never text, never sole indicator */
+    --bb-nav-default: var(--smoke-ink);         /* 9.34:1 */
+    --bb-nav-selected-text: var(--charcoal);    /* selected = bold charcoal + thick camel underline */
+    --bb-nav-accent: var(--camel);              /* never text, never sole indicator */
 
     /* Utility */
-    --bb-star: var(--bliss-gold);   /* stars — always beside a numeric rating in text */
+    --bb-star: var(--camel);        /* stars — always beside a numeric rating in text */
     --bb-social-icon: var(--soot);
 
     /* component/button/visual: radius 8 */

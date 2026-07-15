@@ -18,7 +18,7 @@ import wholeLogoCharcoal from "@/assets/body_bliss_whole_logo_charcoal.png";
 
 /*
   iPhone-first header: clean, translucent background (blends with the
-  #F4F4EE page, gains a subtle backdrop once content scrolls under it),
+  #F7F3EC ivory page, gains a subtle backdrop once content scrolls under it),
   charcoal logo top-left, hamburger top-right. Full navigation lives in a
   slide-out Sheet so the small screen stays calm — but the primary action
   ("Book Now") is ALSO surfaced in the header on tablet+ and repeated in

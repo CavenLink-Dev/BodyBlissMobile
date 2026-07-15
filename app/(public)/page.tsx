@@ -111,7 +111,7 @@ export default async function Home() {
       <main className="px-page-inline py-page-block">
         <div className="mx-auto flex max-w-content flex-col gap-section">
           {/* Hero — charcoal band (documented dark-surface pattern: white text
-              11.2:1, yellow strictly as accent 6.4:1, white lotus watermark) */}
+              11.2:1, camel strictly as accent 5.2:1, white lotus watermark) */}
           <section aria-labelledby="hero-heading">
             <div className="relative overflow-hidden rounded bg-primary p-card-padding tablet:p-12">
               <Image
@@ -171,9 +171,9 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* At a glance — factual stats band */}
+          {/* At a glance — factual stats band on the cream wash */}
           <section aria-label="Body Bliss at a glance" className="-mt-4">
-            <dl className="grid grid-cols-3 divide-x divide-border rounded border border-border bg-card">
+            <dl className="grid grid-cols-3 divide-x divide-border rounded border border-border bg-cream shadow-rest">
               {[
                 { value: "9", label: "Years in Adelaide" },
                 { value: "6", label: "Massage styles" },
@@ -278,10 +278,10 @@ export default async function Home() {
               {TRUST.map((item) => (
                 <Card key={item.title} variant="row" className="items-start">
                   <span
-                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary"
+                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-linen"
                     aria-hidden="true"
                   >
-                    <item.icon className="size-6 text-secondary-foreground" />
+                    <item.icon className="size-6 text-charcoal" />
                   </span>
                   <div className="flex flex-col gap-compact">
                     <CardTitle className="text-subtitle">{item.title}</CardTitle>
@@ -334,7 +334,7 @@ export default async function Home() {
               eyebrow="Be ready"
               title="Getting Ready"
             />
-            <Card variant="row" className="items-start">
+            <Card variant="row" className="items-start border-transparent bg-cream">
               <ul className="flex flex-col gap-component">
                 {PREP.map((p) => (
                   <li key={p} className="flex items-start gap-component">

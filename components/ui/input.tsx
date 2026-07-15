@@ -4,11 +4,11 @@ import { cn } from "@/lib/utils";
 
 /*
   Body Bliss input — 48px hit target, description-size text (never smaller),
-  white surface (surface difference is an affordance because the #E4E4E4
-  stroke alone is too faint — darker input-border token is an open item
-  pending owner approval). Focus = 2px charcoal ring, 2px offset.
-  Error state driven by aria-invalid; always paired with visible error text
-  via the Field component — never colour alone.
+  white surface + stone #8A8172 border (3.84:1 vs white, 3.47:1 vs the ivory
+  page — meets the 3:1 non-text minimum, resolving the old too-faint-border
+  open item). Focus = 2px charcoal ring, 2px offset. Error state driven by
+  aria-invalid; always paired with visible error text via the Field
+  component — never colour alone.
 */
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
