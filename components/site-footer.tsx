@@ -1,30 +1,35 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Clock, Facebook, Instagram, Mail, Phone } from "lucide-react";
 
+import { toast } from "@/components/toaster";
 import wholeLogoWhite from "@/assets/body_bliss_whole_logo_white.png";
 
 /*
-  Footer — dark charcoal band (white logo variant belongs here). Three
-  groups: brand, explore, legal — stacked on phone, columns on tablet+.
-  All links are ≥48px hit targets with visible focus (camel ring works
-  on charcoal, 5.2:1). External day-spa URL is pending owner confirmation
-  (domain decision gate) — rendered as text until confirmed.
+  Footer — dark charcoal band (white logo variant belongs here). Four
+  groups: brand+contact, explore, support/legal, plus social placeholders —
+  stacked on phone, columns on tablet+. All links are ≥48px hit targets
+  with visible focus (camel ring works on charcoal, 5.2:1). Contact
+  details are sample/demonstration information.
 */
-
-const DAY_SPA_URL: string | null = null; // TODO: confirm clinic website URL with owner
 
 const EXPLORE = [
   { href: "/book", label: "Book a massage" },
   { href: "/services", label: "Services & prices" },
   { href: "/therapists", label: "Therapists" },
   { href: "/gift-cards", label: "Gift cards" },
+  { href: "/corporate", label: "Corporate massage" },
+  { href: "/areas", label: "Service areas" },
   { href: "/about", label: "About us" },
-  { href: "/help", label: "Help & safety" },
 ] as const;
 
-const LEGAL = [
+const SUPPORT = [
+  { href: "/help", label: "Help & safety" },
   { href: "/terms", label: "Terms & conditions" },
   { href: "/privacy", label: "Privacy policy" },
+  { href: "/account", label: "My account" },
 ] as const;
 
 const footerLink =
@@ -35,7 +40,7 @@ export function SiteFooter() {
     <footer className="w-full bg-primary text-primary-foreground">
       <div className="mx-auto flex max-w-content flex-col gap-section px-page-inline py-page-block">
         <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
-          {/* Brand */}
+          {/* Brand + contact */}
           <div className="flex flex-col items-start gap-component">
             <Image
               src={wholeLogoWhite}
@@ -43,20 +48,28 @@ export function SiteFooter() {
               className="h-14 w-auto"
             />
             <p className="max-w-prose text-description">
-              Vetted mobile massage therapists at your home, hotel or workplace
-              across Adelaide — from the team behind Body Bliss Massage &amp;
-              Day Spa, with nine years of Adelaide massage and wellness
-              experience.
+              Approved mobile massage therapists at your home, hotel or
+              workplace across Adelaide — from the team behind Body Bliss
+              Massage &amp; Day Spa, with nine years of Adelaide massage and
+              wellness experience.
             </p>
-            {DAY_SPA_URL ? (
-              <a href={DAY_SPA_URL} className={footerLink}>
-                Visit Body Bliss Massage &amp; Day Spa
-              </a>
-            ) : (
-              <span className="inline-flex items-center text-description">
-                Body Bliss Massage &amp; Day Spa, Adelaide
-              </span>
-            )}
+            <ul className="flex flex-col gap-compact text-description">
+              <li className="flex items-center gap-compact">
+                <Mail aria-hidden="true" className="size-4 text-secondary" />
+                support@bodyblissmobile.example
+              </li>
+              <li className="flex items-center gap-compact">
+                <Phone aria-hidden="true" className="size-4 text-secondary" />
+                (08) 8000 0000
+              </li>
+              <li className="flex items-center gap-compact">
+                <Clock aria-hidden="true" className="size-4 text-secondary" />
+                Mon–Fri 8am–8pm · Sat–Sun 9am–5pm (ACST)
+              </li>
+            </ul>
+            <p className="text-caption text-primary-foreground/80">
+              Contact details are sample information for this demonstration.
+            </p>
           </div>
 
           {/* Explore */}
@@ -75,26 +88,47 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Legal & account */}
-          <nav aria-label="Footer — legal" className="flex flex-col gap-compact">
-            <h2 className="font-heading text-subtitle text-primary-foreground">
-              The Fine Print
-            </h2>
-            <ul className="flex flex-col">
-              {LEGAL.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className={footerLink}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/account" className={footerLink}>
-                  My account
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {/* Support & legal + social */}
+          <div className="flex flex-col gap-card-gap">
+            <nav aria-label="Footer — support and legal" className="flex flex-col gap-compact">
+              <h2 className="font-heading text-subtitle text-primary-foreground">
+                Support &amp; The Fine Print
+              </h2>
+              <ul className="flex flex-col">
+                {SUPPORT.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className={footerLink}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="flex flex-col gap-compact">
+              <h2 className="font-heading text-subtitle text-primary-foreground">
+                Follow Us
+              </h2>
+              <div className="flex gap-compact">
+                <button
+                  type="button"
+                  aria-label="Instagram (placeholder)"
+                  onClick={() => toast("Social links are placeholders in this prototype.", "info")}
+                  className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded border border-primary-foreground/30 transition-colors duration-fade hover:bg-primary-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                >
+                  <Instagram aria-hidden="true" className="size-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Facebook (placeholder)"
+                  onClick={() => toast("Social links are placeholders in this prototype.", "info")}
+                  className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded border border-primary-foreground/30 transition-colors duration-fade hover:bg-primary-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                >
+                  <Facebook aria-hidden="true" className="size-5" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col gap-compact border-t border-primary-foreground/20 pt-card-gap">

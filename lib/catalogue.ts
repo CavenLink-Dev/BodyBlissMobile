@@ -43,6 +43,15 @@ const STATIC_SERVICES: StaticService[] = [
     ],
   },
   {
+    code: "remedial",
+    name: "Remedial Massage",
+    description: "Assessment-based treatment targeting specific problem areas.",
+    variants: [
+      [60, 13900],
+      [90, 18900],
+    ],
+  },
+  {
     code: "pregnancy",
     name: "Pregnancy Massage",
     description: "Adapted for each trimester, with suitably experienced therapists.",

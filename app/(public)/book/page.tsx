@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default async function BookPage({
   searchParams,
 }: {
-  searchParams: Promise<{ service?: string; variant?: string }>;
+  searchParams: Promise<{ service?: string; variant?: string; therapist?: string }>;
 }) {
-  const [{ service, variant }, services] = await Promise.all([
+  const [{ service, variant, therapist }, services] = await Promise.all([
     searchParams,
     getServicesWithPricing(),
   ]);
@@ -35,6 +35,7 @@ export default async function BookPage({
           services={services}
           initialServiceCode={service}
           initialVariantId={variant}
+          initialTherapistId={therapist}
         />
       </div>
     </main>

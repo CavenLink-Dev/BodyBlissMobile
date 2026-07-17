@@ -15,7 +15,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getServicesWithPricing } from "@/lib/catalogue";
-import { getServiceDetail } from "@/lib/service-details";
+import {
+  getServiceDetail,
+  getServiceFaqs,
+  PREPARATION_STEPS,
+  SEEK_ADVICE,
+} from "@/lib/service-details";
 import { formatAud } from "@/lib/format";
 
 /*
@@ -257,6 +262,86 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           </section>
         </div>
 
+        {/* Preparation & medical guidance */}
+        <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
+          <section aria-labelledby="prep-heading">
+            <Card className="flex h-full flex-col gap-card-gap">
+              <h2
+                id="prep-heading"
+                className="font-heading text-subtitle text-bb-text-subtitle"
+              >
+                Getting ready
+              </h2>
+              <ul className="flex flex-col gap-component">
+                {PREPARATION_STEPS.map((item) => (
+                  <li key={item} className="flex items-start gap-compact">
+                    <Check
+                      aria-hidden="true"
+                      className="mt-0.5 size-5 shrink-0 text-success"
+                    />
+                    <span className="text-description text-bb-text-description">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </section>
+
+          <section aria-labelledby="advice-heading">
+            <Card className="flex h-full flex-col gap-card-gap">
+              <h2
+                id="advice-heading"
+                className="font-heading text-subtitle text-bb-text-subtitle"
+              >
+                Check with your health practitioner first if…
+              </h2>
+              <ul className="flex flex-col gap-component">
+                {SEEK_ADVICE.map((item) => (
+                  <li key={item} className="flex items-start gap-compact">
+                    <Info
+                      aria-hidden="true"
+                      className="mt-0.5 size-5 shrink-0 text-primary"
+                    />
+                    <span className="text-description text-bb-text-description">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-caption text-bb-text-caption">
+                This website doesn&apos;t provide medical advice — when in
+                doubt, ask your doctor or health practitioner.
+              </p>
+            </Card>
+          </section>
+        </div>
+
+        {/* Service FAQs */}
+        <section aria-labelledby="service-faq-heading" className="flex flex-col gap-card-gap">
+          <h2
+            id="service-faq-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            Common Questions
+          </h2>
+          <div className="flex flex-col gap-component">
+            {getServiceFaqs(service.code).map((f) => (
+              <details
+                key={f.q}
+                className="group rounded border border-border bg-card p-card-padding"
+              >
+                <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between gap-component font-heading text-subtitle text-bb-text-subtitle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  {f.q}
+                </summary>
+                <p className="mt-component max-w-prose text-description text-bb-text-description">
+                  {f.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         {/* Other services */}
         {services.length > 1 ? (
           <section aria-labelledby="other-heading" className="flex flex-col gap-card-gap">
@@ -296,9 +381,20 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
               Book in a couple of minutes. A vetted therapist brings everything
               needed, and the price shown is all-inclusive.
             </p>
-            <Button asChild variant="secondary">
-              <Link href={`/book?service=${service.code}`}>Book Now</Link>
-            </Button>
+            <div className="flex flex-col gap-component tablet:flex-row">
+              <Button asChild variant="secondary" className="w-full tablet:w-auto">
+                <Link href={`/book?service=${service.code}`}>Book Now</Link>
+              </Button>
+              {service.code === "corporate" ? (
+                <Button
+                  asChild
+                  variant="quiet"
+                  className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
+                >
+                  <Link href="/corporate">Get a Corporate Quote</Link>
+                </Button>
+              ) : null}
+            </div>
           </Card>
         </section>
       </div>

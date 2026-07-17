@@ -58,10 +58,12 @@ export function PaymentForm({
   const [expiry, setExpiry] = React.useState("");
   const [cvc, setCvc] = React.useState("");
   const [errors, setErrors] = React.useState<Record<string, string>>({});
+  const [declined, setDeclined] = React.useState(false);
   const [processing, setProcessing] = React.useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setDeclined(false);
     const errs: Record<string, string> = {};
     if (name.trim().length < 2) errs.name = "Please enter the name on the card.";
     if (number.replace(/\D/g, "").length !== 16)
@@ -75,6 +77,13 @@ export function PaymentForm({
     setProcessing(true);
     // Simulated processing delay — nothing is sent anywhere.
     await new Promise((r) => setTimeout(r, 1400));
+    // Simulated decline: any card number ending in 0002 fails, so the
+    // failed-payment state can be demonstrated.
+    if (number.replace(/\D/g, "").endsWith("0002")) {
+      setProcessing(false);
+      setDeclined(true);
+      return;
+    }
     await onPaid();
   }
 
@@ -105,9 +114,20 @@ export function PaymentForm({
         <span>
           <span className="font-medium text-bb-text-display">Test mode.</span>{" "}
           This is a demonstration — no payment is taken and card details are
-          never stored or sent. Any valid-looking card works.
+          never stored or sent. Any valid-looking card works; a number ending
+          in 0002 simulates a declined payment.
         </span>
       </p>
+
+      {declined ? (
+        <p
+          className="rounded border border-destructive bg-card p-3 text-description font-medium text-destructive"
+          role="alert"
+        >
+          Your card was declined (simulated). Nothing was charged — try a
+          different card number, or any number not ending in 0002.
+        </p>
+      ) : null}
 
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-component">
         <Field

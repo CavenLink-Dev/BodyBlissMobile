@@ -9,6 +9,7 @@ import {
   CreditCard,
   Lock,
   ArrowRight,
+  Users,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,9 @@ import { HeroIllustration } from "@/components/hero-illustration";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { getServicesWithPricing, getActiveSuburbs } from "@/lib/catalogue";
+import { SuburbChecker } from "@/components/suburb-checker";
+import { TherapistCard } from "@/components/therapists/therapist-card";
+import { THERAPISTS } from "@/lib/therapists";
 import lotusWhite from "@/assets/body_bliss_lotus_white.png";
 
 /*
@@ -33,7 +37,7 @@ import lotusWhite from "@/assets/body_bliss_lotus_white.png";
 const STEPS = [
   {
     icon: CalendarCheck,
-    title: "Choose your massage",
+    title: "Choose your treatment",
     body: "Pick the massage, length and time that suits you.",
   },
   {
@@ -42,9 +46,14 @@ const STEPS = [
     body: "Add your address, parking and access notes so your therapist arrives ready.",
   },
   {
+    icon: Users,
+    title: "Pick your therapist",
+    body: "Choose a therapist yourself, or let Body Bliss match you with the best available.",
+  },
+  {
     icon: Sparkles,
     title: "Relax at your place",
-    body: "A vetted therapist brings everything needed. Afterwards you can rebook in seconds.",
+    body: "Your therapist brings the table, fresh linen and everything else needed.",
   },
 ];
 
@@ -72,31 +81,62 @@ const TRUST = [
 ];
 
 const PREP = [
-  "A quiet room with a little space to set up a massage table.",
-  "Somewhere to park, or a note on where to park nearby.",
-  "Let us know about pets, stairs or access ahead of time.",
+  "Choose a quiet, comfortable room with space for a massage table — about the size of a single bed, plus room to walk around.",
+  "Add parking and access instructions when you book — driveway, street or visitor parking all work.",
+  "Let us know about stairs, lifts, gates or any accessibility requirements ahead of time.",
+  "Secure pets in another room during the appointment if they're curious types.",
+  "Wear whatever's comfortable — you'll be professionally draped throughout a table massage.",
+  "Complete your treatment notes during booking so your therapist arrives prepared.",
 ];
 
 const FAQS = [
   {
-    q: "Where do you operate?",
-    a: "Across the Adelaide metro area. You can check your suburb when you book.",
-  },
-  {
-    q: "Do I need my own massage table?",
-    a: "No. Your therapist brings a professional massage table, linens and everything needed.",
+    q: "What does the therapist bring?",
+    a: "Everything: a professional massage table, fresh linen, oils, towels and music. You just need a quiet room with a little space.",
   },
   {
     q: "Can I choose my therapist?",
-    a: "Yes. You can let us match you with the best available therapist, or choose one yourself during booking.",
+    a: "Yes. You can browse the team and choose a therapist during booking — including a gender or language preference — or let us match you with the best available.",
   },
   {
-    q: "When am I charged?",
-    a: "You pay by card at checkout when you book — the price shown includes travel, the massage table and all equipment. Cancellation is free until your therapist is on the way.",
+    q: "What should I wear?",
+    a: "Whatever's comfortable. For table massage you undress to your level of comfort and are always professionally draped; for chair massage you stay fully clothed.",
+  },
+  {
+    q: "What about parking?",
+    a: "Add a note about parking when you book — a driveway, street parking or a visitor bay all work. If paid parking is unavoidable, we'll flag any estimate before you pay.",
+  },
+  {
+    q: "Do you come to apartments and hotels?",
+    a: "Absolutely. Just include your unit or room number, buzzer or intercom details, and let hotel reception know you're expecting a therapist.",
+  },
+  {
+    q: "Is pregnancy massage available?",
+    a: "Yes, from the second trimester (12+ weeks), delivered by therapists experienced in prenatal work with side-lying positioning and supportive cushioning. If your pregnancy is high-risk, please check with your midwife or doctor first.",
+  },
+  {
+    q: "I have a health condition — can I still book?",
+    a: "Massage supports general wellbeing and isn't a medical treatment. If you're recovering from injury or surgery or managing a condition, check with your health practitioner first, and add a note to your booking so we match a suitable therapist.",
   },
   {
     q: "What if I need to cancel?",
-    a: "You can manage or cancel a booking from your account. Cancellation is free until your therapist is on the way, with a full refund.",
+    a: "Cancellation is free from your account until your therapist is on the way, with a full refund to your original payment method.",
+  },
+  {
+    q: "Do you sell gift cards?",
+    a: "Yes — digital gift cards for any amount, delivered by email, valid for three years. The recipient books whenever suits them.",
+  },
+  {
+    q: "How does couples massage work?",
+    a: "Two therapists arrive together with two tables and work side by side, so you and your partner or friend are massaged at the same time — each with your own style and pressure.",
+  },
+  {
+    q: "Can you do our office or event?",
+    a: "Yes — corporate chair massage for workplaces, conferences and events. Tell us your numbers and timing through the corporate enquiry form and we'll put together a quote.",
+  },
+  {
+    q: "Where do you operate?",
+    a: "Across the Adelaide metro area, with selected Adelaide Hills suburbs available for a small travel fee. Use the availability checker above to check your suburb.",
   },
 ];
 
@@ -191,6 +231,13 @@ export default async function Home() {
               ))}
             </dl>
           </section>
+
+          {/* Suburb availability checker */}
+          <Reveal>
+            <section aria-label="Check availability in your suburb" id="availability">
+              <SuburbChecker />
+            </section>
+          </Reveal>
 
           {/* Services + live pricing */}
           <Reveal>
@@ -293,25 +340,32 @@ export default async function Home() {
           </section>
           </Reveal>
 
-          {/* Therapist preview — honest, no fabricated profiles */}
+          {/* Therapist preview — fictional sample profiles (labelled) */}
           <Reveal>
-          <section aria-labelledby="therapists-heading">
-            <Card className="flex flex-col items-start gap-component">
-              <h2
-                id="therapists-heading"
-                className="font-heading text-title font-semibold text-bb-text-title"
-              >
-                Our Therapists
-              </h2>
-              <p className="max-w-prose text-description text-bb-text-description">
-                Every therapist is reviewed and approved before they can take
-                bookings. When you book, you can see who&apos;s available and
-                choose for yourself, or let us match you.
-              </p>
-              <Button asChild variant="quiet">
-                <Link href="/therapists">Learn about our therapists</Link>
-              </Button>
-            </Card>
+          <section className="flex flex-col gap-card-gap" aria-labelledby="therapists-heading">
+            <SectionHeading
+              id="therapists-heading"
+              eyebrow="The team"
+              title="Meet Our Therapists"
+              action={
+                <Link
+                  href="/therapists"
+                  className="inline-flex min-h-hit-target items-center gap-compact text-nav font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  View all
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              }
+            />
+            <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
+              {THERAPISTS.slice(0, 4).map((t) => (
+                <TherapistCard key={t.id} therapist={t} />
+              ))}
+            </div>
+            <p className="text-caption text-bb-text-caption">
+              Sample profiles for demonstration — every live therapist is
+              reviewed and approved before taking bookings.
+            </p>
           </section>
           </Reveal>
 
@@ -320,8 +374,8 @@ export default async function Home() {
           <div className="flex flex-col gap-compact">
             <TestimonialsCarousel />
             <p className="text-caption text-bb-text-caption">
-              Reviews from Body Bliss Massage &amp; Day Spa — the Adelaide team
-              behind this mobile service.
+              Sample reviews for demonstration — showing how verified customer
+              feedback will appear once the mobile service is live.
             </p>
           </div>
           </Reveal>
@@ -400,8 +454,14 @@ export default async function Home() {
                   ))}
                 </ul>
                 <p className="text-caption text-bb-text-caption">
-                  …and nearby. Enter your suburb when you book and we&apos;ll
-                  confirm coverage.
+                  …and nearby, including selected Adelaide Hills suburbs.{" "}
+                  <Link
+                    href="/areas"
+                    className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    See all service areas
+                  </Link>
+                  .
                 </p>
               </section>
             </Reveal>
@@ -432,7 +492,7 @@ export default async function Home() {
               </p>
               <div className="flex flex-col gap-component tablet:flex-row">
                 <Button asChild variant="secondary" className="w-full tablet:w-auto">
-                  <Link href="/book">Book Now</Link>
+                  <Link href="/book">Book a Massage</Link>
                 </Button>
                 <Button
                   asChild
@@ -440,6 +500,13 @@ export default async function Home() {
                   className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
                 >
                   <Link href="/gift-cards">Buy a Gift Card</Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="quiet"
+                  className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
+                >
+                  <Link href="#availability">Check Availability</Link>
                 </Button>
               </div>
             </Card>

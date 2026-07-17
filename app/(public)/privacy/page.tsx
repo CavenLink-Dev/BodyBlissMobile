@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FlaskConical } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Privacy policy — Body Bliss Mobile Massage",
@@ -8,54 +9,80 @@ export const metadata: Metadata = {
 };
 
 /*
-  Privacy policy — written to match how the product actually handles data:
-  Supabase auth + bookings, essential cookies only, address shared with the
-  therapist only on confirmation, optional health/access notes.
+  Privacy policy — plain-English demonstration policy matching how the
+  prototype handles data, flagged as placeholder content requiring review
+  before commercial launch.
 */
 
 const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "1. What we collect",
     paragraphs: [
-      "Account details: your name, email address and password (stored securely by our authentication provider — we never see your password).",
-      "Booking details: the address for your massage, parking and access notes, your preferred date and time, and the service you choose.",
-      "Optional notes: anything you choose to tell us — such as accessibility needs, pressure preferences, allergies or health information. You never have to share health information; share only what you're comfortable with.",
+      "Account details: your name, email address, phone number and password (stored securely by our authentication provider — we never see your password). Guest bookings collect the same contact details without creating an account.",
+      "Booking details: the address for your massage, parking and access notes, your preferred date and time, the service you choose, and any therapist preference.",
+      "Optional health information: anything you choose to tell us — accessibility needs, pressure preferences, allergies, pregnancy, injuries or conditions. This is sensitive information, and you never have to share it; share only what you're comfortable with, and we only ask for it to prepare your treatment safely.",
+      "Payment information: handled entirely by our payment provider — full card numbers never touch our systems. (In this prototype, payment is simulated and no card details are collected at all.)",
     ],
   },
   {
     heading: "2. How we use it",
     paragraphs: [
-      "We use your information to arrange and deliver your booking: matching a therapist, confirming your appointment, and helping the therapist arrive prepared. We also use your email to send booking-related messages and, only if you opt in, launch updates like gift-card availability.",
+      "We use your information to arrange and deliver your booking: matching a therapist, confirming your appointment, and helping the therapist arrive prepared. We use your email and phone for booking-related messages, and for marketing only if you opt in — you can opt out any time from your account.",
       "We do not sell your personal information, and we don't use it for third-party advertising.",
     ],
   },
   {
-    heading: "3. Who sees your address",
+    heading: "3. What your therapist sees",
     paragraphs: [
-      "Your exact address and access notes are only shared with your therapist once your booking is confirmed. Until then, they stay within Body Bliss.",
+      "Your exact address, access notes and the treatment notes you consented to share are provided to your assigned therapist once your booking is confirmed — never before, and never to anyone else. Therapists only ever see the bookings assigned to them.",
     ],
   },
   {
-    heading: "4. Cookies",
+    heading: "4. Data retention and deletion",
     paragraphs: [
-      "We only use essential cookies — they keep you signed in and make bookings work. We don't use advertising or tracking cookies. If that ever changes, we'll ask for your consent first.",
+      "We keep booking records for as long as needed to provide the service and meet legal obligations (such as tax record-keeping), then delete or de-identify them. Optional health notes are kept only as long as they're relevant to your bookings.",
+      "You can ask us to delete your account and personal information at any time via Help & Safety. We'll confirm what's been deleted and what must be retained (and for how long) to meet legal obligations.",
     ],
   },
   {
-    heading: "5. Storage and security",
+    heading: "5. Cookies and analytics",
     paragraphs: [
-      "Your data is stored with our database and authentication provider (Supabase) with access controls that limit every record to the people who need it — you can only see your own bookings, and therapists can only see bookings assigned to them. Data is encrypted in transit.",
+      "We only use essential cookies — they keep you signed in and make bookings work. We don't currently use advertising or tracking cookies. If we introduce analytics in future, we'll use a privacy-respecting configuration and ask for your consent first.",
     ],
   },
   {
-    heading: "6. Your rights",
+    heading: "6. Storage, security and overseas access",
     paragraphs: [
-      "We handle personal information in line with the Australian Privacy Principles under the Privacy Act 1988 (Cth). You can access and update your details from your account, and you can ask us to correct or delete your information at any time via Help & safety.",
-      "If you have a privacy concern we can't resolve, you can contact the Office of the Australian Information Commissioner (OAIC).",
+      "Your data is stored with our database and authentication provider with access controls that limit every record to the people who need it — you can only see your own bookings, and therapists can only see bookings assigned to them. Data is encrypted in transit.",
+      "Our providers host data in Australia where available. Where a provider processes data overseas, we take reasonable steps to ensure it's handled consistently with the Australian Privacy Principles.",
     ],
   },
   {
-    heading: "7. Changes to this policy",
+    heading: "7. Your rights: access and correction",
+    paragraphs: [
+      "We handle personal information in line with the Australian Privacy Principles under the Privacy Act 1988 (Cth). You can access and update your details from your account, and you can ask us to access, correct or delete your information at any time via Help & Safety.",
+    ],
+  },
+  {
+    heading: "8. Data breaches",
+    paragraphs: [
+      "If a data breach occurs that's likely to result in serious harm, we'll notify affected customers and the Office of the Australian Information Commissioner (OAIC) as required by the Notifiable Data Breaches scheme, and tell you clearly what happened and what we're doing about it.",
+    ],
+  },
+  {
+    heading: "9. Children and minors",
+    paragraphs: [
+      "Our services and accounts are for adults (18+). We don't knowingly collect personal information from children. Bookings for a person under 18 must be made by a parent or guardian, who provides any relevant information on their behalf.",
+    ],
+  },
+  {
+    heading: "10. Privacy complaints and contact",
+    paragraphs: [
+      "If you have a privacy question or complaint, contact us via Help & Safety (sample contact: privacy@bodyblissmobile.example) and we'll respond within a reasonable time. If we can't resolve your concern, you can contact the Office of the Australian Information Commissioner (OAIC).",
+    ],
+  },
+  {
+    heading: "11. Changes to this policy",
     paragraphs: [
       "We may update this policy from time to time — the latest version always lives on this page, with the date below the heading.",
     ],
@@ -75,6 +102,19 @@ export default function PrivacyPage() {
           </p>
           <p className="text-caption text-bb-text-caption">
             Last updated 14 July 2026
+          </p>
+          <p
+            className="flex max-w-prose items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
+            role="note"
+          >
+            <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+            <span>
+              <span className="font-medium text-bb-text-display">
+                Demonstration content.
+              </span>{" "}
+              This policy is placeholder content for this prototype and would
+              require professional review before any commercial launch.
+            </span>
           </p>
         </header>
 

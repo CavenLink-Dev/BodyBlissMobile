@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { BadgeCheck, ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { TESTIMONIALS } from "@/lib/content";
@@ -110,13 +110,20 @@ export function TestimonialsCarousel() {
           </div>
           <div className="flex flex-col gap-compact">
             <div className="flex items-center gap-1" aria-hidden="true">
-              {Array.from({ length: 5 }).map((_, i) => (
+              {Array.from({ length: TESTIMONIALS[index].rating }).map((_, i) => (
                 <Star key={i} className="size-4 fill-bb-star text-bb-star" />
               ))}
             </div>
             <p className="text-description font-medium text-linen">
-              <span className="font-semibold text-primary-foreground">5.0</span> ·{" "}
-              {TESTIMONIALS[index].attribution}
+              <span className="font-semibold text-primary-foreground">
+                {TESTIMONIALS[index].name}
+              </span>{" "}
+              · {TESTIMONIALS[index].suburb} · {TESTIMONIALS[index].service} ·{" "}
+              {TESTIMONIALS[index].date}
+            </p>
+            <p className="inline-flex w-fit items-center gap-1 rounded-full border border-primary-foreground/30 px-2.5 py-0.5 text-caption text-primary-foreground/90">
+              <BadgeCheck aria-hidden="true" className="size-3.5 text-secondary" />
+              Verified booking · sample review
             </p>
           </div>
         </div>

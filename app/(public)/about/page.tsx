@@ -108,6 +108,119 @@ export default function AboutPage() {
           </div>
         </section>
 
+        <section aria-labelledby="mission-heading" className="flex flex-col gap-component">
+          <h2
+            id="mission-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            Our Mission &amp; Promise
+          </h2>
+          <p className="max-w-prose text-description text-bb-text-description">
+            Our mission is simple: make professional massage effortless for
+            Adelaide — no traffic, no waiting rooms, no compromise on quality.
+            Our promise sits behind every booking: a reviewed and approved
+            therapist, transparent all-inclusive pricing, private handling of
+            your details, and a professional, respectful experience from the
+            moment you book to the moment the table is packed away.
+          </p>
+          <p className="max-w-prose text-description text-bb-text-description">
+            That promise runs both ways. We look after our therapists too —
+            fair conditions, clear conduct standards for customers, and the
+            confidence that every home they walk into has been confirmed as a
+            safe, appropriate space to work.
+          </p>
+        </section>
+
+        <section aria-labelledby="founder-heading" className="flex flex-col gap-component">
+          <h2
+            id="founder-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            A Word From The Founder
+          </h2>
+          <Card variant="row" className="items-start">
+            <span
+              className="inline-flex size-14 shrink-0 items-center justify-center rounded-full bg-secondary font-heading text-title font-semibold text-secondary-foreground"
+              aria-hidden="true"
+            >
+              L
+            </span>
+            <div className="flex flex-col gap-compact">
+              <p className="max-w-prose text-description text-bb-text-description">
+                &ldquo;After nine years welcoming Adelaide into our day spa, we
+                kept hearing the same thing: the massage was perfect, but the
+                drive home undid half the good work. Body Bliss Mobile is our
+                answer — the same care, the same standards, delivered to the
+                place you&apos;re already most relaxed. Your home.&rdquo;
+              </p>
+              <p className="text-description font-medium text-bb-text-display">
+                Lily · Founder, Body Bliss
+              </p>
+              <p className="text-caption text-bb-text-caption">
+                Placeholder founder content for demonstration.
+              </p>
+            </div>
+          </Card>
+        </section>
+
+        <section aria-labelledby="timeline-heading" className="flex flex-col gap-card-gap">
+          <h2
+            id="timeline-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            How We Got Here
+          </h2>
+          <ol className="flex flex-col">
+            {[
+              {
+                year: "2017",
+                text: "Body Bliss Massage & Day Spa opens its doors in Adelaide.",
+              },
+              {
+                year: "2020",
+                text: "The team grows, and regulars start asking whether we'd ever come to them.",
+              },
+              {
+                year: "2024",
+                text: "First trial home visits for long-standing day-spa clients — the feedback settles it.",
+              },
+              {
+                year: "2025",
+                text: "The mobile service takes shape: therapist approval process, equipment kits and conduct standards.",
+              },
+              {
+                year: "2026",
+                text: "Body Bliss Mobile Massage launches across the Adelaide metro area.",
+              },
+            ].map((item, i, arr) => (
+              <li key={item.year} className="relative flex gap-component">
+                <div className="flex flex-col items-center">
+                  <span
+                    className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary font-heading text-description font-semibold text-secondary-foreground"
+                    aria-hidden="true"
+                  >
+                    {item.year.slice(2)}
+                  </span>
+                  {i < arr.length - 1 ? (
+                    <span aria-hidden="true" className="w-0.5 flex-1 bg-border" />
+                  ) : null}
+                </div>
+                <div className="flex flex-col gap-compact pb-card-gap">
+                  <p className="font-heading text-subtitle text-bb-text-subtitle">
+                    {item.year}
+                  </p>
+                  <p className="max-w-prose text-description text-bb-text-description">
+                    {item.text}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="text-caption text-bb-text-caption">
+            Timeline shown for demonstration — dates are illustrative.
+          </p>
+        </section>
+
         <section aria-labelledby="area-heading" className="flex flex-col gap-component">
           <h2
             id="area-heading"

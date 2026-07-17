@@ -48,6 +48,32 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Tell your therapist about any injuries, skin conditions or allergies before you start.",
     ],
   },
+  remedial: {
+    tagline: "Assessment-based treatment for specific problem areas.",
+    intro:
+      "A targeted session that starts with a short conversation and assessment of how your body is moving, then focuses treatment on the areas that need it — combining deeper techniques, stretching and aftercare suggestions you can use between visits.",
+    includes: [
+      ...SHARED_INCLUDES,
+      "A short assessment and chat before hands-on treatment begins",
+      "Targeted techniques on your nominated problem areas",
+      "Simple aftercare and stretch suggestions",
+    ],
+    mayHelp: [
+      "Specific, recurring areas of tension or discomfort",
+      "Postural strain from desk work, driving or repetitive tasks",
+      "General mobility and movement comfort",
+      "Recovery support alongside advice from your health practitioner",
+    ],
+    suitableFor: [
+      "People with a specific problem area they can point to",
+      "Regulars who want a more structured, targeted session",
+    ],
+    considerations: [
+      "Remedial massage supports wellbeing — it isn't a substitute for diagnosis or treatment by a health practitioner.",
+      "If you're under treatment for an injury or medical condition, check with your practitioner first and mention it in your booking notes.",
+      "Some tenderness for a day or two afterwards is normal.",
+    ],
+  },
   deep_tissue: {
     tagline: "Firm, focused pressure for stubborn tension and knots.",
     intro:
@@ -189,4 +215,88 @@ export const DEFAULT_DETAIL: ServiceDetail = {
 
 export function getServiceDetail(code: string): ServiceDetail {
   return SERVICE_DETAILS[code] ?? DEFAULT_DETAIL;
+}
+
+/* ---------- shared page extras: preparation, medical guidance, FAQs ---------- */
+
+export const PREPARATION_STEPS = [
+  "Choose a quiet room with space for the massage table — about the size of a single bed, plus room to walk around.",
+  "Add parking and access notes to your booking so your therapist arrives ready.",
+  "Secure curious pets in another room for the duration of the appointment.",
+  "Wear whatever's comfortable — you'll be professionally draped throughout a table massage.",
+  "Have a glass of water handy for afterwards, and give yourself a little quiet time if you can.",
+];
+
+export const SEEK_ADVICE = [
+  "You're recovering from a recent injury, surgery or acute illness",
+  "You have a heart condition, blood-clotting disorder or take blood thinners",
+  "You have a skin condition or infection in the treatment area",
+  "You're pregnant with any complications, or in your first trimester",
+  "You're simply unsure whether massage is right for you at the moment",
+];
+
+type ServiceFaq = { q: string; a: string };
+
+const SHARED_FAQS: ServiceFaq[] = [
+  {
+    q: "How much space do I need?",
+    a: "Room for a massage table plus space for the therapist to move around it — roughly two metres by three. A lounge room or bedroom usually works well.",
+  },
+  {
+    q: "When should I arrive… or rather, be ready?",
+    a: "Your therapist arrives about 10 minutes before your booked time to set up. Being showered and in comfortable clothes is all the prep you need.",
+  },
+  {
+    q: "Can I use a gift card for this service?",
+    a: "Yes — enter the gift card code at checkout and any remaining balance stays on the card.",
+  },
+];
+
+const SERVICE_FAQS: Record<string, ServiceFaq[]> = {
+  relaxation: [
+    {
+      q: "I've never had a massage before — is this the one?",
+      a: "It's the one we recommend for first-timers: gentle, flowing and easy to enjoy. Tell your therapist it's your first massage and they'll explain everything as they go.",
+    },
+  ],
+  deep_tissue: [
+    {
+      q: "Will it hurt?",
+      a: "Firm doesn't have to mean painful. Your therapist works within your comfort and checks in on pressure — you're always in control, and can ask them to go lighter at any time.",
+    },
+  ],
+  remedial: [
+    {
+      q: "Do I need a referral?",
+      a: "No referral is needed. If you're under treatment for an injury or condition, check with your health practitioner first and let us know in your booking notes.",
+    },
+  ],
+  pregnancy: [
+    {
+      q: "How far along do I need to be?",
+      a: "We book pregnancy massage from 12 weeks (after the first trimester). Add how far along you are in your booking notes so we match a suitably experienced therapist.",
+    },
+  ],
+  couples: [
+    {
+      q: "Can we choose different massage styles?",
+      a: "Yes — each of you chooses your own style and pressure. The two treatments run side by side and finish together.",
+    },
+  ],
+  hotel: [
+    {
+      q: "Do I need to tell the hotel?",
+      a: "A quick heads-up to reception that you're expecting a therapist keeps arrival smooth. Include your room number in the booking notes.",
+    },
+  ],
+  corporate: [
+    {
+      q: "How is corporate massage booked?",
+      a: "Through a tailored quote rather than the standard checkout — tell us your team size and timing via the corporate enquiry form and we'll come back with options.",
+    },
+  ],
+};
+
+export function getServiceFaqs(code: string): ServiceFaq[] {
+  return [...(SERVICE_FAQS[code] ?? []), ...SHARED_FAQS];
 }

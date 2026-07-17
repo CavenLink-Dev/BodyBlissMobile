@@ -1,36 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  AlertTriangle,
   ArrowRight,
   BadgeCheck,
   CalendarX,
+  Clock,
   CreditCard,
   Lock,
+  Mail,
   MessageCircle,
+  Phone,
   ShieldCheck,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
+import { ReportConcernForm } from "@/components/report-concern-form";
 
 export const metadata: Metadata = {
   title: "Help & safety — Body Bliss Mobile Massage",
   description:
-    "How Body Bliss keeps bookings safe, how cancellations and payments work, and answers to common questions about mobile massage in Adelaide.",
+    "Support contacts, safety commitments, cancellations, refunds, complaints and answers to common questions about Body Bliss mobile massage in Adelaide.",
 };
-
-/*
-  Help & Safety — safety commitments, cancellations, payments, privacy
-  summary and a full FAQ. All statements match how the product actually
-  behaves (book and pay at checkout — simulated while in demo mode —
-  approved-only therapists, address released on confirmation).
-*/
 
 const COMMITMENTS = [
   {
     icon: BadgeCheck,
-    title: "Vetted therapists only",
-    body: "Every therapist is reviewed and approved by Body Bliss before they can appear or take a single booking. Only approved therapists are ever matched to you.",
+    title: "Approved therapists only",
+    body: "Every therapist completes identity, qualification and reference checks before they can appear or take a single booking. Only approved therapists are ever matched to you.",
   },
   {
     icon: Lock,
@@ -45,42 +43,62 @@ const COMMITMENTS = [
   {
     icon: MessageCircle,
     title: "Support for every booking",
-    body: "You can review, manage or cancel any booking from your account, and raise a concern about any booking with us at any time.",
+    body: "Manage or cancel any booking from your account, and raise a concern about any booking with us at any time using the form below.",
   },
 ];
 
 const FAQS: { q: string; a: string }[] = [
   {
-    q: "How does booking work?",
-    a: "Choose your massage and time, tell us where to come, review the details and pay at checkout. Your booking is confirmed straight away and we match a vetted therapist to it.",
+    q: "How do I change a booking?",
+    a: "Open the booking in your account and use Manage Booking, or contact support with your booking reference. We'll do our best to accommodate changes to time, address or service — the earlier you ask, the easier it is.",
   },
   {
-    q: "When and how do I pay?",
-    a: "You pay by card at checkout when you book. The price you see includes travel, the massage table and all equipment — no hidden fees. (In this demo, payment is simulated and nothing is charged.)",
+    q: "How do cancellations work?",
+    a: "Cancellation is free from your account until your therapist is on the way, with a full refund to your original payment method. After the therapist has departed, the travel component may apply; no-shows may be charged in full.",
   },
   {
-    q: "How do I cancel or change a booking?",
-    a: "Open the booking in your account. Cancellation is free until your therapist is on the way, with a full refund to your original payment method.",
+    q: "How do refunds work?",
+    a: "Refunds go back to your original payment method within 5–7 business days. Amounts paid by gift card return to the gift card. If a refund seems to be missing, contact support with your booking reference.",
   },
   {
-    q: "What should I prepare at home?",
-    a: "A quiet room with enough space for a massage table (about the size of a single bed plus room to walk around), somewhere to park, and any notes about pets, stairs or entry. Your therapist brings the table, fresh linens, oils and music.",
+    q: "My therapist is running late — what happens?",
+    a: "We'll message you as soon as we know. You always receive your full booked treatment time; if that's not possible on the day, we refund the difference. If you can't wait, you can cancel with a full refund.",
+  },
+  {
+    q: "What's expected of me as a customer?",
+    a: "A safe, clean space for the treatment, respectful behaviour from everyone present, and accurate booking details. Massage is strictly professional — any inappropriate request or behaviour ends the appointment immediately with the full price payable.",
+  },
+  {
+    q: "What can I expect from my therapist?",
+    a: "Identity-checked, qualification-reviewed professionals who follow our code of conduct: on time, professionally presented, respectful of your home and privacy, and clear about the treatment. If anything falls short, tell us.",
+  },
+  {
+    q: "How do you look after personal safety?",
+    a: "Both sides of every booking are protected: customers get approved-only therapists and private address handling; therapists get customer conduct standards, location details in advance, and the right to end any appointment where they feel unsafe. Concerns are reviewed by a person, not a form-filler.",
+  },
+  {
+    q: "I'm in a hotel or apartment — how does access work?",
+    a: "Add your unit or room number, buzzer or intercom details and parking notes when you book. For hotels, let reception know you're expecting a therapist. Your therapist arrives about 10 minutes early to set up.",
+  },
+  {
+    q: "Where does the therapist park?",
+    a: "Wherever you suggest in your parking notes — driveway, street or visitor parking. If paid parking is truly unavoidable, any estimate is flagged before you pay, never surprise-charged afterwards.",
   },
   {
     q: "Do I need to share health information?",
-    a: "No — it's always optional. Anything you do share is used only to prepare for your appointment and is shared with your therapist once your booking is confirmed. Please do tell your therapist about injuries or allergies before the treatment starts.",
+    a: "It's always optional, but it helps your therapist keep you safe and comfortable. Anything you share is used only to prepare for your appointment and goes only to your assigned therapist. Please do mention injuries, allergies or pregnancy before the treatment starts.",
   },
   {
-    q: "Is massage right for me?",
-    a: "Massage supports general wellbeing — it isn't a medical treatment. If you're pregnant, recovering from injury or surgery, or managing a health condition, check with your health practitioner first, and note it in your booking so we match a suitable therapist.",
+    q: "I left something behind after an appointment / found something",
+    a: "Contact support with your booking reference and we'll connect you with your therapist to arrange return of lost property.",
   },
   {
-    q: "Who will my therapist be?",
-    a: "A professional therapist who has been reviewed and approved by Body Bliss. We match the best available therapist to your massage and time; choosing a specific therapist becomes available as our team comes online.",
+    q: "My gift card isn't working",
+    a: "Check the code matches the email exactly (codes look like GIFT-XXXX-XXXX), then try the balance checker on the gift cards page. Still stuck? Contact support with the code and we'll sort it out.",
   },
   {
-    q: "Where do you operate?",
-    a: "Across the Adelaide metro area, South Australia. Enter your suburb when you book and we'll confirm coverage.",
+    q: "How do I make a complaint?",
+    a: "Use the Report a Concern form below or email support. We acknowledge complaints within one business day, investigate properly, and come back to you with an outcome. Safety concerns are prioritised ahead of everything else.",
   },
 ];
 
@@ -93,10 +111,64 @@ export default function HelpPage() {
             Help &amp; Safety
           </h1>
           <p className="max-w-prose text-subtitle text-bb-text-subtitle">
-            Your safety and comfort come first — here&apos;s exactly how
-            bookings, payments and cancellations work.
+            Your safety and comfort come first — here&apos;s how to reach us,
+            and exactly how bookings, payments and cancellations work.
           </p>
         </header>
+
+        {/* Contact */}
+        <section aria-labelledby="contact-heading" className="flex flex-col gap-card-gap">
+          <h2
+            id="contact-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            Contact Support
+          </h2>
+          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
+            <Card variant="row" className="items-start">
+              <Mail aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+              <div className="flex flex-col gap-compact">
+                <CardTitle className="text-subtitle">Email</CardTitle>
+                <CardDescription>support@bodyblissmobile.example</CardDescription>
+                <p className="text-caption text-bb-text-caption">
+                  Sample address for demonstration.
+                </p>
+              </div>
+            </Card>
+            <Card variant="row" className="items-start">
+              <Phone aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+              <div className="flex flex-col gap-compact">
+                <CardTitle className="text-subtitle">Phone</CardTitle>
+                <CardDescription>(08) 8000 0000</CardDescription>
+                <p className="text-caption text-bb-text-caption">
+                  Sample number for demonstration.
+                </p>
+              </div>
+            </Card>
+            <Card variant="row" className="items-start">
+              <Clock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+              <div className="flex flex-col gap-compact">
+                <CardTitle className="text-subtitle">Support hours</CardTitle>
+                <CardDescription>
+                  Mon–Fri 8am–8pm · Sat–Sun 9am–5pm (ACST)
+                </CardDescription>
+              </div>
+            </Card>
+          </div>
+          <p
+            className="flex max-w-prose items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
+            role="note"
+          >
+            <AlertTriangle aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-destructive" />
+            <span>
+              <span className="font-medium text-bb-text-display">
+                Body Bliss is not an emergency or medical service.
+              </span>{" "}
+              For emergencies, call Triple Zero (000). For urgent health advice,
+              contact your doctor or healthdirect on 1800 022 222.
+            </span>
+          </p>
+        </section>
 
         {/* Safety commitments */}
         <section aria-labelledby="safety-heading" className="flex flex-col gap-card-gap">
@@ -124,7 +196,7 @@ export default function HelpPage() {
           </div>
         </section>
 
-        {/* Cancellations & payments, side by side */}
+        {/* Cancellations & payments */}
         <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
           <section aria-labelledby="cancel-heading">
             <Card className="flex h-full flex-col gap-component">
@@ -143,10 +215,10 @@ export default function HelpPage() {
                 </h2>
               </div>
               <CardDescription>
-                Cancel free of charge from your account until your therapist
-                is on the way, with a full refund to your original payment
-                method. If your therapist becomes unavailable, we&apos;ll offer
-                an alternative or cancel with a full refund.
+                Cancel free of charge from your account until your therapist is
+                on the way, with a full refund to your original payment method.
+                If your therapist becomes unavailable, we&apos;ll offer an
+                alternative or cancel with a full refund.
               </CardDescription>
             </Card>
           </section>
@@ -169,8 +241,9 @@ export default function HelpPage() {
               </div>
               <CardDescription>
                 Pay securely by card at checkout. The price you see includes
-                travel, the table and all equipment — no hidden fees, ever.
-                (Payments are simulated in this demo; nothing is charged.)
+                travel (metro), the table and all equipment; any travel fee for
+                outer suburbs is shown before you pay. (Payments are simulated
+                in this demo; nothing is charged.)
               </CardDescription>
             </Card>
           </section>
@@ -205,20 +278,30 @@ export default function HelpPage() {
           </div>
         </section>
 
-        {/* Contact */}
-        <section aria-labelledby="contact-heading">
+        {/* Report a concern */}
+        <section aria-labelledby="report-heading" className="flex flex-col gap-card-gap">
+          <h2
+            id="report-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            Report A Concern
+          </h2>
+          <ReportConcernForm />
+        </section>
+
+        {/* Account shortcut */}
+        <section aria-labelledby="account-cta-heading">
           <Card className="flex flex-col items-start gap-component">
             <h2
-              id="contact-heading"
+              id="account-cta-heading"
               className="font-heading text-title font-semibold text-bb-text-title"
             >
-              Need A Hand?
+              Manage It Yourself
             </h2>
             <p className="max-w-prose text-description text-bb-text-description">
-              Every booking can be managed from your account, and each booking
-              confirmation includes how to reach us about that appointment.
-              Direct phone and email support details will be published here when
-              booking opens.
+              Most things — changing, cancelling or rebooking an appointment,
+              checking a gift card, updating preferences — can be done straight
+              from your account.
             </p>
             <Button asChild variant="secondary">
               <Link href="/account">Go to my account</Link>

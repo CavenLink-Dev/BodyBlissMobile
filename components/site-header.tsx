@@ -33,8 +33,11 @@ const NAV_ITEMS = [
   { href: "/services", label: "Services" },
   { href: "/therapists", label: "Therapists" },
   { href: "/gift-cards", label: "Gift cards" },
+  { href: "/corporate", label: "Corporate massage" },
+  { href: "/areas", label: "Service areas" },
   { href: "/about", label: "About us" },
   { href: "/help", label: "Help & safety" },
+  { href: "/account", label: "My account" },
 ] as const;
 
 export function SiteHeader() {

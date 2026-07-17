@@ -5,6 +5,7 @@ import { Gift, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { GiftCardPurchase } from "@/components/gift-card-purchase";
+import { GiftCardTools } from "@/components/gift-card-tools";
 
 export const metadata: Metadata = {
   title: "Gift cards — Body Bliss Mobile Massage",
@@ -71,6 +72,38 @@ export default function GiftCardsPage() {
             Gift cards are valid for 3 years from purchase, per Australian
             consumer law.
           </p>
+        </section>
+
+        <section aria-labelledby="gift-tools-heading" className="flex flex-col gap-card-gap">
+          <h2
+            id="gift-tools-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            Already Have A Gift Card?
+          </h2>
+          <GiftCardTools />
+          <p className="text-caption text-bb-text-caption">
+            Tip: the demonstration gift card code{" "}
+            <span className="font-medium text-bb-text-description">GIFT-DEMO-2026</span>{" "}
+            works in these tools and at checkout.
+          </p>
+        </section>
+
+        <section aria-labelledby="gift-terms-heading" className="flex flex-col gap-component">
+          <h2
+            id="gift-terms-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            Gift Card Terms
+          </h2>
+          <ul className="flex max-w-prose list-disc flex-col gap-compact pl-5 text-description text-bb-text-description">
+            <li>Valid for 3 years from the date of purchase, in line with Australian consumer law.</li>
+            <li>Redeemable against any Body Bliss mobile massage service at checkout; any remaining balance stays on the card.</li>
+            <li>Not redeemable for cash and can&apos;t be reloaded, but can be combined with another payment method.</li>
+            <li>Delivered by email — to the recipient immediately, or on the date you schedule.</li>
+            <li>Treat the code like cash: anyone with the code can redeem it. We can resend a lost email to the original recipient.</li>
+            <li>Standard booking terms apply to appointments paid with a gift card.</li>
+          </ul>
         </section>
 
         <section aria-labelledby="book-instead-heading">
