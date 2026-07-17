@@ -10,24 +10,11 @@ gift cards in `localStorage`, with a `bb-demo-change` event + React hooks
 (`useDemoUser`, `useDemoBookings`). Deleting that file (after re-wiring every
 consumer below) is the definition of done.
 
-**Real infrastructure already in the repo** (kept as reference, currently unused):
-
-- `supabase/migrations/*` — full schema: identity/roles, catalogue+pricing,
-  bookings+matching, payments, reputation, support. Applied to Supabase
-  project `body-bliss-mobile` (`iiuheyymykxlrixgajpp`, ap-southeast-2).
-- `lib/supabase/{client,server,admin,proxy}.ts` — ready-made Supabase clients.
-- `app/(public)/book/actions.ts` — the real `createBookingRequest` /
-  `cancelBooking` server actions (validated, RLS-aware). Not called anywhere.
-- `app/auth/{callback,signout}/route.ts` — real Supabase auth routes. Unused.
-- `lib/account.ts` — real RLS-scoped account reads. Unused.
-- `components/booking/cancel-booking-button.tsx`, was wired to the real
-  cancel action. Unused.
-
-**Env vars needed when going live** (in `.env.local` and Vercel → Settings →
-Environment Variables — currently set in NEITHER):
-`NEXT_PUBLIC_SUPABASE_URL=https://iiuheyymykxlrixgajpp.supabase.co`,
-`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (get via Supabase dashboard → API keys),
-`SUPABASE_SERVICE_ROLE_KEY` (server-only, needed by `actions.ts`).
+**Real infrastructure** (July 2026): the previously-kept Supabase reference files
+(`lib/supabase/*`, `app/auth/*`, `app/(public)/book/actions.ts`, `lib/account.ts`,
+`supabase/migrations`) were removed to keep the prototype lean — recover them from
+git history when wiring a real backend. The Supabase project schema still exists
+(`body-bliss-mobile`, `iiuheyymykxlrixgajpp`, ap-southeast-2).
 
 ---
 

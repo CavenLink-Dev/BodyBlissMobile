@@ -33,8 +33,6 @@ const NAV_ITEMS = [
   { href: "/services", label: "Services" },
   { href: "/therapists", label: "Therapists" },
   { href: "/gift-cards", label: "Gift cards" },
-  { href: "/corporate", label: "Corporate massage" },
-  { href: "/areas", label: "Service areas" },
   { href: "/about", label: "About us" },
   { href: "/help", label: "Help & safety" },
   { href: "/account", label: "My account" },
@@ -60,7 +58,7 @@ export function SiteHeader() {
           <Image
             src={wholeLogoCharcoal}
             alt="Body Bliss Mobile Massage"
-            className="h-16 w-auto tablet:h-20"
+            className="h-20 w-auto tablet:h-28"
             priority
           />
         </Link>

@@ -20,7 +20,7 @@ import { BookNowBar } from "@/components/book-now-bar";
 import { HeroIllustration } from "@/components/hero-illustration";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
-import { getServicesWithPricing, getActiveSuburbs } from "@/lib/catalogue";
+import { getServicesWithPricing } from "@/lib/catalogue";
 import { SuburbChecker } from "@/components/suburb-checker";
 import { TherapistCard } from "@/components/therapists/therapist-card";
 import { THERAPISTS } from "@/lib/therapists";
@@ -80,15 +80,6 @@ const TRUST = [
   },
 ];
 
-const PREP = [
-  "Choose a quiet, comfortable room with space for a massage table — about the size of a single bed, plus room to walk around.",
-  "Add parking and access instructions when you book — driveway, street or visitor parking all work.",
-  "Let us know about stairs, lifts, gates or any accessibility requirements ahead of time.",
-  "Secure pets in another room during the appointment if they're curious types.",
-  "Wear whatever's comfortable — you'll be professionally draped throughout a table massage.",
-  "Complete your treatment notes during booking so your therapist arrives prepared.",
-];
-
 const FAQS = [
   {
     q: "What does the therapist bring?",
@@ -101,14 +92,6 @@ const FAQS = [
   {
     q: "What should I wear?",
     a: "Whatever's comfortable. For table massage you undress to your level of comfort and are always professionally draped; for chair massage you stay fully clothed.",
-  },
-  {
-    q: "What about parking?",
-    a: "Add a note about parking when you book — a driveway, street parking or a visitor bay all work. If paid parking is unavoidable, we'll flag any estimate before you pay.",
-  },
-  {
-    q: "Do you come to apartments and hotels?",
-    a: "Absolutely. Just include your unit or room number, buzzer or intercom details, and let hotel reception know you're expecting a therapist.",
   },
   {
     q: "Is pregnancy massage available?",
@@ -127,24 +110,13 @@ const FAQS = [
     a: "Yes — digital gift cards for any amount, delivered by email, valid for three years. The recipient books whenever suits them.",
   },
   {
-    q: "How does couples massage work?",
-    a: "Two therapists arrive together with two tables and work side by side, so you and your partner or friend are massaged at the same time — each with your own style and pressure.",
-  },
-  {
-    q: "Can you do our office or event?",
-    a: "Yes — corporate chair massage for workplaces, conferences and events. Tell us your numbers and timing through the corporate enquiry form and we'll put together a quote.",
-  },
-  {
     q: "Where do you operate?",
     a: "Across the Adelaide metro area, with selected Adelaide Hills suburbs available for a small travel fee. Use the availability checker above to check your suburb.",
   },
 ];
 
 export default async function Home() {
-  const [services, suburbs] = await Promise.all([
-    getServicesWithPricing(),
-    getActiveSuburbs(),
-  ]);
+  const services = await getServicesWithPricing();
 
   return (
     <>
@@ -209,27 +181,6 @@ export default async function Home() {
               <HeroIllustration className="mx-auto mt-2 w-full max-w-md desktop:mt-0" />
               </div>
             </div>
-          </section>
-
-          {/* At a glance — factual stats band on the cream wash */}
-          <section aria-label="Body Bliss at a glance" className="-mt-4">
-            <dl className="grid grid-cols-3 divide-x divide-border rounded border border-border bg-cream shadow-rest">
-              {[
-                { value: "9", label: "Years in Adelaide" },
-                { value: "6", label: "Massage styles" },
-                { value: "100%", label: "Mobile — we come to you" },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col-reverse items-center gap-compact px-2 py-card-gap text-center"
-                >
-                  <dt className="text-caption text-bb-text-caption">{stat.label}</dt>
-                  <dd className="font-heading text-title font-semibold text-bb-text-display">
-                    {stat.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </section>
 
           {/* Suburb availability checker */}
@@ -380,30 +331,6 @@ export default async function Home() {
           </div>
           </Reveal>
 
-          {/* Preparation guidance */}
-          <Reveal>
-          <section className="flex flex-col gap-card-gap" aria-labelledby="prep-heading">
-            <SectionHeading
-              id="prep-heading"
-              eyebrow="Be ready"
-              title="Getting Ready"
-            />
-            <Card variant="row" className="items-start border-transparent bg-cream">
-              <ul className="flex flex-col gap-component">
-                {PREP.map((p) => (
-                  <li key={p} className="flex items-start gap-component">
-                    <BadgeCheck
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-success"
-                    />
-                    <span className="text-description text-bb-text-description">{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </section>
-          </Reveal>
-
           {/* FAQ — accessible native accordion */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="faq-heading">
@@ -433,39 +360,6 @@ export default async function Home() {
             </div>
           </section>
           </Reveal>
-
-          {/* Service areas — live from the database */}
-          {suburbs.length > 0 ? (
-            <Reveal>
-              <section className="flex flex-col gap-card-gap" aria-labelledby="areas-heading">
-                <SectionHeading
-                  id="areas-heading"
-                  eyebrow="Service areas"
-                  title="Where We Go"
-                />
-                <ul className="flex flex-wrap gap-compact">
-                  {suburbs.map((s) => (
-                    <li
-                      key={s}
-                      className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1.5 text-description text-bb-text-description"
-                    >
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-caption text-bb-text-caption">
-                  …and nearby, including selected Adelaide Hills suburbs.{" "}
-                  <Link
-                    href="/areas"
-                    className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    See all service areas
-                  </Link>
-                  .
-                </p>
-              </section>
-            </Reveal>
-          ) : null}
 
           {/* Final CTA */}
           <Reveal>

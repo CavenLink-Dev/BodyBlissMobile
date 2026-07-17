@@ -89,21 +89,6 @@ const STATIC_SERVICES: StaticService[] = [
   },
 ];
 
-/* Highlight suburbs shown on the home page — the full list (with zones and
-   travel fees) lives in lib/service-areas and on the /areas page. */
-const SUBURBS = [
-  "Adelaide CBD",
-  "North Adelaide",
-  "Glenelg",
-  "Norwood",
-  "Unley",
-  "Burnside",
-  "Prospect",
-  "Henley Beach",
-  "Marion",
-  "Adelaide Hills (selected)",
-];
-
 function toService(s: StaticService): ServiceWithPricing {
   const variants: ServiceVariant[] = s.variants.map(([minutes, cents]) => ({
     id: `${s.code}-${minutes}`,
@@ -122,11 +107,7 @@ function toService(s: StaticService): ServiceWithPricing {
 
 export const SERVICES: ServiceWithPricing[] = STATIC_SERVICES.map(toService);
 
-/* Async signatures preserved so pages don't change when the backend returns. */
+/* Async signature preserved so pages don't change when a backend returns. */
 export async function getServicesWithPricing(): Promise<ServiceWithPricing[]> {
   return SERVICES;
-}
-
-export async function getActiveSuburbs(): Promise<string[]> {
-  return SUBURBS;
 }

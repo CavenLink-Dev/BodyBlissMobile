@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/account", "/auth", "/styleguide"],
+      disallow: ["/account"],
     },
     sitemap: "https://bodyblissmobile.vercel.app/sitemap.xml", // TODO: custom domain
   };
