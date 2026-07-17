@@ -84,9 +84,9 @@ export default function AreasPage() {
               Not On The List?
             </h2>
             <p className="max-w-prose text-description text-primary-foreground">
-              We&apos;re expanding as more therapists join. For corporate or
-              group events outside our usual area, send a corporate enquiry and
-              we&apos;ll see what we can arrange.
+              We&apos;re expanding as more therapists join. For group bookings
+              outside our usual area, contact support and we&apos;ll see what we
+              can arrange.
             </p>
             <div className="flex flex-col gap-component tablet:flex-row">
               <Button asChild variant="secondary" className="w-full tablet:w-auto">
@@ -97,7 +97,7 @@ export default function AreasPage() {
                 variant="quiet"
                 className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
               >
-                <Link href="/corporate">Corporate Enquiry</Link>
+                <Link href="/help">Contact Support</Link>
               </Button>
             </div>
           </Card>

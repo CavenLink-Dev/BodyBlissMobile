@@ -5,8 +5,8 @@ import {
   Baby,
   Users,
   Hotel,
-  Armchair,
   Sparkles,
+  HandHeart,
   type LucideIcon,
 } from "lucide-react";
 
@@ -25,11 +25,11 @@ import type { ServiceWithPricing } from "@/lib/catalogue-types";
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
   relaxation: Waves,
+  remedial: HandHeart,
   deep_tissue: Activity,
   pregnancy: Baby,
   couples: Users,
   hotel: Hotel,
-  corporate: Armchair,
 };
 
 export function ServicesCarousel({ services }: { services: ServiceWithPricing[] }) {

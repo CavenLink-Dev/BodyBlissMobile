@@ -78,16 +78,40 @@ const STATIC_SERVICES: StaticService[] = [
       [90, 16900],
     ],
   },
+];
+
+/* Upcoming treatments — shown on the services page as "Coming Soon".
+   Not bookable; their detail pages render a polished coming-soon view. */
+export type ComingSoonService = {
+  code: string;
+  name: string;
+  description: string;
+};
+
+export const COMING_SOON_SERVICES: ComingSoonService[] = [
   {
-    code: "corporate",
-    name: "Corporate Chair Massage",
-    description: "Seated, fully-clothed massage for workplaces and events.",
-    variants: [
-      [30, 5900],
-      [60, 11500],
-    ],
+    code: "chiropractic",
+    name: "Chiropractic Care",
+    description:
+      "Mobile chiropractic adjustments and spinal-health consultations, delivered at home.",
+  },
+  {
+    code: "dry-needling",
+    name: "Dry Needling",
+    description:
+      "Fine-needle trigger-point therapy for stubborn muscle tension, by qualified practitioners.",
+  },
+  {
+    code: "cupping",
+    name: "Cupping Therapy",
+    description:
+      "Traditional cupping to ease tight muscles and support recovery, in your own space.",
   },
 ];
+
+export function getComingSoonService(code: string): ComingSoonService | undefined {
+  return COMING_SOON_SERVICES.find((s) => s.code === code);
+}
 
 function toService(s: StaticService): ServiceWithPricing {
   const variants: ServiceVariant[] = s.variants.map(([minutes, cents]) => ({

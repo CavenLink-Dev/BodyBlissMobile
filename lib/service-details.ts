@@ -171,30 +171,6 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Most hotel rooms comfortably fit a massage table — a little floor space beside the bed is all we need.",
     ],
   },
-  corporate: {
-    tagline: "Seated, fully-clothed massage for workplaces and events.",
-    intro:
-      "Boost your team's day with professional chair massage. Therapists set up a purpose-built massage chair in your office or event space, and staff enjoy short, seated neck-shoulder-back treatments — no oils, no undressing, minimal disruption.",
-    includes: [
-      "A vetted therapist with a purpose-built massage chair",
-      "Short seated treatments focused on neck, shoulders and back",
-      "Fully clothed, no oils — straight back to work afterwards",
-      "Flexible scheduling for teams and events",
-    ],
-    mayHelp: [
-      "Team morale, wellbeing days and staff rewards",
-      "Desk-related neck and shoulder tension",
-      "Conferences, events and client days",
-    ],
-    suitableFor: [
-      "Offices, workplaces and corporate events of any size",
-      "Anyone short on time — sessions from 30 minutes",
-    ],
-    considerations: [
-      "We just need a quiet corner roughly two metres square.",
-      "For larger teams or recurring visits, mention numbers in your booking notes and we'll be in touch to plan.",
-    ],
-  },
 };
 
 /* Fallback so a new service added in the database still renders sensibly. */
@@ -287,12 +263,6 @@ const SERVICE_FAQS: Record<string, ServiceFaq[]> = {
     {
       q: "Do I need to tell the hotel?",
       a: "A quick heads-up to reception that you're expecting a therapist keeps arrival smooth. Include your room number in the booking notes.",
-    },
-  ],
-  corporate: [
-    {
-      q: "How is corporate massage booked?",
-      a: "Through a tailored quote rather than the standard checkout — tell us your team size and timing via the corporate enquiry form and we'll come back with options.",
     },
   ],
 };

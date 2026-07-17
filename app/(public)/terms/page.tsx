@@ -98,9 +98,9 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
     ],
   },
   {
-    heading: "13. Corporate bookings",
+    heading: "13. Group and event bookings",
     paragraphs: [
-      "Corporate and event bookings are quoted individually and confirmed in writing, with payment by invoice. The written quote's terms apply alongside these terms; where they differ, the quote prevails.",
+      "Larger group and event bookings may be quoted individually and confirmed in writing. Where a written quote is provided, its terms apply alongside these terms; if they differ, the quote prevails.",
     ],
   },
   {

@@ -112,13 +112,13 @@ export function SuburbChecker() {
                   <span className="font-medium text-bb-text-display">
                     We&apos;re not in that area just yet.
                   </span>{" "}
-                  We&apos;re expanding as more therapists join. For corporate or
-                  group events outside our usual area,{" "}
+                  We&apos;re expanding as more therapists join. For group
+                  bookings a little further out,{" "}
                   <Link
-                    href="/corporate"
+                    href="/help"
                     className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    contact us for a quote
+                    contact support
                   </Link>
                   .
                 </span>

@@ -14,7 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getServicesWithPricing } from "@/lib/catalogue";
+import { getServicesWithPricing, getComingSoonService } from "@/lib/catalogue";
+import { NotifyMe } from "@/components/notify-me";
 import {
   getServiceDetail,
   getServiceFaqs,
@@ -38,6 +39,13 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { code } = await params;
+  const comingSoon = getComingSoonService(code);
+  if (comingSoon) {
+    return {
+      title: `${comingSoon.name} (coming soon) — Body Bliss`,
+      description: comingSoon.description,
+    };
+  }
   const services = await getServicesWithPricing();
   const service = services.find((s) => s.code === code);
   // 404 here (before streaming starts) so unknown services return a real 404.
@@ -50,6 +58,62 @@ export async function generateMetadata({
 
 export default async function ServiceDetailPage({ params }: { params: Params }) {
   const { code } = await params;
+
+  const comingSoon = getComingSoonService(code);
+  if (comingSoon) {
+    return (
+      <main className="px-page-inline py-page-block">
+        <div className="mx-auto flex max-w-content flex-col gap-section">
+          <nav aria-label="Breadcrumb">
+            <Link
+              href="/services"
+              className="inline-flex min-h-hit-target items-center gap-compact text-nav font-medium text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <ArrowLeft aria-hidden="true" className="size-4" />
+              All services &amp; prices
+            </Link>
+          </nav>
+
+          <header className="flex flex-col gap-component">
+            <Badge variant="secondary" className="w-fit">Coming Soon</Badge>
+            <h1 className="font-heading text-display text-bb-text-display">
+              {comingSoon.name}
+            </h1>
+            <p className="max-w-prose text-subtitle text-bb-text-subtitle">
+              {comingSoon.description}
+            </p>
+            <p className="max-w-prose text-description text-bb-text-description">
+              We&apos;re bringing qualified practitioners on board now, with the
+              same approval process, upfront pricing and at-home convenience as
+              our massage services. Leave your email and you&apos;ll be first to
+              know when bookings open.
+            </p>
+          </header>
+
+          <NotifyMe treatment={comingSoon.name} />
+
+          <section aria-labelledby="meanwhile-heading">
+            <Card variant="highlight" className="flex flex-col items-start gap-component">
+              <h2
+                id="meanwhile-heading"
+                className="font-heading text-title font-semibold text-primary-foreground"
+              >
+                In The Meantime
+              </h2>
+              <p className="max-w-prose text-description text-primary-foreground">
+                Our mobile massage services are available now across Adelaide —
+                including remedial and deep tissue work for problem areas.
+              </p>
+              <Button asChild variant="secondary">
+                <Link href="/services">Browse Massage Services</Link>
+              </Button>
+            </Card>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
   const services = await getServicesWithPricing();
   const service = services.find((s) => s.code === code);
   if (!service) notFound();
@@ -381,20 +445,9 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
               Book in a couple of minutes. A vetted therapist brings everything
               needed, and the price shown is all-inclusive.
             </p>
-            <div className="flex flex-col gap-component tablet:flex-row">
-              <Button asChild variant="secondary" className="w-full tablet:w-auto">
-                <Link href={`/book?service=${service.code}`}>Book Now</Link>
-              </Button>
-              {service.code === "corporate" ? (
-                <Button
-                  asChild
-                  variant="quiet"
-                  className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
-                >
-                  <Link href="/corporate">Get a Corporate Quote</Link>
-                </Button>
-              ) : null}
-            </div>
+            <Button asChild variant="secondary">
+              <Link href={`/book?service=${service.code}`}>Book Now</Link>
+            </Button>
           </Card>
         </section>
       </div>

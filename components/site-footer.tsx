@@ -20,7 +20,6 @@ const EXPLORE = [
   { href: "/services", label: "Services & prices" },
   { href: "/therapists", label: "Therapists" },
   { href: "/gift-cards", label: "Gift cards" },
-  { href: "/corporate", label: "Corporate massage" },
   { href: "/areas", label: "Service areas" },
   { href: "/about", label: "About us" },
 ] as const;

@@ -6,8 +6,7 @@
   - core:     included in every price (no travel fee)
   - extended: available with a small additional travel fee
   - hills:    selected Adelaide Hills areas, larger travel fee
-  Anything not listed → not currently available (with a corporate-enquiry
-  nudge, since events can sometimes be arranged further out).
+  Anything not listed → not currently available.
 */
 
 export type AreaZone = "core" | "extended" | "hills";

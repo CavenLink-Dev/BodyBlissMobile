@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getServicesWithPricing } from "@/lib/catalogue";
+import { getServicesWithPricing, COMING_SOON_SERVICES } from "@/lib/catalogue";
 import { formatAud } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -95,6 +95,47 @@ export default async function ServicesPage() {
             ))}
           </div>
         )}
+
+        {/* Coming soon treatments */}
+        <section aria-labelledby="coming-soon-heading" className="flex flex-col gap-card-gap">
+          <div className="flex flex-col gap-compact">
+            <h2
+              id="coming-soon-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              More Treatments — Coming Soon
+            </h2>
+            <p className="max-w-prose text-description text-bb-text-description">
+              We&apos;re expanding beyond massage. These mobile treatments are
+              on the way.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
+            {COMING_SOON_SERVICES.map((s) => (
+              <Card key={s.code} className="flex h-full flex-col gap-component">
+                <div className="flex items-start justify-between gap-component">
+                  <CardTitle className="text-subtitle">
+                    <Link
+                      href={`/services/${s.code}`}
+                      className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      {s.name}
+                    </Link>
+                  </CardTitle>
+                  <Badge variant="outline">Coming Soon</Badge>
+                </div>
+                <CardDescription className="flex-1">{s.description}</CardDescription>
+                <div>
+                  <Button asChild variant="quiet" className="border border-border">
+                    <Link href={`/services/${s.code}`} aria-label={`${s.name} — coming soon`}>
+                      Learn More
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
 
         <section aria-labelledby="services-cta">
           <Card variant="highlight" className="flex flex-col items-start gap-component">

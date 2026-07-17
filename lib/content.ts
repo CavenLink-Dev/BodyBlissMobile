@@ -62,10 +62,10 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t5",
     quote:
-      "Our office booked chair massage for a wellbeing day and it was the highlight of the quarter. Fifteen-minute sessions, zero fuss, and the whole team was raving about it afterwards.",
+      "Booked back-to-back massages for me and my mum at my place. One therapist, two happy customers, zero driving anywhere. Such an easy way to treat her.",
     name: "Priyanka S.",
-    suburb: "Adelaide CBD",
-    service: "Corporate Chair Massage",
+    suburb: "Mawson Lakes",
+    service: "Relaxation Massage",
     rating: 5,
     date: "April 2026",
   },
