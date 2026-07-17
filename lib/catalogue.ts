@@ -89,19 +89,19 @@ const STATIC_SERVICES: StaticService[] = [
   },
 ];
 
+/* Highlight suburbs shown on the home page — the full list (with zones and
+   travel fees) lives in lib/service-areas and on the /areas page. */
 const SUBURBS = [
-  "Adelaide",
-  "Burnside",
-  "Glenelg",
-  "Henley Beach",
-  "Kensington",
-  "Marion",
-  "Mile End",
+  "Adelaide CBD",
   "North Adelaide",
+  "Glenelg",
   "Norwood",
-  "Prospect",
   "Unley",
-  "Walkerville",
+  "Burnside",
+  "Prospect",
+  "Henley Beach",
+  "Marion",
+  "Adelaide Hills (selected)",
 ];
 
 function toService(s: StaticService): ServiceWithPricing {

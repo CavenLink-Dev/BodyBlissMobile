@@ -49,7 +49,7 @@ export default function Styleguide() {
                 { name: "Cream", hex: "#F1EAE0", note: "Wash bands · charcoal 12.8:1", cls: "bg-cream" },
                 { name: "Linen", hex: "#EAE0D1", note: "Chips, muted · charcoal 11.7:1", cls: "bg-linen" },
                 { name: "Sand", hex: "#DDCFB9", note: "Hairlines · charcoal 10.0:1", cls: "bg-sand" },
-                { name: "Camel", hex: "#C9AC7C", note: "The accent · charcoal 7.1:1", cls: "bg-camel" },
+                { name: "Gold", hex: "#E3AC2B", note: "The accent · charcoal ≈5.5:1", cls: "bg-camel" },
                 { name: "Taupe", hex: "#8C7351", note: "Deep accent — never a text surface", cls: "bg-taupe" },
                 { name: "Espresso", hex: "#3D3B36", note: "Primary · white 11.2:1", cls: "bg-espresso" },
                 { name: "Charcoal", hex: "#252525", note: "Display text · white 15.3:1", cls: "bg-charcoal" },

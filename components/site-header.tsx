@@ -60,7 +60,7 @@ export function SiteHeader() {
           <Image
             src={wholeLogoCharcoal}
             alt="Body Bliss Mobile Massage"
-            className="h-10 w-auto tablet:h-12"
+            className="h-16 w-auto tablet:h-20"
             priority
           />
         </Link>

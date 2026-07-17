@@ -137,3 +137,15 @@ auth emails cover §1; add a transactional email provider for the rest.
   owner/legal-reviewed and updated when payments go live** (they currently
   say payment is simulated/confirmed-before-charge).
 - `/help` contact card — no real support email/phone yet; owner to supply.
+
+---
+
+## §7 July 2026 prototype expansion (all fake, local-only)
+
+- **Therapists** — fictional sample profiles in `lib/therapists.ts`; filtering is client-side (`components/therapists/*`). REAL: therapist tables + approved-only RLS reads.
+- **Suburb checker & travel fees** — static list in `lib/service-areas.ts` used by `components/suburb-checker.tsx`, `/areas`, and the booking flow's travel-fee calc. REAL: service-area tables or a geocoding API.
+- **Booking flow** — 7 steps (massage/time slots → therapist → details → location → preferences → review with gift-card/promo codes → fake payment). Sample time slots are deterministic per date. Guest checkout allowed. Card numbers ending 0002 simulate a decline.
+- **Gift cards** — custom amounts, scheduling, anonymous sender, balance/resend tools (`components/gift-card-tools.tsx`); balances stored in localStorage. Seeded demo card `GIFT-DEMO-2026`; promo `WELCOME10` (see `lib/demo-store.ts`).
+- **Demo account** — `signInDemoAccount()` seeds bookings/prefs once. Receipts, calendar-add, reviews, card management = toasts only.
+- **Corporate quotes & concern reports** — validated locally, fake confirmations, nothing sent.
+- **Toasts/offline** — `components/toaster.tsx`, mounted in the root layout.
