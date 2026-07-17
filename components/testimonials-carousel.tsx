@@ -1,34 +1,27 @@
 "use client";
 
 import * as React from "react";
-import { BadgeCheck, ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { TESTIMONIALS } from "@/lib/content";
 
 /*
-  Customer-experience carousel on a charcoal band — the mid-page dark
-  moment in the page rhythm (ivory → white cards → charcoal → ivory).
-  Dark-surface pairings (verified): white text 11.19:1, linen attribution
-  8.57:1, camel stars 5.15:1 (decorative, always beside the "5.0" figure
-  in white). It moves on its own but never traps the user:
-  - Auto-advances every 6s, but pauses on hover, on focus within, and when
-    the tab is hidden.
-  - Fully honours prefers-reduced-motion: if the user prefers reduced
-    motion we do NOT auto-advance at all (WCAG 2.2.2 — moving content is
-    pausable/stoppable; here it simply doesn't start).
-  - Real Previous/Next buttons (48px targets) and dot controls, so it works
-    with keyboard and screen readers.
-  - Region is labelled and marked aria-roledescription="carousel"; the live
-    region announces the current slide politely.
+  Customer-review carousel on the charcoal band. Cleaned up:
+  - Full-width sliding track — cards transition left to right automatically
+    (every 7s) and via subtle chevron controls.
+  - One attribution line (name · suburb · service · date); the sample-data
+    note lives once, below the carousel on the page — nothing said twice.
+  - Pauses on hover/focus and when the tab is hidden; honours
+    prefers-reduced-motion (no auto-advance; the global reduced-motion rule
+    zeroes the slide transition).
 */
 
-const AUTO_MS = 6000;
+const AUTO_MS = 7000;
 
 const arrowButton = cn(
   "inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded",
-  "border border-primary-foreground/30 text-primary-foreground",
-  "transition-colors duration-fade hover:bg-primary-foreground/10",
+  "text-primary-foreground/60 transition-colors duration-fade hover:text-primary-foreground",
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-primary",
 );
 
@@ -49,7 +42,8 @@ export function TestimonialsCarousel() {
     if (prefersReduced || paused) return;
 
     const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % count);
+      if (document.visibilityState === "visible")
+        setIndex((i) => (i + 1) % count);
     }, AUTO_MS);
     return () => window.clearInterval(id);
   }, [paused, count]);
@@ -72,11 +66,11 @@ export function TestimonialsCarousel() {
             What Customers Say
           </h2>
         </div>
-        <div className="flex items-center gap-compact">
+        <div className="flex items-center">
           <button
             type="button"
             onClick={() => go(index - 1)}
-            aria-label="Previous testimonial"
+            aria-label="Previous review"
             className={arrowButton}
           >
             <ChevronLeft aria-hidden="true" className="size-5" />
@@ -84,7 +78,7 @@ export function TestimonialsCarousel() {
           <button
             type="button"
             onClick={() => go(index + 1)}
-            aria-label="Next testimonial"
+            aria-label="Next review"
             className={arrowButton}
           >
             <ChevronRight aria-hidden="true" className="size-5" />
@@ -92,40 +86,42 @@ export function TestimonialsCarousel() {
         </div>
       </div>
 
+      {/* Full-width sliding track */}
       <div
         role="group"
         aria-roledescription="carousel"
-        aria-label="Customer testimonials"
+        aria-label="Customer reviews"
+        className="overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocusCapture={() => setPaused(true)}
         onBlurCapture={() => setPaused(false)}
       >
-        <div className="flex min-h-[13rem] flex-col justify-between gap-card-gap rounded border border-primary-foreground/15 p-card-padding">
-          <div className="flex flex-col gap-component" aria-live="polite">
-            <Quote aria-hidden="true" className="size-8 text-secondary" />
-            <p className="text-subtitle text-primary-foreground">
-              {TESTIMONIALS[index].quote}
-            </p>
-          </div>
-          <div className="flex flex-col gap-compact">
-            <div className="flex items-center gap-1" aria-hidden="true">
-              {Array.from({ length: TESTIMONIALS[index].rating }).map((_, i) => (
-                <Star key={i} className="size-4 fill-bb-star text-bb-star" />
-              ))}
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+          aria-live="polite"
+        >
+          {TESTIMONIALS.map((t, i) => (
+            <div
+              key={t.id}
+              className="flex w-full shrink-0 flex-col justify-between gap-card-gap py-2"
+              aria-hidden={i !== index}
+            >
+              <div className="flex flex-col gap-component">
+                <Quote aria-hidden="true" className="size-8 text-secondary" />
+                <p className="max-w-prose text-subtitle text-primary-foreground">
+                  {t.quote}
+                </p>
+              </div>
+              <p className="text-description text-linen">
+                <span className="font-semibold text-primary-foreground">
+                  {t.name}
+                </span>{" "}
+                · {t.suburb} · {t.service} · {t.date}
+              </p>
             </div>
-            <p className="text-description font-medium text-linen">
-              <span className="font-semibold text-primary-foreground">
-                {TESTIMONIALS[index].name}
-              </span>{" "}
-              · {TESTIMONIALS[index].suburb} · {TESTIMONIALS[index].service} ·{" "}
-              {TESTIMONIALS[index].date}
-            </p>
-            <p className="inline-flex w-fit items-center gap-1 rounded-full border border-primary-foreground/30 px-2.5 py-0.5 text-caption text-primary-foreground/90">
-              <BadgeCheck aria-hidden="true" className="size-3.5 text-secondary" />
-              Verified booking · sample review
-            </p>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -135,7 +131,7 @@ export function TestimonialsCarousel() {
             key={t.id}
             type="button"
             onClick={() => go(i)}
-            aria-label={`Show testimonial ${i + 1} of ${count}`}
+            aria-label={`Show review ${i + 1} of ${count}`}
             aria-current={i === index ? "true" : undefined}
             className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
           >

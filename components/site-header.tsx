@@ -55,10 +55,13 @@ export function SiteHeader() {
           aria-label="Body Bliss Mobile Massage — home"
           className="flex min-h-hit-target items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
+          {/* Oversized logo with negative vertical margins: the image grows
+              visually (the PNG has built-in whitespace) while the header bar
+              keeps its previous height. */}
           <Image
             src={wholeLogoCharcoal}
             alt="Body Bliss Mobile Massage"
-            className="h-20 w-auto tablet:h-28"
+            className="-my-3 h-24 w-auto tablet:-my-5 tablet:h-36"
             priority
           />
         </Link>

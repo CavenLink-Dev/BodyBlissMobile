@@ -45,7 +45,7 @@ export function SiteFooter() {
             <Image
               src={wholeLogoWhite}
               alt="Body Bliss Mobile Massage"
-              className="h-14 w-auto"
+              className="h-28 w-auto tablet:h-36"
             />
             <p className="max-w-prose text-description">
               Approved mobile massage therapists at your home, hotel or

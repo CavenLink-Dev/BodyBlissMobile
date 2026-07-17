@@ -23,9 +23,9 @@ export const metadata: Metadata = {
 };
 
 // iPhone-first: fit content into the safe area (notch / home indicator) and
-// keep the browser chrome on-brand with the vibrant gold accent #E3AC2B.
+// keep the browser chrome on-brand with the vibrant gold accent #CC9624.
 export const viewport: Viewport = {
-  themeColor: "#E3AC2B",
+  themeColor: "#CC9624",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
