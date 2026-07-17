@@ -623,31 +623,16 @@ export function BookingFlow({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
-            <SelectField
-              id="genderPref"
-              label="Therapist gender preference"
-              value={data.genderPref}
-              onChange={(e) => set("genderPref", e.target.value)}
-            >
-              <option>No preference</option>
-              <option>Female</option>
-              <option>Male</option>
-            </SelectField>
-            <SelectField
-              id="languagePref"
-              label="Language preference"
-              value={data.languagePref}
-              onChange={(e) => set("languagePref", e.target.value)}
-            >
-              <option>No preference</option>
-              <option>English</option>
-              <option>Mandarin</option>
-              <option>Hindi</option>
-              <option>Japanese</option>
-              <option>Italian</option>
-            </SelectField>
-          </div>
+          <SelectField
+            id="genderPref"
+            label="Therapist gender preference"
+            value={data.genderPref}
+            onChange={(e) => set("genderPref", e.target.value)}
+          >
+            <option>No preference</option>
+            <option>Female</option>
+            <option>Male</option>
+          </SelectField>
 
           <fieldset className="flex flex-col gap-component">
             <legend className="sr-only">Therapist selection</legend>
@@ -697,7 +682,7 @@ export function BookingFlow({
                       : "border-border bg-card hover:border-primary",
                   )}
                 >
-                  <TherapistAvatar therapist={t} className="size-11 text-description" />
+                  <TherapistAvatar therapist={t} className="size-12 text-subtitle" />
                   <span className="flex min-w-0 flex-col gap-compact">
                     <span className="font-heading text-subtitle text-bb-text-subtitle">
                       {t.name}
@@ -705,10 +690,8 @@ export function BookingFlow({
                         <Check aria-hidden="true" className="ml-2 inline size-5 text-success" />
                       ) : null}
                     </span>
-                    <span className="flex items-center gap-compact text-description text-bb-text-description">
-                      <Star aria-hidden="true" className="size-4 fill-bb-star text-bb-star" />
-                      {t.rating.toFixed(1)} · {t.yearsExperience} yrs ·{" "}
-                      {t.languages.join(", ")}
+                    <span className="text-description capitalize text-bb-text-description">
+                      {t.gender} · {t.yearsExperience} years experience
                     </span>
                     <span className="text-description text-bb-text-description">
                       {t.shortBio}
@@ -1318,43 +1301,42 @@ export function BookingFlow({
   );
 }
 
+/*
+  Booking progress — an accessible progress bar. Screen readers get a real
+  progressbar with aria-valuetext ("Step 3 of 7: Details"); sighted users
+  get the step name, the count, and a smoothly animating gold fill (the
+  global reduced-motion rule zeroes the transition).
+*/
 function StepIndicator({ current }: { current: number }) {
+  const percent = Math.round(((current + 1) / STEPS.length) * 100);
   return (
-    <ol className="flex items-center gap-1" aria-label="Booking progress">
-      {STEPS.map((label, i) => {
-        const state = i < current ? "done" : i === current ? "current" : "upcoming";
-        return (
-          <li key={label} className="flex flex-1 items-center gap-1">
-            <span
-              className={cn(
-                "inline-flex size-7 shrink-0 items-center justify-center rounded-full text-caption font-semibold tablet:size-8 tablet:text-description",
-                state === "done" && "bg-primary text-primary-foreground",
-                state === "current" && "bg-secondary text-secondary-foreground",
-                state === "upcoming" && "border border-border bg-card text-bb-text-description",
-              )}
-              aria-current={state === "current" ? "step" : undefined}
-              aria-label={`Step ${i + 1}: ${label}${state === "done" ? " (complete)" : ""}`}
-            >
-              {state === "done" ? <Check aria-hidden="true" className="size-4" /> : i + 1}
-            </span>
-            <span
-              className={cn(
-                "hidden text-caption desktop:inline",
-                state === "current" ? "font-semibold text-bb-text-display" : "text-bb-text-description",
-              )}
-            >
-              {label}
-            </span>
-            {i < STEPS.length - 1 ? (
-              <span
-                aria-hidden="true"
-                className={cn("h-0.5 flex-1 rounded", i < current ? "bg-primary" : "bg-border")}
-              />
-            ) : null}
-          </li>
-        );
-      })}
-    </ol>
+    <div className="flex flex-col gap-compact">
+      <div className="flex items-baseline justify-between gap-component">
+        <p className="font-heading text-subtitle font-semibold text-bb-text-display">
+          {STEPS[current]}
+        </p>
+        <p className="text-description text-bb-text-description">
+          Step {current + 1} of {STEPS.length}
+        </p>
+      </div>
+      <div
+        role="progressbar"
+        aria-valuemin={1}
+        aria-valuemax={STEPS.length}
+        aria-valuenow={current + 1}
+        aria-valuetext={`Step ${current + 1} of ${STEPS.length}: ${STEPS[current]}`}
+        aria-label="Booking progress"
+        className="h-2.5 w-full overflow-hidden rounded-full bg-linen"
+      >
+        <div
+          className="h-full rounded-full bg-secondary transition-[width] duration-500 ease-out"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+      <p className="text-caption text-bb-text-caption" aria-hidden="true">
+        {percent}% complete
+      </p>
+    </div>
   );
 }
 
