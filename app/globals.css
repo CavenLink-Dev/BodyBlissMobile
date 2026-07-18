@@ -188,3 +188,9 @@
 .bb-anim-steam-late { animation: bb-steam 2.8s ease-in-out 1.2s infinite; }
 .bb-anim-pulse { animation: bb-pulse-soft 3s ease-in-out infinite; }
 .bb-anim-sway { animation: bb-sway 4s ease-in-out infinite; transform-origin: bottom center; }
+@keyframes bb-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.bb-anim-pop { animation: bb-pop 0.5s ease-out both; }

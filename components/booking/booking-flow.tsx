@@ -503,14 +503,14 @@ export function BookingFlow({
               {STEP_HELP[step]}
             </p>
             <p className="text-description text-bb-text-description">
-              Prefer a person? Call{" "}
+              Still stuck after trying? As a last resort you can call{" "}
               <a
                 href="tel:0880000000"
                 className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 (08) 8000 0000
               </a>{" "}
-              and we will make the whole booking for you over the phone.
+              and we will finish the booking with you.
             </p>
           </div>
         ) : null}

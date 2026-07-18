@@ -118,12 +118,12 @@ export function GiftCardPurchase() {
       <Card className="flex flex-col gap-card-gap" role="status">
         <div className="flex items-center gap-component">
           <span
-            className="inline-flex size-12 items-center justify-center rounded-full bg-secondary"
+            className="bb-anim-pop inline-flex size-14 items-center justify-center rounded-full bg-secondary shadow-rest"
             aria-hidden="true"
           >
-            <Gift className="size-6 text-secondary-foreground" />
+            <Gift className="size-7 text-secondary-foreground" />
           </span>
-          <CardTitle className="text-subtitle">Gift card purchased</CardTitle>
+          <CardTitle className="text-title">Gift card sent</CardTitle>
         </div>
 
         <p
@@ -232,7 +232,7 @@ export function GiftCardPurchase() {
                 onCheckedChange={(v) => setUseCustom(v === true)}
               />
               <span className="text-description text-bb-text-description">
-                Choose my own amount ($25–$500)
+                Choose my own amount ($25 to $500)
               </span>
             </label>
             {useCustom ? (
@@ -260,91 +260,113 @@ export function GiftCardPurchase() {
           </p>
         </fieldset>
 
-        <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
-          <Field
-            id="recipientName"
-            label="Recipient's name"
-            autoComplete="off"
-            required
-            value={recipientName}
-            error={errors.recipientName}
-            onChange={(e) => setRecipientName(e.target.value)}
-          />
-          <Field
-            id="recipientEmail"
-            type="email"
-            label="Recipient's email"
-            hint="The gift card is delivered by email."
-            inputMode="email"
-            autoComplete="off"
-            required
-            value={recipientEmail}
-            error={errors.recipientEmail}
-            onChange={(e) => setRecipientEmail(e.target.value)}
-          />
-          <Field
-            id="buyerName"
-            label="Your name"
-            autoComplete="name"
-            required
-            value={buyerName}
-            error={errors.buyerName}
-            onChange={(e) => setBuyerName(e.target.value)}
-          />
-          <Field
-            id="buyerEmail"
-            type="email"
-            label="Your email"
-            hint="For your receipt."
-            inputMode="email"
-            autoComplete="email"
-            required
-            value={buyerEmail}
-            error={errors.buyerEmail}
-            onChange={(e) => setBuyerEmail(e.target.value)}
-          />
-        </div>
-
-        <label className="flex items-center gap-component">
-          <Checkbox
-            checked={anonymous}
-            onCheckedChange={(v) => setAnonymous(v === true)}
-          />
-          <span className="text-description text-bb-text-description">
-            Keep my name off the gift card (send anonymously)
-          </span>
-        </label>
-
-        <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
-          <SelectField
-            id="delivery"
-            label="Delivery"
-            value={delivery}
-            onChange={(e) => setDelivery(e.target.value as "now" | "schedule")}
-          >
-            <option value="now">Send now</option>
-            <option value="schedule">Schedule for a date</option>
-          </SelectField>
-          {delivery === "schedule" ? (
+        {/* Who it's for */}
+        <fieldset className="flex flex-col gap-component">
+          <legend className="text-description font-medium text-bb-text-display">
+            Who is it for?
+          </legend>
+          <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
             <Field
-              id="deliveryDate"
-              label="Delivery date"
-              type="date"
-              min={new Date().toISOString().slice(0, 10)}
-              value={deliveryDate}
-              error={errors.deliveryDate}
-              onChange={(e) => setDeliveryDate(e.target.value)}
+              id="recipientName"
+              label="Their name"
+              autoComplete="off"
+              required
+              value={recipientName}
+              error={errors.recipientName}
+              onChange={(e) => setRecipientName(e.target.value)}
             />
-          ) : null}
-        </div>
+            <Field
+              id="recipientEmail"
+              type="email"
+              label="Their email"
+              hint="The gift card is delivered by email."
+              inputMode="email"
+              autoComplete="off"
+              required
+              value={recipientEmail}
+              error={errors.recipientEmail}
+              onChange={(e) => setRecipientEmail(e.target.value)}
+            />
+          </div>
+          <FieldTextarea
+            id="giftMessage"
+            label="Personal message"
+            hint="Optional, shown on the gift card."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </fieldset>
 
-        <FieldTextarea
-          id="giftMessage"
-          label="Personal message"
-          hint="Optional, shown on the gift card."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+        {/* From you */}
+        <fieldset className="flex flex-col gap-component">
+          <legend className="text-description font-medium text-bb-text-display">
+            From you
+          </legend>
+          <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
+            <Field
+              id="buyerName"
+              label="Your name"
+              autoComplete="name"
+              required
+              value={buyerName}
+              error={errors.buyerName}
+              onChange={(e) => setBuyerName(e.target.value)}
+            />
+            <Field
+              id="buyerEmail"
+              type="email"
+              label="Your email"
+              hint="For your receipt."
+              inputMode="email"
+              autoComplete="email"
+              required
+              value={buyerEmail}
+              error={errors.buyerEmail}
+              onChange={(e) => setBuyerEmail(e.target.value)}
+            />
+          </div>
+        </fieldset>
+
+        {/* Rarely needed extras, tucked away */}
+        <details className="group rounded border border-border bg-cream p-3">
+          <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between text-description font-medium text-bb-text-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            More options: send later or send anonymously
+            <ChevronLeft aria-hidden="true" className="size-5 -rotate-90 transition-transform duration-fade group-open:rotate-90" />
+          </summary>
+          <div className="mt-component flex flex-col gap-component">
+            <label className="flex items-center gap-component">
+              <Checkbox
+                checked={anonymous}
+                onCheckedChange={(v) => setAnonymous(v === true)}
+              />
+              <span className="text-description text-bb-text-description">
+                Keep my name off the gift card (send anonymously)
+              </span>
+            </label>
+            <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
+              <SelectField
+                id="delivery"
+                label="Delivery"
+                value={delivery}
+                onChange={(e) => setDelivery(e.target.value as "now" | "schedule")}
+              >
+                <option value="now">Send now</option>
+                <option value="schedule">Schedule for a date</option>
+              </SelectField>
+              {delivery === "schedule" ? (
+                <Field
+                  id="deliveryDate"
+                  label="Delivery date"
+                  type="date"
+                  min={new Date().toISOString().slice(0, 10)}
+                  value={deliveryDate}
+                  error={errors.deliveryDate}
+                  onChange={(e) => setDeliveryDate(e.target.value)}
+                />
+              ) : null}
+            </div>
+          </div>
+        </details>
 
         {preview}
 

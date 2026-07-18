@@ -130,15 +130,8 @@ export default async function Home() {
                     <Link href="/gift-cards">Buy a Gift Card</Link>
                   </Button>
                 </div>
-                <p className="text-description text-primary-foreground">
-                  Prefer to book by phone? Call{" "}
-                  <a
-                    href="tel:0880000000"
-                    className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-                  >
-                    (08) 8000 0000
-                  </a>{" "}
-                  and we will arrange everything for you.
+                <p className="text-description text-primary-foreground/80">
+                  Booking takes about two minutes, right from your phone.
                 </p>
               </div>
 

@@ -28,17 +28,8 @@ export default async function BookPage({
           </h1>
           <p className="max-w-prose text-description text-bb-text-description">
             It takes a couple of minutes. Start with your massage and time,
-            then tell us where to come.
-          </p>
-          <p className="max-w-prose text-description text-bb-text-description">
-            Prefer to book by phone? Call{" "}
-            <a
-              href="tel:0880000000"
-              className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              (08) 8000 0000
-            </a>{" "}
-            and we will take care of it for you.
+            then tell us where to come. If you get stuck at any point, tap
+            the Help me button.
           </p>
         </div>
         <BookingFlow
