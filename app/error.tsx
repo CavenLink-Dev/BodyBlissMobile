@@ -21,7 +21,7 @@ export default function Error({
           Something Went Wrong
         </h1>
         <p className="text-description text-bb-text-description">
-          Sorry — that didn&apos;t load properly. It&apos;s usually temporary.
+          Sorry, that didn&apos;t load properly. It&apos;s usually temporary.
         </p>
         <div className="flex flex-col gap-component tablet:flex-row">
           <Button type="button" variant="secondary" onClick={reset} className="w-full tablet:w-auto">

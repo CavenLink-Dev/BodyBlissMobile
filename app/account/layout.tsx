@@ -13,7 +13,7 @@ export default function AccountLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
-      <div className="flex-1">{children}</div>
+      <div id="main-content" className="flex-1">{children}</div>
       <SiteFooter />
     </div>
   );

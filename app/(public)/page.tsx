@@ -63,12 +63,12 @@ const TRUST = [
   {
     icon: BadgeCheck,
     title: "Reviewed & approved therapists",
-    body: "Therapists are reviewed and approved before they can take bookings — only approved therapists ever appear.",
+    body: "Therapists are reviewed and approved before they can take bookings, only approved therapists ever appear.",
   },
   {
     icon: CreditCard,
     title: "Upfront pricing",
-    body: "The price you see is the price you pay — travel, table and equipment included. No hidden fees.",
+    body: "The price you see is the price you pay, travel, table and equipment included. No hidden fees.",
   },
   {
     icon: Lock,
@@ -89,7 +89,7 @@ const FAQS = [
   },
   {
     q: "Can I choose my therapist?",
-    a: "Yes. You can browse the team and choose a therapist during booking — including a gender preference — or let us match you with the best available.",
+    a: "Yes. You can browse the team and choose a therapist during booking, including a gender preference, or let us match you with the best available.",
   },
   {
     q: "What should I wear?",
@@ -100,7 +100,7 @@ const FAQS = [
     a: "Yes, from the second trimester (12+ weeks), delivered by therapists experienced in prenatal work with side-lying positioning and supportive cushioning. If your pregnancy is high-risk, please check with your midwife or doctor first.",
   },
   {
-    q: "I have a health condition — can I still book?",
+    q: "I have a health condition, can I still book?",
     a: "Massage supports general wellbeing and isn't a medical treatment. If you're recovering from injury or surgery or managing a condition, check with your health practitioner first, and add a note to your booking so we match a suitable therapist.",
   },
   {
@@ -109,7 +109,7 @@ const FAQS = [
   },
   {
     q: "Do you sell gift cards?",
-    a: "Yes — digital gift cards for any amount, delivered by email, valid for three years. The recipient books whenever suits them.",
+    a: "Yes, digital gift cards for any amount, delivered by email, valid for three years. The recipient books whenever suits them.",
   },
   {
     q: "Where do you operate?",
@@ -124,7 +124,7 @@ export default async function Home() {
     <>
       <main className="px-page-inline py-page-block">
         <div className="mx-auto flex max-w-content flex-col gap-section">
-          {/* Hero — charcoal band (documented dark-surface pattern: white text
+          {/* Hero, charcoal band (documented dark-surface pattern: white text
               11.2:1, camel strictly as accent 5.2:1, white lotus watermark) */}
           <section aria-labelledby="hero-heading">
             <div className="relative overflow-hidden rounded bg-primary p-card-padding tablet:p-12">
@@ -142,9 +142,9 @@ export default async function Home() {
                 </h1>
                 <span aria-hidden="true" className="h-1.5 w-16 rounded bg-secondary" />
                 <p className="max-w-prose text-subtitle text-primary-foreground">
-                  Book a vetted massage therapist to your home, hotel or
-                  workplace — backed by nine years of Body Bliss massage and
-                  wellness experience.
+                  Book an approved massage therapist to your home, hotel or
+                  workplace, from the Adelaide team behind the Body Bliss day
+                  spas in Prospect and Norwood.
                 </p>
                 <div className="mt-1 flex flex-col gap-component tablet:flex-row">
                   <Button asChild variant="secondary" className="w-full tablet:w-auto">
@@ -158,6 +158,16 @@ export default async function Home() {
                     <Link href="/gift-cards">Buy a Gift Card</Link>
                   </Button>
                 </div>
+                <p className="text-description text-primary-foreground">
+                  Prefer to book by phone? Call{" "}
+                  <a
+                    href="tel:0880000000"
+                    className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                  >
+                    (08) 8000 0000
+                  </a>{" "}
+                  and we will arrange everything for you.
+                </p>
                 <ul className="mt-1 flex flex-wrap gap-compact">
                   {["Reviewed therapists", "Upfront pricing", "Adelaide metro"].map(
                     (t) => (
@@ -213,7 +223,7 @@ export default async function Home() {
               <ServicesCarousel services={services} />
             )}
             <p className="text-caption text-bb-text-caption">
-              Prices include travel, table and equipment — no hidden fees.
+              Prices include travel, table and equipment, no hidden fees.
             </p>
           </section>
           </Reveal>
@@ -227,7 +237,7 @@ export default async function Home() {
               title="How It Works"
             />
             {/* Immersive step cards: vertical gold rail on phone, four even
-                columns on desktop — no orphaned steps, no dangling lines. */}
+                columns on desktop, no orphaned steps, no dangling lines. */}
             <ol className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-4">
               {STEPS.map((step, i) => (
                 <li key={step.title} className="h-full">
@@ -282,7 +292,7 @@ export default async function Home() {
           </section>
           </Reveal>
 
-          {/* Therapist preview — fictional sample profiles (labelled) */}
+          {/* Therapist preview, fictional sample profiles (labelled) */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="therapists-heading">
             <SectionHeading
@@ -305,24 +315,23 @@ export default async function Home() {
               ))}
             </div>
             <p className="text-caption text-bb-text-caption">
-              Sample profiles for demonstration — every live therapist is
+              Sample profiles for demonstration, every live therapist is
               reviewed and approved before taking bookings.
             </p>
           </section>
           </Reveal>
 
-          {/* Reviews — adapted from real day-spa Google reviews */}
+          {/* Reviews, adapted from real day-spa Google reviews */}
           <Reveal>
           <div className="flex flex-col gap-compact">
             <TestimonialsCarousel />
             <p className="text-caption text-bb-text-caption">
-              Sample reviews for demonstration — showing how verified customer
-              feedback will appear once the mobile service is live.
+              Written reviews shown are sample content for this preview.
             </p>
           </div>
           </Reveal>
 
-          {/* FAQ — accessible native accordion */}
+          {/* FAQ, accessible native accordion */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="faq-heading">
             <SectionHeading

@@ -47,7 +47,7 @@ export const THERAPISTS: Therapist[] = [
     availability: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     shortBio:
       "Calm, intuitive relaxation and pregnancy massage with a gentle, unhurried style.",
-    bio: "Mia has spent eight years helping Adelaide clients switch off, with a particular love of prenatal work. Her treatments are slow, rhythmic and deeply calming — clients often say the hour disappears. She brings a warm, quiet presence into your home and always checks in on pressure before she begins.",
+    bio: "Mia has spent eight years helping Adelaide clients switch off, with a particular love of prenatal work. Her treatments are slow, rhythmic and deeply calming, clients often say the hour disappears. She brings a warm, quiet presence into your home and always checks in on pressure before she begins.",
   },
   {
     id: "daniel",
@@ -81,7 +81,7 @@ export const THERAPISTS: Therapist[] = [
     availability: ["Tue", "Wed", "Thu", "Fri", "Sat"],
     shortBio:
       "Versatile all-rounder who tailors every session to how you feel that day.",
-    bio: "Priya believes no two massages should be the same. She starts every appointment with a short chat about how your body is feeling, then blends techniques to suit — gentle and flowing one visit, targeted and firm the next. Clients love her adaptability and easy warmth.",
+    bio: "Priya believes no two massages should be the same. She starts every appointment with a short chat about how your body is feeling, then blends techniques to suit, gentle and flowing one visit, targeted and firm the next. Clients love her adaptability and easy warmth.",
   },
   {
     id: "tom",
@@ -114,7 +114,7 @@ export const THERAPISTS: Therapist[] = [
     areas: ["core", "extended"],
     availability: ["Mon", "Tue", "Wed", "Sat", "Sun"],
     shortBio:
-      "Serene, detail-focused relaxation massage — a regular pick for couples bookings.",
+      "Serene, detail-focused relaxation massage, a regular pick for couples bookings.",
     bio: "Hana's sessions are known for their attention to detail: warmed oil, carefully arranged linens, and pacing that never feels rushed. She frequently pairs with another therapist for couples bookings, and hotel guests appreciate her discreet, polished service.",
   },
   {
@@ -132,7 +132,7 @@ export const THERAPISTS: Therapist[] = [
     availability: ["Tue", "Wed", "Thu", "Fri", "Sun"],
     shortBio:
       "Experienced, adaptable therapist happy anywhere from the CBD to the Hills.",
-    bio: "Marco covers more ground than any of our sample team — city apartments, suburban homes and Hills properties alike. Nine years of practice show in his confident, adaptable technique, and he's equally at home doing firm remedial-style work or a slower couples session.",
+    bio: "Marco covers more ground than any of our sample team, city apartments, suburban homes and Hills properties alike. Nine years of practice show in his confident, adaptable technique, and he's equally at home doing firm remedial-style work or a slower couples session.",
   },
 ];
 
@@ -175,6 +175,6 @@ export const APPROVAL_STEPS = [
   },
   {
     title: "Ongoing feedback review",
-    body: "Customer feedback is reviewed continuously — consistently poor feedback means a therapist is stood down.",
+    body: "Customer feedback is reviewed continuously, consistently poor feedback means a therapist is stood down.",
   },
 ] as const;

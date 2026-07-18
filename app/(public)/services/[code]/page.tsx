@@ -42,7 +42,7 @@ export async function generateMetadata({
   const comingSoon = getComingSoonService(code);
   if (comingSoon) {
     return {
-      title: `${comingSoon.name} (coming soon) — Body Bliss`,
+      title: `${comingSoon.name} (coming soon) | Body Bliss`,
       description: comingSoon.description,
     };
   }
@@ -51,7 +51,7 @@ export async function generateMetadata({
   // 404 here (before streaming starts) so unknown services return a real 404.
   if (!service) notFound();
   return {
-    title: `${service.name} — Body Bliss Mobile Massage`,
+    title: `${service.name} | Body Bliss Mobile Massage`,
     description: `${service.description} Durations, prices and what's included. A vetted therapist comes to you across Adelaide.`,
   };
 }
@@ -101,7 +101,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 In The Meantime
               </h2>
               <p className="max-w-prose text-description text-primary-foreground">
-                Our mobile massage services are available now across Adelaide —
+                Our mobile massage services are available now across Adelaide,
                 including remedial and deep tissue work for problem areas.
               </p>
               <Button asChild variant="secondary">
@@ -152,7 +152,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           </p>
         </header>
 
-        {/* Durations & prices — the decision point */}
+        {/* Durations & prices, the decision point */}
         <section aria-labelledby="durations-heading" className="flex flex-col gap-card-gap">
           <h2
             id="durations-heading"
@@ -252,7 +252,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 ))}
               </ul>
               <p className="text-caption text-bb-text-caption">
-                Massage supports general wellbeing — it isn&apos;t a medical
+                Massage supports general wellbeing, it isn&apos;t a medical
                 treatment or a substitute for professional health advice.
               </p>
             </Card>
@@ -374,7 +374,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 ))}
               </ul>
               <p className="text-caption text-bb-text-caption">
-                This website doesn&apos;t provide medical advice — when in
+                This website doesn&apos;t provide medical advice, when in
                 doubt, ask your doctor or health practitioner.
               </p>
             </Card>

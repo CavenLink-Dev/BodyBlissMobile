@@ -61,7 +61,7 @@ export default function BookingDetailPage() {
             Booking not found
           </h1>
           <p className="text-description text-bb-text-description">
-            We couldn&apos;t find this booking in this browser — demo bookings
+            We couldn&apos;t find this booking in this browser, demo bookings
             are stored locally, so they don&apos;t follow you between devices.
           </p>
           <Button asChild variant="secondary">
@@ -90,7 +90,7 @@ export default function BookingDetailPage() {
     markBookingReviewed(booking!.id);
     setBooking(getDemoBooking(booking!.id));
     setReviewOpen(false);
-    toast("Thanks — your review was saved (simulated).");
+    toast("Thanks, your review was saved (simulated).");
   }
 
   return (
@@ -152,7 +152,7 @@ export default function BookingDetailPage() {
               variant="quiet"
               className="border border-border"
               onClick={() =>
-                toast("Receipt downloaded (simulated — this is a demonstration).")
+                toast("Receipt downloaded (simulated, this is a demonstration).")
               }
             >
               <FileDown aria-hidden="true" className="size-5" />
@@ -173,7 +173,7 @@ export default function BookingDetailPage() {
 
           {booking.reviewed ? (
             <CardDescription>
-              You&apos;ve reviewed this booking — thank you.
+              You&apos;ve reviewed this booking, thank you.
             </CardDescription>
           ) : null}
 

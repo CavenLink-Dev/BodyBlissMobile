@@ -8,7 +8,7 @@ import { GiftCardPurchase } from "@/components/gift-card-purchase";
 import { GiftCardTools } from "@/components/gift-card-tools";
 
 export const metadata: Metadata = {
-  title: "Gift cards — Body Bliss Mobile Massage",
+  title: "Gift cards | Body Bliss Mobile Massage",
   description:
     "Give the gift of a Body Bliss mobile massage. Choose an amount, add a message, and it's delivered by email.",
 };
@@ -63,7 +63,7 @@ export default function GiftCardsPage() {
               <Users aria-hidden="true" className="size-8 text-primary" />
               <CardTitle className="text-subtitle">We come to them</CardTitle>
               <CardDescription>
-                A vetted therapist arrives with everything needed — they just
+                A vetted therapist arrives with everything needed, they just
                 relax.
               </CardDescription>
             </Card>
@@ -100,7 +100,7 @@ export default function GiftCardsPage() {
             <li>Valid for 3 years from the date of purchase, in line with Australian consumer law.</li>
             <li>Redeemable against any Body Bliss mobile massage service at checkout; any remaining balance stays on the card.</li>
             <li>Not redeemable for cash and can&apos;t be reloaded, but can be combined with another payment method.</li>
-            <li>Delivered by email — to the recipient immediately, or on the date you schedule.</li>
+            <li>Delivered by email, to the recipient immediately, or on the date you schedule.</li>
             <li>Treat the code like cash: anyone with the code can redeem it. We can resend a lost email to the original recipient.</li>
             <li>Standard booking terms apply to appointments paid with a gift card.</li>
           </ul>

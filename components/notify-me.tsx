@@ -34,8 +34,8 @@ export function NotifyMe({ treatment }: { treatment: string }) {
       >
         <CheckCircle2 aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
         <span>
-          You&apos;re on the list — we&apos;ll email you when {treatment}{" "}
-          launches. (Simulated — nothing is sent in this prototype.)
+          You&apos;re on the list, we&apos;ll email you when {treatment}{" "}
+          launches. (Simulated, nothing is sent in this prototype.)
         </span>
       </p>
     );

@@ -13,7 +13,7 @@ export function TestModeBanner() {
     <div role="status" className="w-full bg-primary text-primary-foreground">
       <p className="mx-auto flex max-w-content items-center justify-center gap-compact px-page-inline py-1.5 text-center text-description">
         <FlaskConical aria-hidden="true" className="size-4 shrink-0 text-secondary" />
-        Demo site — test mode. Bookings, payments and emails are simulated.
+        Demo site, test mode. Bookings, payments and emails are simulated.
       </p>
     </div>
   );

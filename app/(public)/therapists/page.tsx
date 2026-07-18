@@ -9,7 +9,7 @@ import { TherapistDirectory } from "@/components/therapists/therapist-directory"
 import { APPROVAL_STEPS } from "@/lib/therapists";
 
 export const metadata: Metadata = {
-  title: "Therapists — Body Bliss Mobile Massage",
+  title: "Therapists | Body Bliss Mobile Massage",
   description:
     "Meet the Body Bliss mobile massage team, filter by massage type and gender, and see how therapists are reviewed and approved.",
 };

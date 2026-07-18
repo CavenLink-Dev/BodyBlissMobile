@@ -48,9 +48,9 @@ export function SiteFooter() {
             />
             <p className="max-w-prose text-description">
               Approved mobile massage therapists at your home, hotel or
-              workplace across Adelaide — from the team behind Body Bliss
-              Massage &amp; Day Spa, with nine years of Adelaide massage and
-              wellness experience.
+              workplace across Adelaide, from the team behind the Body Bliss
+              Massage and Day Spa locations in Prospect and Norwood, caring
+              for Adelaide since 2017.
             </p>
             <ul className="flex flex-col gap-compact text-description">
               <li className="flex items-center gap-compact">
@@ -59,11 +59,16 @@ export function SiteFooter() {
               </li>
               <li className="flex items-center gap-compact">
                 <Phone aria-hidden="true" className="size-4 text-secondary" />
-                (08) 8000 0000
+                <a
+                  href="tel:0880000000"
+                  className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                >
+                  (08) 8000 0000
+                </a>
               </li>
               <li className="flex items-center gap-compact">
                 <Clock aria-hidden="true" className="size-4 text-secondary" />
-                Mon–Fri 8am–8pm · Sat–Sun 9am–5pm (ACST)
+                Mon to Fri 8am to 8pm, Sat and Sun 9am to 5pm (ACST)
               </li>
             </ul>
             <p className="text-caption text-primary-foreground/80">
@@ -72,7 +77,7 @@ export function SiteFooter() {
           </div>
 
           {/* Explore */}
-          <nav aria-label="Footer — explore" className="flex flex-col gap-compact">
+          <nav aria-label="Footer, explore" className="flex flex-col gap-compact">
             <h2 className="font-heading text-subtitle text-primary-foreground">
               Explore
             </h2>
@@ -89,7 +94,7 @@ export function SiteFooter() {
 
           {/* Support & legal + social */}
           <div className="flex flex-col gap-card-gap">
-            <nav aria-label="Footer — support and legal" className="flex flex-col gap-compact">
+            <nav aria-label="Footer, support and legal" className="flex flex-col gap-compact">
               <h2 className="font-heading text-subtitle text-primary-foreground">
                 Support &amp; The Fine Print
               </h2>

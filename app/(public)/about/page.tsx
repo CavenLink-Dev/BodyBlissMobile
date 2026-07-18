@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "About — Body Bliss Mobile Massage",
+  title: "About | Body Bliss Mobile Massage",
   description:
     "Body Bliss Mobile Massage brings nine years of Adelaide massage and wellness experience from Body Bliss Massage & Day Spa to your home, hotel or workplace.",
 };
@@ -31,7 +31,7 @@ const VALUES = [
   {
     icon: Home,
     title: "Comfort of your space",
-    body: "No travel, no waiting rooms, no rushing back into traffic afterwards — just rest.",
+    body: "No travel, no waiting rooms, no rushing back into traffic afterwards, just rest.",
   },
   {
     icon: Leaf,
@@ -49,7 +49,7 @@ export default function AboutPage() {
             About Body Bliss
           </h1>
           <p className="max-w-prose text-subtitle text-bb-text-subtitle">
-            Nine years of Adelaide massage and wellness experience — now at
+            Nine years of Adelaide massage and wellness experience, now at
             your door.
           </p>
         </header>
@@ -63,15 +63,19 @@ export default function AboutPage() {
           </h2>
           <p className="max-w-prose text-description text-bb-text-description">
             Body Bliss Mobile Massage comes from the team behind Body Bliss
-            Massage &amp; Day Spa, where Adelaide locals have trusted us with
-            their massage and wellness care for nine years.
+            Massage and Day Spa. Since 2017 our day spas on Prospect Road in
+            Prospect and The Parade in Norwood have welcomed Adelaide locals
+            seven days a week, earning a 4.9 star rating from more than 1,500
+            reviews for relaxation, deep tissue, aromatherapy and cupping
+            treatments.
           </p>
           <p className="max-w-prose text-description text-bb-text-description">
-            The mobile service is a simple idea: the treatments our clients
-            love, delivered wherever they&apos;re most relaxed — at home after a
-            long week, in a hotel room mid-trip, or at the workplace as a team
-            treat. A vetted therapist arrives with a professional table, fresh
-            linens and everything else needed, so all you have to do is unwind.
+            The mobile service is a simple idea. We take the treatments our
+            clients already love and deliver them wherever people are most
+            relaxed, whether that is at home after a long week, in a hotel room
+            during a trip, or at the workplace as a team treat. An approved
+            therapist arrives with a professional table, fresh linen and
+            everything else needed, so all you have to do is unwind.
           </p>
         </section>
 
@@ -109,14 +113,14 @@ export default function AboutPage() {
           </h2>
           <p className="max-w-prose text-description text-bb-text-description">
             Our mission is simple: make professional massage effortless for
-            Adelaide — no traffic, no waiting rooms, no compromise on quality.
+            Adelaide, no traffic, no waiting rooms, no compromise on quality.
             Our promise sits behind every booking: a reviewed and approved
             therapist, transparent all-inclusive pricing, private handling of
             your details, and a professional, respectful experience from the
             moment you book to the moment the table is packed away.
           </p>
           <p className="max-w-prose text-description text-bb-text-description">
-            That promise runs both ways. We look after our therapists too —
+            That promise runs both ways. We look after our therapists with
             fair conditions, clear conduct standards for customers, and the
             confidence that every home they walk into has been confirmed as a
             safe, appropriate space to work.
@@ -142,7 +146,7 @@ export default function AboutPage() {
                 &ldquo;After nine years welcoming Adelaide into our day spa, we
                 kept hearing the same thing: the massage was perfect, but the
                 drive home undid half the good work. Body Bliss Mobile is our
-                answer — the same care, the same standards, delivered to the
+                answer, the same care, the same standards, delivered to the
                 place you&apos;re already most relaxed. Your home.&rdquo;
               </p>
               <p className="text-description font-medium text-bb-text-display">
@@ -174,7 +178,7 @@ export default function AboutPage() {
               },
               {
                 year: "2024",
-                text: "First trial home visits for long-standing day-spa clients — the feedback settles it.",
+                text: "First trial home visits for long-standing day-spa clients, the feedback settles it.",
               },
               {
                 year: "2025",
@@ -209,7 +213,7 @@ export default function AboutPage() {
             ))}
           </ol>
           <p className="text-caption text-bb-text-caption">
-            Timeline shown for demonstration — dates are illustrative.
+            Timeline shown for demonstration, dates are illustrative.
           </p>
         </section>
 
@@ -222,7 +226,7 @@ export default function AboutPage() {
           </h2>
           <p className="max-w-prose text-description text-bb-text-description">
             We serve the Adelaide metropolitan area, South Australia. Enter your
-            suburb during booking and we&apos;ll confirm coverage — and if
+            suburb during booking and we&apos;ll confirm coverage, and if
             we&apos;re not in your area yet, we&apos;re expanding as more
             therapists join.
           </p>
@@ -237,7 +241,7 @@ export default function AboutPage() {
               Experience It Yourself
             </h2>
             <p className="max-w-prose text-description text-primary-foreground">
-              Browse our massages or book in a couple of minutes — a vetted
+              Browse our massages or book in a couple of minutes, a vetted
               therapist comes to you.
             </p>
             <div className="flex flex-col gap-component tablet:flex-row">

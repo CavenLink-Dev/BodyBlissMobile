@@ -99,13 +99,13 @@ export const SEEDED_GIFT_CARD: DemoGiftCard = {
   recipientName: "Demo Customer",
   recipientEmail: "demo@example.com",
   buyerName: "Body Bliss",
-  message: "Enjoy a massage on us — demonstration gift card.",
+  message: "Enjoy a massage on us, demonstration gift card.",
   createdAt: "2026-06-01T09:00:00.000Z",
 };
 
 /* Demonstration promotional code applied at checkout. */
 export const PROMO_CODES: Record<string, { label: string; percentOff: number }> = {
-  WELCOME10: { label: "Welcome offer — 10% off", percentOff: 10 },
+  WELCOME10: { label: "Welcome offer, 10% off", percentOff: 10 },
 };
 
 /* ---------- low-level storage (fail-soft in private mode) ---------- */
@@ -181,7 +181,7 @@ export function signInDemoAccount() {
         streetAddress: "12 Osmond Terrace",
         suburb: "Norwood",
         postcode: "5067",
-        notes: "Parking: driveway available.\nStairs: No stairs — step-free access.",
+        notes: "Parking: driveway available.\nStairs: No stairs, step-free access.",
         status: "confirmed",
         createdAt: new Date().toISOString(),
       },
@@ -220,7 +220,7 @@ export function signInDemoAccount() {
         streetAddress: "Hotel Indigo, 23 Market St",
         suburb: "Adelaide",
         postcode: "5000",
-        notes: "Room 1204 — reception notified.",
+        notes: "Room 1204, reception notified.",
         status: "completed",
         createdAt: new Date(Date.now() - 42 * 864e5).toISOString(),
       },

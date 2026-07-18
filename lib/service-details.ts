@@ -19,14 +19,14 @@ export type ServiceDetail = {
 const SHARED_INCLUDES = [
   "A vetted, professional massage therapist who comes to you",
   "Professional massage table, fresh linens, oils and music",
-  "Set-up and pack-down — you don't lift a finger",
+  "Set-up and pack-down, you don't lift a finger",
 ];
 
 export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   relaxation: {
     tagline: "Gentle, flowing strokes to switch your whole body off.",
     intro:
-      "Our most popular massage. Long, rhythmic Swedish-style strokes with light to medium pressure, designed to calm the nervous system, ease everyday tension and leave you feeling deeply rested — without leaving home.",
+      "Our most popular massage. Long, rhythmic Swedish-style strokes with light to medium pressure, designed to calm the nervous system, ease everyday tension and leave you feeling deeply rested, without leaving home.",
     includes: [
       ...SHARED_INCLUDES,
       "Light to medium pressure, adjusted to your preference on the day",
@@ -39,7 +39,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "A first massage if you're unsure what to choose",
     ],
     suitableFor: [
-      "Almost everyone — it's our gentlest option",
+      "Almost everyone, it's our gentlest option",
       "First-time massage customers",
       "Anyone who prefers lighter pressure",
     ],
@@ -51,7 +51,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   remedial: {
     tagline: "Assessment-based treatment for specific problem areas.",
     intro:
-      "A targeted session that starts with a short conversation and assessment of how your body is moving, then focuses treatment on the areas that need it — combining deeper techniques, stretching and aftercare suggestions you can use between visits.",
+      "A targeted session that starts with a short conversation and assessment of how your body is moving, then focuses treatment on the areas that need it, combining deeper techniques, stretching and aftercare suggestions you can use between visits.",
     includes: [
       ...SHARED_INCLUDES,
       "A short assessment and chat before hands-on treatment begins",
@@ -69,7 +69,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Regulars who want a more structured, targeted session",
     ],
     considerations: [
-      "Remedial massage supports wellbeing — it isn't a substitute for diagnosis or treatment by a health practitioner.",
+      "Remedial massage supports wellbeing, it isn't a substitute for diagnosis or treatment by a health practitioner.",
       "If you're under treatment for an injury or medical condition, check with your practitioner first and mention it in your booking notes.",
       "Some tenderness for a day or two afterwards is normal.",
     ],
@@ -77,10 +77,10 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   deep_tissue: {
     tagline: "Firm, focused pressure for stubborn tension and knots.",
     intro:
-      "A slower, stronger massage that works into the deeper layers of muscle. Your therapist uses firm pressure, forearms and targeted techniques on the areas that need it most — ideal after heavy training, long hours at a desk, or persistent tightness.",
+      "A slower, stronger massage that works into the deeper layers of muscle. Your therapist uses firm pressure, forearms and targeted techniques on the areas that need it most, ideal after heavy training, long hours at a desk, or persistent tightness.",
     includes: [
       ...SHARED_INCLUDES,
-      "Firm, targeted pressure — always adjusted to your feedback",
+      "Firm, targeted pressure, always adjusted to your feedback",
       "Focus on the areas you nominate: back, shoulders, neck, legs",
     ],
     mayHelp: [
@@ -94,9 +94,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Active people and regular massage-goers",
     ],
     considerations: [
-      "Some tenderness for a day or two afterwards is normal — drink water and take it easy.",
+      "Some tenderness for a day or two afterwards is normal, drink water and take it easy.",
       "Not recommended immediately after acute injury. If you're under treatment for an injury or medical condition, check with your health practitioner first.",
-      "You're always in control — ask your therapist to go lighter at any time.",
+      "You're always in control, ask your therapist to go lighter at any time.",
     ],
   },
   pregnancy: {
@@ -107,7 +107,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       ...SHARED_INCLUDES,
       "A therapist with suitable pregnancy massage experience",
       "Side-lying positioning with supportive cushioning",
-      "Gentle, appropriate pressure — never on unsafe areas",
+      "Gentle, appropriate pressure, never on unsafe areas",
     ],
     mayHelp: [
       "Lower back, hip and pelvic discomfort",
@@ -131,7 +131,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     includes: [
       "Two vetted therapists arriving together",
       "Two professional tables, fresh linens, oils and music",
-      "Individual preferences — different pressure or focus for each person",
+      "Individual preferences, different pressure or focus for each person",
       "Set-up and pack-down of everything",
     ],
     mayHelp: [
@@ -144,14 +144,14 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       "Anyone who wants a shared wind-down at home or in a hotel",
     ],
     considerations: [
-      "You'll need space for two massage tables — a lounge room or large bedroom usually works well.",
+      "You'll need space for two massage tables, a lounge room or large bedroom usually works well.",
       "Both massages run simultaneously and finish together.",
     ],
   },
   hotel: {
     tagline: "In-room massage for hotel stays in Adelaide.",
     intro:
-      "Travelling for work or staying in town? Your therapist comes straight to your hotel room with everything needed — perfect after a flight, a conference day, or as part of a weekend away.",
+      "Travelling for work or staying in town? Your therapist comes straight to your hotel room with everything needed, perfect after a flight, a conference day, or as part of a weekend away.",
     includes: [
       ...SHARED_INCLUDES,
       "Discreet, professional service that respects hotel policies",
@@ -168,7 +168,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     ],
     considerations: [
       "Add your hotel name and room number in the booking notes, and let reception know you're expecting a therapist.",
-      "Most hotel rooms comfortably fit a massage table — a little floor space beside the bed is all we need.",
+      "Most hotel rooms comfortably fit a massage table, a little floor space beside the bed is all we need.",
     ],
   },
 };
@@ -183,7 +183,7 @@ export const DEFAULT_DETAIL: ServiceDetail = {
     "General relaxation and wellbeing",
     "Everyday muscle tension",
   ],
-  suitableFor: ["Most people — ask us if you're unsure"],
+  suitableFor: ["Most people, ask us if you're unsure"],
   considerations: [
     "Tell your therapist about any injuries, conditions or allergies before you start.",
   ],
@@ -196,10 +196,10 @@ export function getServiceDetail(code: string): ServiceDetail {
 /* ---------- shared page extras: preparation, medical guidance, FAQs ---------- */
 
 export const PREPARATION_STEPS = [
-  "Choose a quiet room with space for the massage table — about the size of a single bed, plus room to walk around.",
+  "Choose a quiet room with space for the massage table, about the size of a single bed, plus room to walk around.",
   "Add parking and access notes to your booking so your therapist arrives ready.",
   "Secure curious pets in another room for the duration of the appointment.",
-  "Wear whatever's comfortable — you'll be professionally draped throughout a table massage.",
+  "Wear whatever's comfortable, you'll be professionally draped throughout a table massage.",
   "Have a glass of water handy for afterwards, and give yourself a little quiet time if you can.",
 ];
 
@@ -216,7 +216,7 @@ type ServiceFaq = { q: string; a: string };
 const SHARED_FAQS: ServiceFaq[] = [
   {
     q: "How much space do I need?",
-    a: "Room for a massage table plus space for the therapist to move around it — roughly two metres by three. A lounge room or bedroom usually works well.",
+    a: "Room for a massage table plus space for the therapist to move around it, roughly two metres by three. A lounge room or bedroom usually works well.",
   },
   {
     q: "When should I arrive… or rather, be ready?",
@@ -224,21 +224,21 @@ const SHARED_FAQS: ServiceFaq[] = [
   },
   {
     q: "Can I use a gift card for this service?",
-    a: "Yes — enter the gift card code at checkout and any remaining balance stays on the card.",
+    a: "Yes, enter the gift card code at checkout and any remaining balance stays on the card.",
   },
 ];
 
 const SERVICE_FAQS: Record<string, ServiceFaq[]> = {
   relaxation: [
     {
-      q: "I've never had a massage before — is this the one?",
+      q: "I've never had a massage before, is this the one?",
       a: "It's the one we recommend for first-timers: gentle, flowing and easy to enjoy. Tell your therapist it's your first massage and they'll explain everything as they go.",
     },
   ],
   deep_tissue: [
     {
       q: "Will it hurt?",
-      a: "Firm doesn't have to mean painful. Your therapist works within your comfort and checks in on pressure — you're always in control, and can ask them to go lighter at any time.",
+      a: "Firm doesn't have to mean painful. Your therapist works within your comfort and checks in on pressure, you're always in control, and can ask them to go lighter at any time.",
     },
   ],
   remedial: [
@@ -256,7 +256,7 @@ const SERVICE_FAQS: Record<string, ServiceFaq[]> = {
   couples: [
     {
       q: "Can we choose different massage styles?",
-      a: "Yes — each of you chooses your own style and pressure. The two treatments run side by side and finish together.",
+      a: "Yes, each of you chooses your own style and pressure. The two treatments run side by side and finish together.",
     },
   ],
   hotel: [

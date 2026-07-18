@@ -66,7 +66,7 @@ const LOCATION_TYPES = [
 ] as const;
 
 const STAIRS_OPTIONS = [
-  "No stairs — step-free access",
+  "No stairs, step-free access",
   "A few steps",
   "One flight of stairs",
   "Several flights of stairs",
@@ -357,7 +357,7 @@ export function BookingFlow({
       setCodeError("That gift card has no remaining balance.");
     } else {
       setCodeError(
-        "We couldn't find that code. Check it and try again — codes look like GIFT-XXXX-XXXX.",
+        "We couldn't find that code. Check it and try again, codes look like GIFT-XXXX-XXXX.",
       );
     }
   }
@@ -500,14 +500,14 @@ export function BookingFlow({
             {selectedService?.variants.map((v) => (
               <option key={v.id} value={v.id}>
                 {v.durationMinutes} min
-                {v.priceCents != null ? ` — ${formatAud(v.priceCents)}` : ""}
+                {v.priceCents != null ? `, ${formatAud(v.priceCents)}` : ""}
               </option>
             ))}
           </SelectField>
 
           {isCouples ? (
             <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description">
-              Couples massage covers two people — two therapists arrive
+              Couples massage covers two people, two therapists arrive
               together with two tables.
             </p>
           ) : (
@@ -544,7 +544,7 @@ export function BookingFlow({
               </legend>
               {slots.length === 0 ? (
                 <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description">
-                  No appointments left on that date — try the next day, or a
+                  No appointments left on that date, try the next day, or a
                   nearby date. Availability shown is sample data for this
                   prototype.
                 </p>
@@ -589,7 +589,7 @@ export function BookingFlow({
               <span className="font-medium text-bb-text-display">
                 {formatAud(baseCents)}
               </span>{" "}
-              — includes travel (metro), table and equipment.
+, includes travel (metro), table and equipment.
             </p>
           ) : null}
 
@@ -699,7 +699,7 @@ export function BookingFlow({
             {availableTherapists.length === 0 ? (
               <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description">
                 No sample therapist matches those preferences for this massage
-                — choose &ldquo;Match me automatically&rdquo; and we&apos;ll
+, choose &ldquo;Match me automatically&rdquo; and we&apos;ll
                 assign a suitable therapist.
               </p>
             ) : null}
@@ -732,7 +732,7 @@ export function BookingFlow({
           {user ? (
             <p className="flex items-start gap-compact rounded border border-border bg-cream p-3 text-description text-bb-text-description">
               <BadgeCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
-              Signed in as {user.name} ({user.email}) — details pre-filled below.
+              Signed in as {user.name} ({user.email}), details pre-filled below.
             </p>
           ) : (
             <Card variant="row" className="flex-col items-start gap-component">
@@ -871,15 +871,15 @@ export function BookingFlow({
 
           {travelFeeCents > 0 ? (
             <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description" role="status">
-              A {formatAud(travelFeeCents)} travel fee applies for this suburb —
-              it&apos;s included in your total before you pay.
+              A {formatAud(travelFeeCents)} travel fee applies for this suburb.
+              It is included in your total before you pay.
             </p>
           ) : null}
 
           <Field
             id="unit"
             label="Unit, apartment or hotel room"
-            hint="Optional — unit number, room number, floor."
+            hint="Optional, unit number, room number, floor."
             value={data.unit}
             onChange={(e) => set("unit", e.target.value)}
           />
@@ -938,7 +938,7 @@ export function BookingFlow({
           <Field
             id="pets"
             label="Pets"
-            hint="e.g. 'Friendly dog — will be in the yard.'"
+            hint="e.g. 'Friendly dog, will be in the yard.'"
             value={data.pets}
             onChange={(e) => set("pets", e.target.value)}
           />
@@ -1055,7 +1055,7 @@ export function BookingFlow({
           <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
             <Lock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
             <span>
-              Massage supports general wellbeing — this website doesn&apos;t
+              Massage supports general wellbeing, this website doesn&apos;t
               provide medical advice. If you&apos;re managing a health
               condition, recovering from surgery, or your pregnancy is
               high-risk, please check with your health practitioner before
@@ -1164,7 +1164,7 @@ export function BookingFlow({
                   <span className="font-medium text-bb-text-display">
                     {appliedCode.code}
                   </span>{" "}
-                  applied — you save {formatAud(discountCents)}.
+                  applied, you save {formatAud(discountCents)}.
                 </p>
                 <Button
                   type="button"
@@ -1205,7 +1205,7 @@ export function BookingFlow({
             <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
             <span>
               Free cancellation until your therapist is on the way. Payment is
-              simulated in this demo — nothing is ever charged.
+              simulated in this demo, nothing is ever charged.
             </span>
           </p>
 
@@ -1279,7 +1279,7 @@ export function BookingFlow({
           ) : (
             <PaymentForm
               amountCents={totalCents}
-              buttonLabel={`Complete Demo Booking — ${formatAud(totalCents)}`}
+              buttonLabel={`Complete Demo Booking, ${formatAud(totalCents)}`}
               onPaid={onPaid}
             />
           )}

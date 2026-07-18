@@ -79,7 +79,7 @@ export function SuburbChecker() {
                 <CheckCircle2 aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
                 <span>
                   <span className="font-medium text-bb-text-display">
-                    Great news — {result.area.suburb} is in our area.
+                    Great news, {result.area.suburb} is in our area.
                   </span>{" "}
                   No travel fee applies; the price you see is the price you pay.
                 </span>

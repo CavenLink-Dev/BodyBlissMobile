@@ -133,7 +133,7 @@ export function GiftCardPurchase() {
           <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
           <span>
             <span className="font-medium text-bb-text-display">Test mode.</span>{" "}
-            No payment was taken and no email was sent — this is a
+            No payment was taken and no email was sent, this is a
             demonstration.
           </span>
         </p>
@@ -179,7 +179,7 @@ export function GiftCardPurchase() {
         {preview}
         <PaymentForm
           amountCents={effectiveCents}
-          buttonLabel={`Complete Demo Purchase — ${formatAud(effectiveCents)}`}
+          buttonLabel={`Complete Demo Purchase, ${formatAud(effectiveCents)}`}
           onPaid={onPaid}
         />
         <div>
@@ -341,7 +341,7 @@ export function GiftCardPurchase() {
         <FieldTextarea
           id="giftMessage"
           label="Personal message"
-          hint="Optional — shown on the gift card."
+          hint="Optional, shown on the gift card."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />

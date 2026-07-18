@@ -90,7 +90,7 @@ export function travelFeeForSuburb(suburbOrPostcode: string): number {
 }
 
 export const ZONE_LABELS: Record<AreaZone, string> = {
-  core: "Included — no travel fee",
-  extended: "Available — small travel fee",
-  hills: "Adelaide Hills — travel fee applies",
+  core: "Included, no travel fee",
+  extended: "Available, small travel fee",
+  hills: "Adelaide Hills, travel fee applies",
 };

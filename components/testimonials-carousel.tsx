@@ -1,20 +1,16 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { TESTIMONIALS } from "@/lib/content";
 
 /*
-  Customer-review carousel on the charcoal band. Cleaned up:
-  - Full-width sliding track — cards transition left to right automatically
-    (every 7s) and via subtle chevron controls.
-  - One attribution line (name · suburb · service · date); the sample-data
-    note lives once, below the carousel on the page — nothing said twice.
-  - Pauses on hover/focus and when the tab is hidden; honours
-    prefers-reduced-motion (no auto-advance; the global reduced-motion rule
-    zeroes the slide transition).
+  Reviews — stripped back to how the best booking sites do it: one overall
+  rating line up top, then a single quote at a time with just a name and a
+  suburb. Nothing repeated, nothing extra. Slides automatically, pauses on
+  hover and focus, honours prefers-reduced-motion.
 */
 
 const AUTO_MS = 7000;
@@ -53,18 +49,21 @@ export function TestimonialsCarousel() {
       aria-labelledby="testimonials-heading"
       className="flex flex-col gap-card-gap rounded bg-primary p-card-padding shadow-rest tablet:p-8"
     >
-      <div className="flex items-end justify-between gap-component">
+      <div className="flex flex-wrap items-end justify-between gap-component">
         <div className="flex flex-col gap-compact">
-          <p className="flex items-center gap-compact text-caption font-medium uppercase tracking-[0.14em] text-primary-foreground/80">
-            <span aria-hidden="true" className="h-0.5 w-6 rounded bg-secondary" />
-            Reviews
-          </p>
           <h2
             id="testimonials-heading"
             className="font-heading text-title font-semibold text-primary-foreground"
           >
             What Customers Say
           </h2>
+          <p className="flex items-center gap-compact text-description text-linen">
+            <Star aria-hidden="true" className="size-4 fill-bb-star text-bb-star" />
+            <span>
+              <span className="font-semibold text-primary-foreground">4.9</span>{" "}
+              from 1,500+ reviews of our Prospect and Norwood day spas
+            </span>
+          </p>
         </div>
         <div className="flex items-center">
           <button
@@ -86,7 +85,7 @@ export function TestimonialsCarousel() {
         </div>
       </div>
 
-      {/* Full-width sliding track */}
+      {/* Full-width sliding quotes */}
       <div
         role="group"
         aria-roledescription="carousel"
@@ -103,24 +102,21 @@ export function TestimonialsCarousel() {
           aria-live="polite"
         >
           {TESTIMONIALS.map((t, i) => (
-            <div
+            <figure
               key={t.id}
-              className="flex w-full shrink-0 flex-col justify-between gap-card-gap py-2"
+              className="flex w-full shrink-0 flex-col gap-component py-2"
               aria-hidden={i !== index}
             >
-              <div className="flex flex-col gap-component">
-                <Quote aria-hidden="true" className="size-8 text-secondary" />
-                <p className="max-w-prose text-subtitle text-primary-foreground">
-                  {t.quote}
-                </p>
-              </div>
-              <p className="text-description text-linen">
+              <blockquote className="max-w-prose text-subtitle text-primary-foreground">
+                &ldquo;{t.quote}&rdquo;
+              </blockquote>
+              <figcaption className="text-description text-linen">
                 <span className="font-semibold text-primary-foreground">
                   {t.name}
-                </span>{" "}
-                · {t.suburb} · {t.service} · {t.date}
-              </p>
-            </div>
+                </span>
+                , {t.suburb}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

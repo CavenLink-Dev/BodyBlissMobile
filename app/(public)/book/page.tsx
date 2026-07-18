@@ -4,7 +4,7 @@ import { BookingFlow } from "@/components/booking/booking-flow";
 import { getServicesWithPricing } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
-  title: "Book a massage — Body Bliss Mobile Massage",
+  title: "Book a massage | Body Bliss Mobile Massage",
   description:
     "Book your Body Bliss mobile massage: choose your massage and time, tell us where to come, and check out in minutes.",
 };
@@ -29,6 +29,16 @@ export default async function BookPage({
           <p className="max-w-prose text-description text-bb-text-description">
             It takes a couple of minutes. Start with your massage and time,
             then tell us where to come.
+          </p>
+          <p className="max-w-prose text-description text-bb-text-description">
+            Prefer to book by phone? Call{" "}
+            <a
+              href="tel:0880000000"
+              className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              (08) 8000 0000
+            </a>{" "}
+            and we will take care of it for you.
           </p>
         </div>
         <BookingFlow

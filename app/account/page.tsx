@@ -89,7 +89,7 @@ function SignedOut() {
           </h1>
           <p className="text-description text-bb-text-description">
             Sign in to manage bookings, save your details and rebook in
-            seconds. Everything here is simulated — no real account is
+            seconds. Everything here is simulated, no real account is
             created.
           </p>
         </div>
@@ -97,7 +97,7 @@ function SignedOut() {
         <Card className="flex flex-col gap-component">
           <CardTitle className="text-subtitle">Try the demo account</CardTitle>
           <CardDescription>
-            One tap, no details needed — explore a pre-filled account with
+            One tap, no details needed, explore a pre-filled account with
             upcoming and past bookings, saved addresses and preferences.
           </CardDescription>
           <Button
@@ -122,7 +122,7 @@ function SignedOut() {
             <Link href="/signup?next=/account">Create Account</Link>
           </Button>
           <Button asChild variant="quiet" className="w-full">
-            <Link href="/book">Continue as Guest — book without an account</Link>
+            <Link href="/book">Continue as Guest, book without an account</Link>
           </Button>
         </div>
       </div>
@@ -210,7 +210,7 @@ export default function AccountPage() {
               </p>
               {user.isDemoAccount ? (
                 <p className="text-caption text-bb-text-caption">
-                  Demonstration account — all data is sample data in this
+                  Demonstration account, all data is sample data in this
                   browser.
                 </p>
               ) : null}
@@ -237,7 +237,7 @@ export default function AccountPage() {
           {upcoming.length === 0 ? (
             <Card className="flex flex-col items-start gap-component">
               <CardDescription>
-                You have no upcoming bookings — your next massage is a couple
+                You have no upcoming bookings, your next massage is a couple
                 of minutes away.
               </CardDescription>
               <Button asChild variant="secondary">
@@ -418,7 +418,7 @@ export default function AccountPage() {
                 Visa •••• 4242 <span className="text-bb-text-caption">(placeholder)</span>
               </p>
               <CardDescription>
-                Saved cards are placeholders in this prototype — no real
+                Saved cards are placeholders in this prototype, no real
                 payment details are ever stored.
               </CardDescription>
               <Button
@@ -464,7 +464,7 @@ export default function AccountPage() {
               </span>
             </label>
             <CardDescription>
-              Booking confirmations are always sent — they&apos;re part of the
+              Booking confirmations are always sent, they&apos;re part of the
               service. (All messages are simulated in this prototype.)
             </CardDescription>
           </Card>

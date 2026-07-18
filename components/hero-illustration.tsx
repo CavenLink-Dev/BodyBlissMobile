@@ -111,7 +111,7 @@ export function HeroIllustration({ className }: { className?: string }) {
         <rect x="324" y="238" width="48" height="4" rx="2" fill="hsl(38 41% 95%)" opacity="0.5" />
       </g>
 
-      {/* therapist's carry bag — the "mobile" in mobile massage */}
+      {/* therapist's carry bag, the "mobile" in mobile massage */}
       <g>
         <rect x="86" y="234" width="52" height="30" rx="6" fill="hsl(var(--camel))" />
         <path

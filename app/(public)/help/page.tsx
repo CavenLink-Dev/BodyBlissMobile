@@ -19,7 +19,7 @@ import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { ReportConcernForm } from "@/components/report-concern-form";
 
 export const metadata: Metadata = {
-  title: "Help & safety — Body Bliss Mobile Massage",
+  title: "Help & safety | Body Bliss Mobile Massage",
   description:
     "Support contacts, safety commitments, cancellations, refunds, complaints and answers to common questions about Body Bliss mobile massage in Adelaide.",
 };
@@ -33,12 +33,12 @@ const COMMITMENTS = [
   {
     icon: Lock,
     title: "Your address stays private",
-    body: "Your exact address and access notes are only shared with your therapist once your booking is confirmed — never before.",
+    body: "Your exact address and access notes are only shared with your therapist once your booking is confirmed, never before.",
   },
   {
     icon: ShieldCheck,
     title: "Professional treatment, always",
-    body: "Every service is strictly professional, therapeutic massage. Any inappropriate behaviour — from anyone — ends the appointment immediately, and both you and your therapist can end a session at any time.",
+    body: "Every service is strictly professional, therapeutic massage. Any inappropriate behaviour, from anyone, ends the appointment immediately, and both you and your therapist can end a session at any time.",
   },
   {
     icon: MessageCircle,
@@ -50,7 +50,7 @@ const COMMITMENTS = [
 const FAQS: { q: string; a: string }[] = [
   {
     q: "How do I change a booking?",
-    a: "Open the booking in your account and use Manage Booking, or contact support with your booking reference. We'll do our best to accommodate changes to time, address or service — the earlier you ask, the easier it is.",
+    a: "Open the booking in your account and use Manage Booking, or contact support with your booking reference. We'll do our best to accommodate changes to time, address or service, the earlier you ask, the easier it is.",
   },
   {
     q: "How do cancellations work?",
@@ -58,15 +58,15 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How do refunds work?",
-    a: "Refunds go back to your original payment method within 5–7 business days. Amounts paid by gift card return to the gift card. If a refund seems to be missing, contact support with your booking reference.",
+    a: "Refunds go back to your original payment method within 5 to 7 business days. Amounts paid by gift card return to the gift card. If a refund seems to be missing, contact support with your booking reference.",
   },
   {
-    q: "My therapist is running late — what happens?",
+    q: "My therapist is running late, what happens?",
     a: "We'll message you as soon as we know. You always receive your full booked treatment time; if that's not possible on the day, we refund the difference. If you can't wait, you can cancel with a full refund.",
   },
   {
     q: "What's expected of me as a customer?",
-    a: "A safe, clean space for the treatment, respectful behaviour from everyone present, and accurate booking details. Massage is strictly professional — any inappropriate request or behaviour ends the appointment immediately with the full price payable.",
+    a: "A safe, clean space for the treatment, respectful behaviour from everyone present, and accurate booking details. Massage is strictly professional, any inappropriate request or behaviour ends the appointment immediately with the full price payable.",
   },
   {
     q: "What can I expect from my therapist?",
@@ -77,12 +77,12 @@ const FAQS: { q: string; a: string }[] = [
     a: "Both sides of every booking are protected: customers get approved-only therapists and private address handling; therapists get customer conduct standards, location details in advance, and the right to end any appointment where they feel unsafe. Concerns are reviewed by a person, not a form-filler.",
   },
   {
-    q: "I'm in a hotel or apartment — how does access work?",
+    q: "I'm in a hotel or apartment, how does access work?",
     a: "Add your unit or room number, buzzer or intercom details and parking notes when you book. For hotels, let reception know you're expecting a therapist. Your therapist arrives about 10 minutes early to set up.",
   },
   {
     q: "Where does the therapist park?",
-    a: "Wherever you suggest in your parking notes — driveway, street or visitor parking. If paid parking is truly unavoidable, any estimate is flagged before you pay, never surprise-charged afterwards.",
+    a: "Wherever you suggest in your parking notes, driveway, street or visitor parking. If paid parking is truly unavoidable, any estimate is flagged before you pay, never surprise-charged afterwards.",
   },
   {
     q: "Do I need to share health information?",
@@ -111,7 +111,7 @@ export default function HelpPage() {
             Help &amp; Safety
           </h1>
           <p className="max-w-prose text-subtitle text-bb-text-subtitle">
-            Your safety and comfort come first — here&apos;s how to reach us,
+            Your safety and comfort come first, here&apos;s how to reach us,
             and exactly how bookings, payments and cancellations work.
           </p>
         </header>
@@ -150,7 +150,7 @@ export default function HelpPage() {
               <div className="flex flex-col gap-compact">
                 <CardTitle className="text-subtitle">Support hours</CardTitle>
                 <CardDescription>
-                  Mon–Fri 8am–8pm · Sat–Sun 9am–5pm (ACST)
+                  Mon to Fri 8am to 8pm, Sat and Sun 9am to 5pm (ACST)
                 </CardDescription>
               </div>
             </Card>
@@ -299,8 +299,8 @@ export default function HelpPage() {
               Manage It Yourself
             </h2>
             <p className="max-w-prose text-description text-bb-text-description">
-              Most things — changing, cancelling or rebooking an appointment,
-              checking a gift card, updating preferences — can be done straight
+              Most things, changing, cancelling or rebooking an appointment,
+              checking a gift card, updating preferences, can be done straight
               from your account.
             </p>
             <Button asChild variant="secondary">

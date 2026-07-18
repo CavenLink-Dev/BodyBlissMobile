@@ -14,6 +14,11 @@ const CHARCOAL = "hsl(var(--charcoal))";
 const CREAM = "hsl(var(--cream))";
 const LINEN = "hsl(var(--linen))";
 const WHITE = "hsl(var(--white))";
+/* Gentle supporting tones that stay within the warm palette:
+   a muted eucalyptus green and a warm taupe brown. */
+const GREEN = "hsl(150 28% 42%)";
+const GREEN_LIGHT = "hsl(150 30% 55%)";
+const TAUPE = "hsl(35 27% 43%)";
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
@@ -37,8 +42,12 @@ function Frame({ children }: { children: React.ReactNode }) {
 export function IllustrationChoose() {
   return (
     <Frame>
+      {/* small leaf accent */}
+      <g className="bb-anim-sway">
+        <path d="M52 60c-2-10 3-19 11-22 1 9-3 18-11 22z" fill={GREEN_LIGHT} />
+      </g>
       <g className="bb-anim-float">
-        <rect x="70" y="26" width="60" height="104" rx="10" fill={CHARCOAL} />
+        <rect x="70" y="26" width="60" height="104" rx="10" fill={TAUPE} />
         <rect x="75" y="34" width="50" height="88" rx="6" fill={WHITE} />
         {/* service rows */}
         <rect x="80" y="42" width="40" height="12" rx="3" fill={LINEN} />
@@ -69,10 +78,15 @@ export function IllustrationLocation() {
     <Frame>
       {/* house */}
       <rect x="62" y="78" width="76" height="48" rx="4" fill={WHITE} />
-      <path d="M56 82l44-30 44 30" stroke={CHARCOAL} strokeWidth="7" strokeLinecap="round" fill="none" />
+      <path d="M56 82l44-30 44 30" stroke={TAUPE} strokeWidth="7" strokeLinecap="round" fill="none" />
       <rect x="90" y="96" width="20" height="30" rx="2" fill={GOLD} />
       <rect x="70" y="90" width="13" height="13" rx="2" fill={LINEN} />
       <rect x="117" y="90" width="13" height="13" rx="2" fill={LINEN} />
+      {/* garden bush beside the house */}
+      <g className="bb-anim-sway">
+        <circle cx="50" cy="118" r="9" fill={GREEN} />
+        <circle cx="42" cy="122" r="7" fill={GREEN_LIGHT} />
+      </g>
       {/* floating pin */}
       <g className="bb-anim-float">
         <path
@@ -150,6 +164,14 @@ export function IllustrationRelax() {
       <g stroke={GOLD} strokeWidth="2.4" strokeLinecap="round" fill="none">
         <path className="bb-anim-steam" d="M163 98c2-3-2-5 0-8" />
         <path className="bb-anim-steam-late" d="M168 96c2-3-2-5 0-8" />
+      </g>
+      {/* potted plant on the other side */}
+      <g>
+        <g className="bb-anim-sway">
+          <path d="M36 104c-6-10-16-12-24-10 3 8 12 14 22 12" fill={GREEN_LIGHT} />
+          <path d="M38 104c1-11-4-21-12-24-2 9 2 19 10 24" fill={GREEN} />
+        </g>
+        <path d="M28 104h18l-3 22H31l-3-22z" fill={TAUPE} />
       </g>
     </Frame>
   );

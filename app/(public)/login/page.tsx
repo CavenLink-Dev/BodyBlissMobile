@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 import { LoginForm } from "@/components/auth/login-form";
 
-export const metadata: Metadata = { title: "Sign in — Body Bliss Mobile Massage" };
+export const metadata: Metadata = { title: "Sign in | Body Bliss Mobile Massage" };
 
 export default function LoginPage() {
   return (

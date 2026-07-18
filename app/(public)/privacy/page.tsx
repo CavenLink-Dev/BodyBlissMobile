@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FlaskConical } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Privacy policy — Body Bliss Mobile Massage",
+  title: "Privacy policy | Body Bliss Mobile Massage",
   description:
     "How Body Bliss Mobile Massage collects, uses and protects your personal information.",
 };
@@ -18,23 +18,23 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "1. What we collect",
     paragraphs: [
-      "Account details: your name, email address, phone number and password (stored securely by our authentication provider — we never see your password). Guest bookings collect the same contact details without creating an account.",
+      "Account details: your name, email address, phone number and password (stored securely by our authentication provider, we never see your password). Guest bookings collect the same contact details without creating an account.",
       "Booking details: the address for your massage, parking and access notes, your preferred date and time, the service you choose, and any therapist preference.",
-      "Optional health information: anything you choose to tell us — accessibility needs, pressure preferences, allergies, pregnancy, injuries or conditions. This is sensitive information, and you never have to share it; share only what you're comfortable with, and we only ask for it to prepare your treatment safely.",
-      "Payment information: handled entirely by our payment provider — full card numbers never touch our systems. (In this prototype, payment is simulated and no card details are collected at all.)",
+      "Optional health information: anything you choose to tell us, accessibility needs, pressure preferences, allergies, pregnancy, injuries or conditions. This is sensitive information, and you never have to share it; share only what you're comfortable with, and we only ask for it to prepare your treatment safely.",
+      "Payment information: handled entirely by our payment provider, full card numbers never touch our systems. (In this prototype, payment is simulated and no card details are collected at all.)",
     ],
   },
   {
     heading: "2. How we use it",
     paragraphs: [
-      "We use your information to arrange and deliver your booking: matching a therapist, confirming your appointment, and helping the therapist arrive prepared. We use your email and phone for booking-related messages, and for marketing only if you opt in — you can opt out any time from your account.",
+      "We use your information to arrange and deliver your booking: matching a therapist, confirming your appointment, and helping the therapist arrive prepared. We use your email and phone for booking-related messages, and for marketing only if you opt in, you can opt out any time from your account.",
       "We do not sell your personal information, and we don't use it for third-party advertising.",
     ],
   },
   {
     heading: "3. What your therapist sees",
     paragraphs: [
-      "Your exact address, access notes and the treatment notes you consented to share are provided to your assigned therapist once your booking is confirmed — never before, and never to anyone else. Therapists only ever see the bookings assigned to them.",
+      "Your exact address, access notes and the treatment notes you consented to share are provided to your assigned therapist once your booking is confirmed, never before, and never to anyone else. Therapists only ever see the bookings assigned to them.",
     ],
   },
   {
@@ -47,13 +47,13 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "5. Cookies and analytics",
     paragraphs: [
-      "We only use essential cookies — they keep you signed in and make bookings work. We don't currently use advertising or tracking cookies. If we introduce analytics in future, we'll use a privacy-respecting configuration and ask for your consent first.",
+      "We only use essential cookies, they keep you signed in and make bookings work. We don't currently use advertising or tracking cookies. If we introduce analytics in future, we'll use a privacy-respecting configuration and ask for your consent first.",
     ],
   },
   {
     heading: "6. Storage, security and overseas access",
     paragraphs: [
-      "Your data is stored with our database and authentication provider with access controls that limit every record to the people who need it — you can only see your own bookings, and therapists can only see bookings assigned to them. Data is encrypted in transit.",
+      "Your data is stored with our database and authentication provider with access controls that limit every record to the people who need it, you can only see your own bookings, and therapists can only see bookings assigned to them. Data is encrypted in transit.",
       "Our providers host data in Australia where available. Where a provider processes data overseas, we take reasonable steps to ensure it's handled consistently with the Australian Privacy Principles.",
     ],
   },
@@ -84,7 +84,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "11. Changes to this policy",
     paragraphs: [
-      "We may update this policy from time to time — the latest version always lives on this page, with the date below the heading.",
+      "We may update this policy from time to time, the latest version always lives on this page, with the date below the heading.",
     ],
   },
 ];
@@ -98,7 +98,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="max-w-prose text-subtitle text-bb-text-subtitle">
-            What we collect, why, and who can see it — in plain English.
+            What we collect, why, and who can see it, in plain English.
           </p>
           <p className="text-caption text-bb-text-caption">
             Last updated 14 July 2026

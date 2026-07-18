@@ -63,7 +63,7 @@ export function TherapistDirectory() {
         <Card className="flex flex-col items-start gap-component">
           <SearchX aria-hidden="true" className="size-8 text-primary" />
           <CardDescription>
-            No therapists match those filters. Try widening your search — or
+            No therapists match those filters. Try widening your search, or
             book with automatic matching and we&apos;ll assign the best
             available therapist.
           </CardDescription>

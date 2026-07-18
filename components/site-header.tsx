@@ -52,7 +52,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-content items-center justify-between gap-component px-page-inline py-2 [padding-top:max(0.5rem,env(safe-area-inset-top))]">
         <Link
           href="/"
-          aria-label="Body Bliss Mobile Massage — home"
+          aria-label="Body Bliss Mobile Massage, home"
           className="flex min-h-hit-target items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           {/* Oversized logo with negative vertical margins: the image grows

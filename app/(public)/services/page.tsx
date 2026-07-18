@@ -8,7 +8,7 @@ import { getServicesWithPricing, COMING_SOON_SERVICES } from "@/lib/catalogue";
 import { formatAud } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Services & prices — Body Bliss Mobile Massage",
+  title: "Services & prices | Body Bliss Mobile Massage",
   description:
     "Mobile massage options and prices for Body Bliss across Adelaide. A vetted therapist comes to you.",
 };
@@ -103,7 +103,7 @@ export default async function ServicesPage() {
               id="coming-soon-heading"
               className="font-heading text-title font-semibold text-bb-text-title"
             >
-              More Treatments — Coming Soon
+              More Treatments. Coming Soon
             </h2>
             <p className="max-w-prose text-description text-bb-text-description">
               We&apos;re expanding beyond massage. These mobile treatments are
@@ -127,7 +127,7 @@ export default async function ServicesPage() {
                 <CardDescription className="flex-1">{s.description}</CardDescription>
                 <div>
                   <Button asChild variant="quiet" className="border border-border">
-                    <Link href={`/services/${s.code}`} aria-label={`${s.name} — coming soon`}>
+                    <Link href={`/services/${s.code}`} aria-label={`${s.name}, coming soon`}>
                       Learn More
                     </Link>
                   </Button>

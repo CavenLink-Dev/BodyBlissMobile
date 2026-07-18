@@ -46,7 +46,7 @@ export function CookieNotice() {
     >
       <div className="mx-auto flex max-w-content flex-col gap-component px-page-inline py-3 tablet:flex-row tablet:items-center">
         <p className="flex-1 text-description text-bb-text-description">
-          We only use essential cookies — they keep you signed in and make
+          We only use essential cookies, they keep you signed in and make
           bookings work. No advertising or tracking cookies.{" "}
           <Link
             href="/privacy"

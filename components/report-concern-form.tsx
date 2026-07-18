@@ -63,7 +63,7 @@ export function ReportConcernForm() {
         <CardDescription>
           Thank you. In the live site our support team would acknowledge this
           within one business day at {email}, and prioritise anything involving
-          safety. (This is a demonstration — nothing was sent.)
+          safety. (This is a demonstration, nothing was sent.)
         </CardDescription>
         <p className="text-caption text-bb-text-caption">Reference: {ref}</p>
         <Button
@@ -91,7 +91,7 @@ export function ReportConcernForm() {
         <CardTitle className="text-subtitle">Report a concern</CardTitle>
       </div>
       <CardDescription>
-        Tell us about anything that didn&apos;t feel right — a booking issue,
+        Tell us about anything that didn&apos;t feel right, a booking issue,
         conduct, safety, or something else. Safety reports are prioritised.
       </CardDescription>
       <form noValidate onSubmit={onSubmit} className="flex flex-col gap-component">
@@ -132,7 +132,7 @@ export function ReportConcernForm() {
         <Field
           id="concernRef"
           label="Booking reference (if relevant)"
-          hint="e.g. BB-XXXXXX — helps us find the booking quickly."
+          hint="e.g. BB-XXXXXX, helps us find the booking quickly."
           value={reference}
           onChange={(e) => setReference(e.target.value)}
         />
@@ -148,7 +148,7 @@ export function ReportConcernForm() {
           {submitting ? "Sending…" : "Submit Report"}
         </Button>
         <p className="text-caption text-bb-text-caption">
-          Reports are simulated in this prototype — nothing is sent.
+          Reports are simulated in this prototype, nothing is sent.
         </p>
       </form>
     </Card>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form";
 
 export const metadata: Metadata = {
-  title: "Reset password — Body Bliss Mobile Massage",
+  title: "Reset password | Body Bliss Mobile Massage",
   robots: { index: false },
 };
 

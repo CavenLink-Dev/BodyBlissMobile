@@ -9,7 +9,7 @@ import { SERVICE_AREAS, ZONE_LABELS, TRAVEL_FEES_CENTS, type AreaZone } from "@/
 import { formatAud } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Service areas — Body Bliss Mobile Massage",
+  title: "Service areas | Body Bliss Mobile Massage",
   description:
     "The Adelaide suburbs Body Bliss mobile massage therapists visit, including travel-fee areas and selected Adelaide Hills suburbs.",
 };

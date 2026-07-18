@@ -56,6 +56,12 @@ export default function RootLayout({
   return (
     <html lang="en-AU">
       <body className={`${sora.variable} ${dmSans.variable} font-sans antialiased`}>
+        <a
+          href="#main-content"
+          className="sr-only z-50 rounded bg-primary px-4 py-3 text-description font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to main content
+        </a>
         <TestModeBanner />
         {children}
         <CookieNotice />

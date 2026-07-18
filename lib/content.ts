@@ -42,7 +42,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t3",
     quote:
-      "At 31 weeks pregnant, getting to a clinic was the last thing I wanted. Having a pregnancy-experienced therapist come to me — with all the cushions and side-lying setup — was a game changer.",
+      "At 31 weeks pregnant, getting to a clinic was the last thing I wanted. Having a pregnancy-experienced therapist come to me, with all the cushions and side-lying setup, was a game changer.",
     name: "Emily R.",
     suburb: "Glenelg",
     service: "Pregnancy Massage",
@@ -82,7 +82,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t7",
     quote:
-      "The remedial session actually addressed my desk-job neck properly — she assessed first, explained what she found, and followed up with stretches. Rare to get that level of care at home.",
+      "The remedial session actually addressed my desk-job neck properly, she assessed first, explained what she found, and followed up with stretches. Rare to get that level of care at home.",
     name: "Anna M.",
     suburb: "Unley",
     service: "Remedial Massage",

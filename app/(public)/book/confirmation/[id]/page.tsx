@@ -56,7 +56,7 @@ export default function ConfirmationPage() {
             Booking not found
           </h1>
           <p className="text-description text-bb-text-description">
-            We couldn&apos;t find this booking in this browser — demo bookings
+            We couldn&apos;t find this booking in this browser, demo bookings
             are stored locally, so they don&apos;t follow you between devices.
           </p>
           <Button asChild variant="secondary">
@@ -81,7 +81,7 @@ export default function ConfirmationPage() {
             Booking Confirmed
           </h1>
           <p className="text-description text-bb-text-description">
-            You&apos;re all set — your therapist will arrive with everything
+            You&apos;re all set, your therapist will arrive with everything
             needed. A confirmation email would normally arrive shortly.
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function ConfirmationPage() {
           <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
           <span>
             <span className="font-medium text-bb-text-display">Test mode.</span>{" "}
-            This was a demonstration checkout — no payment was taken and no
+            This was a demonstration checkout, no payment was taken and no
             real booking was made.
           </span>
         </p>
@@ -155,7 +155,7 @@ export default function ConfirmationPage() {
             variant="secondary"
             className="w-full"
             onClick={() =>
-              toast("Added to your calendar (simulated — this is a demonstration).")
+              toast("Added to your calendar (simulated, this is a demonstration).")
             }
           >
             <CalendarPlus aria-hidden="true" className="size-5" />

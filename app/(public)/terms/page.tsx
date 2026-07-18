@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FlaskConical } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Terms & conditions — Body Bliss Mobile Massage",
+  title: "Terms & conditions | Body Bliss Mobile Massage",
   description:
     "The terms and conditions for booking a Body Bliss mobile massage in Adelaide.",
 };
@@ -30,14 +30,14 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "3. Accounts and guest bookings",
     paragraphs: [
-      "You can book with a free account or as a guest. Either way, you're responsible for making sure the information in your booking — address, access notes, contact details — is accurate. Account holders are also responsible for keeping their sign-in details secure.",
+      "You can book with a free account or as a guest. Either way, you're responsible for making sure the information in your booking, address, access notes, contact details, is accurate. Account holders are also responsible for keeping their sign-in details secure.",
       "Your exact address is only shared with your therapist once your booking is confirmed. See our Privacy Policy for how we handle your information.",
     ],
   },
   {
     heading: "4. Booking confirmation and therapist matching",
     paragraphs: [
-      "Your booking is confirmed at checkout. You can choose a specific therapist or let us match you; either way, only approved therapists are ever assigned. If your chosen therapist becomes unavailable, we'll offer a suitable substitute, an alternative time, or a full refund — your choice.",
+      "Your booking is confirmed at checkout. You can choose a specific therapist or let us match you; either way, only approved therapists are ever assigned. If your chosen therapist becomes unavailable, we'll offer a suitable substitute, an alternative time, or a full refund, your choice.",
       "If no therapist is available for your time, we'll offer an alternative or refund you in full.",
     ],
   },
@@ -45,7 +45,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
     heading: "5. Pricing, GST and additional charges",
     paragraphs: [
       "The price shown at checkout is the price you pay. It includes GST, the therapist's travel within the standard metro area, the massage table and all equipment.",
-      "Suburbs outside the standard area attract a travel fee, always shown in your total before you pay. If unavoidable paid parking applies at your location, any estimate is flagged before checkout — surprise charges are never added afterwards.",
+      "Suburbs outside the standard area attract a travel fee, always shown in your total before you pay. If unavoidable paid parking applies at your location, any estimate is flagged before checkout, surprise charges are never added afterwards.",
     ],
   },
   {
@@ -59,7 +59,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
     heading: "7. Cancellations, no-shows and refunds",
     paragraphs: [
       "You can cancel free of charge from your account (or via support for guest bookings) until your therapist is on the way, with a full refund to your original payment method. Cancellations after your therapist has departed may incur the travel component; no-shows may be charged in full.",
-      "Refunds are processed to the original payment method within 5–7 business days. Amounts paid by gift card are refunded to the gift card.",
+      "Refunds are processed to the original payment method within 5 to 7 business days. Amounts paid by gift card are refunded to the gift card.",
     ],
   },
   {
@@ -80,7 +80,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "10. Health disclosures",
     paragraphs: [
-      "Massage is a wellbeing service, not a medical treatment, and nothing on this website is medical advice. Tell your therapist about any injuries, medical conditions, allergies or pregnancy before your treatment — and check with your health practitioner first if you're unsure whether massage is right for you.",
+      "Massage is a wellbeing service, not a medical treatment, and nothing on this website is medical advice. Tell your therapist about any injuries, medical conditions, allergies or pregnancy before your treatment, and check with your health practitioner first if you're unsure whether massage is right for you.",
       "Therapists may adapt or decline a treatment where health information disclosed suggests massage isn't appropriate; in that case you'll receive a full refund of any undelivered service.",
     ],
   },
@@ -112,7 +112,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "15. Technical failures",
     paragraphs: [
-      "If a technical fault on our side causes a booking error — a double booking, wrong price or failed confirmation — we'll fix it, honour the correct arrangement where reasonable, or refund you in full. We're not liable for failures of your device or internet connection.",
+      "If a technical fault on our side causes a booking error, a double booking, wrong price or failed confirmation, we'll fix it, honour the correct arrangement where reasonable, or refund you in full. We're not liable for failures of your device or internet connection.",
     ],
   },
   {

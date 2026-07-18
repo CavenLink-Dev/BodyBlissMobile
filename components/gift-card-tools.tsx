@@ -30,7 +30,7 @@ export function GiftCardTools() {
     if (!card) {
       setFound(null);
       setBalanceError(
-        "We couldn't find that gift card. Codes look like GIFT-XXXX-XXXX — try the demo card GIFT-DEMO-2026.",
+        "We couldn't find that gift card. Codes look like GIFT-XXXX-XXXX, try the demo card GIFT-DEMO-2026.",
       );
       return;
     }
@@ -49,7 +49,7 @@ export function GiftCardTools() {
     }
     setResendError(undefined);
     toast(
-      `Gift card resent to ${card.recipientEmail} (simulated — no email is sent in this demo).`,
+      `Gift card resent to ${card.recipientEmail} (simulated, no email is sent in this demo).`,
     );
   }
 
