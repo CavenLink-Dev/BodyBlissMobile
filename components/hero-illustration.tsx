@@ -32,7 +32,7 @@ export function HeroIllustration({ className }: { className?: string }) {
       {/* window with night sky + moon (we come to you, evenings too) */}
       <rect x="288" y="38" width="96" height="118" rx="8" fill="hsl(38 41% 95%)" opacity="0.12" />
       <rect x="296" y="46" width="80" height="102" rx="4" fill="hsl(43 6% 16%)" />
-      <circle cx="352" cy="72" r="12" fill="hsl(37 42% 64%)" opacity="0.9" />
+      <circle cx="352" cy="72" r="12" fill="hsl(var(--camel))" opacity="0.9" />
       <circle cx="316" cy="96" r="2" fill="hsl(38 41% 95%)" opacity="0.7" />
       <circle cx="332" cy="118" r="1.6" fill="hsl(38 41% 95%)" opacity="0.5" />
       <circle cx="312" cy="128" r="1.6" fill="hsl(38 41% 95%)" opacity="0.6" />
@@ -47,7 +47,7 @@ export function HeroIllustration({ className }: { className?: string }) {
           d="M66 176c2-20-8-38-22-44-4 16 4 34 18 42"
           fill="hsl(152 40% 38%)"
         />
-        <path d="M52 174h28l-5 44H57l-5-44z" fill="hsl(37 42% 64%)" />
+        <path d="M52 174h28l-5 44H57l-5-44z" fill="hsl(var(--camel))" />
         <rect x="50" y="172" width="32" height="8" rx="3" fill="hsl(43 6% 30%)" />
       </g>
 
@@ -58,7 +58,7 @@ export function HeroIllustration({ className }: { className?: string }) {
         <path className="bb-aroma bb-aroma-3" d="M350 206c-4-6 4-10 0-16" opacity="0" />
       </g>
       {/* oil burner / candle */}
-      <rect x="322" y="208" width="36" height="12" rx="4" fill="hsl(37 42% 64%)" />
+      <rect x="322" y="208" width="36" height="12" rx="4" fill="hsl(var(--camel))" />
       <rect x="328" y="220" width="24" height="6" rx="2" fill="hsl(43 6% 30%)" />
 
       {/* therapist */}
@@ -66,7 +66,7 @@ export function HeroIllustration({ className }: { className?: string }) {
         {/* body */}
         <path
           d="M132 128c0-12 10-22 22-22s22 10 22 22v10l16 34-14 60h-14l6-52-16-26-16 26 6 52h-14l-14-60 16-34v-10z"
-          fill="hsl(37 42% 64%)"
+          fill="hsl(var(--camel))"
         />
         {/* head */}
         <circle cx="154" cy="92" r="15" fill="hsl(38 41% 95%)" />
@@ -95,7 +95,7 @@ export function HeroIllustration({ className }: { className?: string }) {
         <circle cx="352" cy="186" r="12" fill="hsl(38 41% 95%)" opacity="0.95" />
         <path d="M344 178c6-4 14-2 17 3-5-1-11 0-14 4l-3-7z" fill="hsl(43 6% 16%)" />
         {/* camel trim on the towel */}
-        <rect x="188" y="192" width="150" height="4" fill="hsl(37 42% 64%)" />
+        <rect x="188" y="192" width="150" height="4" fill="hsl(var(--camel))" />
       </g>
 
       {/* portable massage table */}
@@ -113,7 +113,7 @@ export function HeroIllustration({ className }: { className?: string }) {
 
       {/* therapist's carry bag — the "mobile" in mobile massage */}
       <g>
-        <rect x="86" y="234" width="52" height="30" rx="6" fill="hsl(37 42% 64%)" />
+        <rect x="86" y="234" width="52" height="30" rx="6" fill="hsl(var(--camel))" />
         <path
           d="M100 234v-6c0-5 4-9 9-9h6c5 0 9 4 9 9v6h-7v-6c0-1-1-2-2-2h-6c-1 0-2 1-2 2v6h-7z"
           fill="hsl(43 6% 30%)"

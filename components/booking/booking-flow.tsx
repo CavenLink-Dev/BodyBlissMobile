@@ -10,7 +10,6 @@ import {
   Gift,
   Lock,
   ShieldCheck,
-  Star,
   Users,
 } from "lucide-react";
 
@@ -110,7 +109,6 @@ type BookingState = {
   time: string;
   therapistChoice: "match" | string; // "match" or therapist id
   genderPref: string;
-  languagePref: string;
   bookingFor: "myself" | "someone-else";
   fullName: string;
   email: string;
@@ -168,7 +166,6 @@ export function BookingFlow({
     time: "",
     therapistChoice: initialTherapistId ?? "match",
     genderPref: "No preference",
-    languagePref: "No preference",
     bookingFor: "myself",
     fullName: "",
     email: "",
@@ -241,10 +238,8 @@ export function BookingFlow({
 
   const availableTherapists = therapistsForService(data.serviceCode).filter(
     (t) =>
-      (data.genderPref === "No preference" ||
-        t.gender === data.genderPref.toLowerCase()) &&
-      (data.languagePref === "No preference" ||
-        t.languages.includes(data.languagePref)),
+      data.genderPref === "No preference" ||
+      t.gender === data.genderPref.toLowerCase(),
   );
   const chosenTherapist =
     data.therapistChoice !== "match" ? getTherapist(data.therapistChoice) : undefined;

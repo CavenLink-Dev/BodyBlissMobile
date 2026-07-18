@@ -11,7 +11,7 @@ import { APPROVAL_STEPS } from "@/lib/therapists";
 export const metadata: Metadata = {
   title: "Therapists — Body Bliss Mobile Massage",
   description:
-    "Meet the Body Bliss mobile massage team, filter by speciality, language and availability, and see how therapists are reviewed and approved.",
+    "Meet the Body Bliss mobile massage team, filter by massage type and gender, and see how therapists are reviewed and approved.",
 };
 
 export default function TherapistsPage() {
@@ -37,8 +37,7 @@ export default function TherapistsPage() {
                 Sample profiles.
               </span>{" "}
               The therapists below are fictional demonstration profiles showing
-              how the live team page will work — ratings and booking counts are
-              illustrative.
+              how the live team page will work.
             </span>
           </p>
         </header>

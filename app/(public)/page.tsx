@@ -1,16 +1,19 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
-  CalendarCheck,
   MapPin,
-  Sparkles,
   ShieldCheck,
   BadgeCheck,
   CreditCard,
   Lock,
   ArrowRight,
-  Users,
 } from "lucide-react";
+
+import {
+  IllustrationChoose,
+  IllustrationLocation,
+  IllustrationTherapist,
+  IllustrationRelax,
+} from "@/components/step-illustrations";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
@@ -24,7 +27,6 @@ import { getServicesWithPricing } from "@/lib/catalogue";
 import { SuburbChecker } from "@/components/suburb-checker";
 import { TherapistCard } from "@/components/therapists/therapist-card";
 import { THERAPISTS } from "@/lib/therapists";
-import lotusWhite from "@/assets/body_bliss_lotus_white.png";
 
 /*
   Home — mobile-first, adapted from the service-booking layout in the Figma
@@ -36,22 +38,22 @@ import lotusWhite from "@/assets/body_bliss_lotus_white.png";
 
 const STEPS = [
   {
-    icon: CalendarCheck,
+    illustration: IllustrationChoose,
     title: "Choose your treatment",
     body: "Pick the massage, length and time that suits you.",
   },
   {
-    icon: MapPin,
+    illustration: IllustrationLocation,
     title: "Tell us where",
     body: "Add your address, parking and access notes so your therapist arrives ready.",
   },
   {
-    icon: Users,
+    illustration: IllustrationTherapist,
     title: "Pick your therapist",
     body: "Choose a therapist yourself, or let Body Bliss match you with the best available.",
   },
   {
-    icon: Sparkles,
+    illustration: IllustrationRelax,
     title: "Relax at your place",
     body: "Your therapist brings the table, fresh linen and everything else needed.",
   },
@@ -87,11 +89,11 @@ const FAQS = [
   },
   {
     q: "Can I choose my therapist?",
-    a: "Yes. You can browse the team and choose a therapist during booking — including a gender or language preference — or let us match you with the best available.",
+    a: "Yes. You can browse the team and choose a therapist during booking — including a gender preference — or let us match you with the best available.",
   },
   {
     q: "What should I wear?",
-    a: "Whatever's comfortable. For table massage you undress to your level of comfort and are always professionally draped; for chair massage you stay fully clothed.",
+    a: "Whatever's comfortable. You undress to your level of comfort and are always professionally draped throughout the massage.",
   },
   {
     q: "Is pregnancy massage available?",
@@ -126,12 +128,6 @@ export default async function Home() {
               11.2:1, camel strictly as accent 5.2:1, white lotus watermark) */}
           <section aria-labelledby="hero-heading">
             <div className="relative overflow-hidden rounded bg-primary p-card-padding tablet:p-12">
-              <Image
-                src={lotusWhite}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-4 -top-4 h-36 w-auto opacity-10 tablet:h-56"
-              />
               <div className="relative grid grid-cols-1 items-center gap-card-gap desktop:grid-cols-[3fr_2fr]">
               <div className="flex flex-col gap-card-gap">
                 <span className="inline-flex w-fit items-center gap-compact rounded-full border border-primary-foreground/30 px-3 py-1 text-description font-medium text-primary-foreground">
@@ -230,29 +226,24 @@ export default async function Home() {
               eyebrow="Simple as"
               title="How It Works"
             />
-            {/* De-boxed numbered timeline: vertical rail on phone,
-                three columns on tablet+. Calmer than three identical cards. */}
-            <ol className="flex flex-col tablet:grid tablet:grid-cols-3 tablet:gap-card-gap">
+            {/* Immersive step cards: vertical gold rail on phone, four even
+                columns on desktop — no orphaned steps, no dangling lines. */}
+            <ol className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-4">
               {STEPS.map((step, i) => (
-                <li key={step.title} className="relative flex gap-component tablet:flex-col">
-                  <div className="flex flex-col items-center tablet:flex-row tablet:items-center tablet:gap-component">
-                    <span
-                      className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary font-heading text-subtitle font-semibold text-secondary-foreground"
-                      aria-hidden="true"
-                    >
-                      {i + 1}
-                    </span>
-                    {i < STEPS.length - 1 ? (
+                <li key={step.title} className="h-full">
+                  <div className="group relative flex h-full flex-col gap-component overflow-hidden rounded border border-border bg-card p-card-padding shadow-rest transition-shadow duration-fade hover:shadow-md">
+                    <step.illustration />
+                    <p className="flex items-center gap-compact font-heading text-subtitle font-semibold text-bb-text-subtitle">
                       <span
                         aria-hidden="true"
-                        className="w-0.5 flex-1 bg-border tablet:h-0.5 tablet:w-auto tablet:flex-1"
-                      />
-                    ) : null}
-                  </div>
-                  <div className="flex flex-col gap-compact pb-card-gap tablet:pb-0 tablet:pr-card-gap">
-                    <p className="flex items-center gap-compact font-heading text-subtitle text-bb-text-subtitle">
-                      <step.icon aria-hidden="true" className="size-5 text-primary" />
-                      {step.title}
+                        className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-description font-bold text-secondary-foreground"
+                      >
+                        {i + 1}
+                      </span>
+                      <span>
+                        <span className="sr-only">Step {i + 1}: </span>
+                        {step.title}
+                      </span>
                     </p>
                     <p className="text-description text-bb-text-description">
                       {step.body}
@@ -368,12 +359,6 @@ export default async function Home() {
               variant="highlight"
               className="relative flex flex-col items-start gap-card-gap overflow-hidden"
             >
-              <Image
-                src={lotusWhite}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-6 -right-4 h-32 w-auto opacity-10"
-              />
               <h2
                 id="cta-heading"
                 className="font-heading text-title font-semibold text-primary-foreground"

@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { HeartHandshake, Home, Leaf, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
-import lotusCharcoal from "@/assets/body_bliss_lotus_charcoal.png";
 
 export const metadata: Metadata = {
   title: "About — Body Bliss Mobile Massage",
@@ -47,12 +45,6 @@ export default function AboutPage() {
     <main className="px-page-inline py-page-block">
       <div className="mx-auto flex max-w-content flex-col gap-section">
         <header className="flex flex-col gap-component">
-          <Image
-            src={lotusCharcoal}
-            alt=""
-            aria-hidden="true"
-            className="h-14 w-auto self-start"
-          />
           <h1 className="font-heading text-display text-bb-text-display">
             About Body Bliss
           </h1>
