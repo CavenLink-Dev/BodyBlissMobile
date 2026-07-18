@@ -55,7 +55,7 @@ export function SiteFooter() {
             <ul className="flex flex-col gap-compact text-description">
               <li className="flex items-center gap-compact">
                 <Mail aria-hidden="true" className="size-4 text-secondary" />
-                support@bodyblissmobile.example
+                bodyblissmassageanddayspa@gmail.com
               </li>
               <li className="flex items-center gap-compact">
                 <Phone aria-hidden="true" className="size-4 text-secondary" />
@@ -71,10 +71,7 @@ export function SiteFooter() {
                 Open 7 days, 10am to 8pm (ACST)
               </li>
             </ul>
-            <p className="text-caption text-primary-foreground/80">
-              Phone and hours are from our Prospect day spa. The email address
-              is a placeholder until launch.
-            </p>
+
           </div>
 
           {/* Explore */}

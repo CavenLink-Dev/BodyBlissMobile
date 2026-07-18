@@ -129,10 +129,8 @@ export default function HelpPage() {
               <Mail aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
               <div className="flex flex-col gap-compact">
                 <CardTitle className="text-subtitle">Email</CardTitle>
-                <CardDescription>support@bodyblissmobile.example</CardDescription>
-                <p className="text-caption text-bb-text-caption">
-                  Sample address for demonstration.
-                </p>
+                <CardDescription><a href="mailto:bodyblissmassageanddayspa@gmail.com" className="break-all underline underline-offset-4">bodyblissmassageanddayspa@gmail.com</a></CardDescription>
+
               </div>
             </Card>
             <Card variant="row" className="items-start">

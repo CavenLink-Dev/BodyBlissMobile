@@ -54,12 +54,6 @@ export const SERVICE_AREAS: ServiceArea[] = [
   { suburb: "Port Adelaide", postcode: "5015", zone: "extended" },
   { suburb: "West Lakes", postcode: "5021", zone: "extended" },
   { suburb: "Glen Osmond", postcode: "5064", zone: "extended" },
-  // Selected Adelaide Hills
-  { suburb: "Stirling", postcode: "5152", zone: "hills" },
-  { suburb: "Aldgate", postcode: "5154", zone: "hills" },
-  { suburb: "Crafers", postcode: "5152", zone: "hills" },
-  { suburb: "Bridgewater", postcode: "5155", zone: "hills" },
-  { suburb: "Mount Barker", postcode: "5251", zone: "hills" },
 ];
 
 export type AreaCheckResult =
@@ -91,6 +85,6 @@ export function travelFeeForSuburb(suburbOrPostcode: string): number {
 
 export const ZONE_LABELS: Record<AreaZone, string> = {
   core: "Included, no travel fee",
-  extended: "Available, small travel fee",
-  hills: "Adelaide Hills, travel fee applies",
+  extended: "Edge of our 15 km area, small travel fee",
+  hills: "Not currently served",
 };

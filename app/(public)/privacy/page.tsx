@@ -86,7 +86,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "11. Privacy complaints and contact",
     paragraphs: [
-      "If you have a privacy question or complaint, contact us via Help & Safety (sample contact: privacy@bodyblissmobile.example) and we'll respond within a reasonable time. If we can't resolve your concern, you can contact the Office of the Australian Information Commissioner (OAIC).",
+      "If you have a privacy question or complaint, contact us via Help & Safety (bodyblissmassageanddayspa@gmail.com) and we'll respond within a reasonable time. If we can't resolve your concern, you can contact the Office of the Australian Information Commissioner (OAIC).",
     ],
   },
   {
