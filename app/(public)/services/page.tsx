@@ -82,7 +82,7 @@ export default async function ServicesPage() {
                   <Button asChild variant="secondary">
                     <Link href={`/book?service=${s.code}`}>Book Now</Link>
                   </Button>
-                  <Button asChild variant="quiet">
+                  <Button asChild variant="soft">
                     <Link
                       href={`/services/${s.code}`}
                       aria-label={`Learn more about ${s.name}`}

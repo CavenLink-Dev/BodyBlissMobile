@@ -35,6 +35,10 @@ const buttonVariants = cva(
         primary: "bg-primary text-primary-foreground active:brightness-90",
         secondary:
           "bg-secondary text-secondary-foreground shadow-secondary-inner active:brightness-95",
+        /* soft: a lighter gold wash for supporting actions (Details, Buy a
+           Gift Card). Reads as a real button without competing with the
+           solid gold primary action beside it. */
+        soft: "bg-secondary/25 text-foreground border border-secondary/50 hover:bg-secondary/40 active:bg-secondary/50",
         quiet: "bg-transparent text-foreground active:bg-foreground/10",
       },
     },

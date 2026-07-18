@@ -152,8 +152,8 @@ export default async function Home() {
                   </Button>
                   <Button
                     asChild
-                    variant="quiet"
-                    className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
+                    variant="soft"
+                    className="w-full text-primary-foreground tablet:w-auto"
                   >
                     <Link href="/gift-cards">Buy a Gift Card</Link>
                   </Button>
@@ -371,15 +371,15 @@ export default async function Home() {
                 </Button>
                 <Button
                   asChild
-                  variant="quiet"
-                  className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
+                  variant="soft"
+                  className="w-full text-primary-foreground tablet:w-auto"
                 >
                   <Link href="/gift-cards">Buy a Gift Card</Link>
                 </Button>
                 <Button
                   asChild
-                  variant="quiet"
-                  className="w-full text-primary-foreground active:bg-primary-foreground/10 tablet:w-auto"
+                  variant="soft"
+                  className="w-full text-primary-foreground tablet:w-auto"
                 >
                   <Link href="#availability">Check Availability</Link>
                 </Button>

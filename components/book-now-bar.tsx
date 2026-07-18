@@ -20,7 +20,7 @@ export function BookNowBar() {
         <Button asChild variant="secondary" className="flex-1">
           <Link href="/book">Book Now</Link>
         </Button>
-        <Button asChild variant="quiet" className="flex-1">
+        <Button asChild variant="soft" className="flex-1">
           <Link href="/gift-cards">Gift Card</Link>
         </Button>
       </div>
