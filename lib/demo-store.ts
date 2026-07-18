@@ -331,6 +331,30 @@ export function redeemGiftCard(code: string, amountCents: number): number {
   return applied;
 }
 
+/* ---------- one-time identity check (simulated) ----------
+   Data minimisation: only a yes or no result is ever stored, never a
+   document or photo. REAL: a verification partner (for example Stripe
+   Identity) returns a pass result; the document stays with the partner. */
+
+export function getIdVerified(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem("bb-demo-id-verified") === "yes";
+  } catch {
+    return false;
+  }
+}
+
+export function setIdVerified() {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem("bb-demo-id-verified", "yes");
+  } catch {
+    // ignore
+  }
+  window.dispatchEvent(new Event("bb-demo-change"));
+}
+
 /* ---------- preferences ---------- */
 
 export function getDemoPrefs(): DemoPrefs {

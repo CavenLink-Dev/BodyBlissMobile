@@ -18,10 +18,12 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "1. What we collect",
     paragraphs: [
+      "We collect the minimum needed to deliver your massage, nothing more. No marketing profiles, no browsing history, no data we do not need.",
       "Account details: your name, email address, phone number and password (stored securely by our authentication provider, we never see your password). Guest bookings collect the same contact details without creating an account.",
       "Booking details: the address for your massage, parking and access notes, your preferred date and time, the service you choose, and any therapist preference.",
       "Optional health information: anything you choose to tell us, accessibility needs, pressure preferences, allergies, pregnancy, injuries or conditions. This is sensitive information, and you never have to share it; share only what you're comfortable with, and we only ask for it to prepare your treatment safely.",
       "Payment information: handled entirely by our payment provider, full card numbers never touch our systems. (In this prototype, payment is simulated and no card details are collected at all.)",
+      "Identity verification: each new customer completes a one time photo ID check through a secure verification partner. The partner confirms the result to us and keeps the document under its own strict controls. Body Bliss never stores your ID document or photo, only the verified result.",
     ],
   },
   {
@@ -40,7 +42,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "4. Data retention and deletion",
     paragraphs: [
-      "We keep booking records for as long as needed to provide the service and meet legal obligations (such as tax record-keeping), then delete or de-identify them. Optional health notes are kept only as long as they're relevant to your bookings.",
+      "We keep as little as possible, for as short a time as possible. Treatment notes, access notes and addresses are removed within 30 days of your appointment. After that we keep only the basic booking record (service, date and amount) that tax law requires us to hold.",
       "You can ask us to delete your account and personal information at any time via Help & Safety. We'll confirm what's been deleted and what must be retained (and for how long) to meet legal obligations.",
     ],
   },
@@ -64,25 +66,31 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
     ],
   },
   {
-    heading: "8. Data breaches",
+    heading: "8. Safety and serious incidents",
+    paragraphs: [
+      "If a serious incident occurs in connection with a booking, we may share the relevant booking details and identity verification result with police or emergency services where the law allows. This is the reason we verify identity once: everyone in the home, customer and therapist alike, can be identified if something goes badly wrong.",
+    ],
+  },
+  {
+    heading: "9. Data breaches",
     paragraphs: [
       "If a data breach occurs that's likely to result in serious harm, we'll notify affected customers and the Office of the Australian Information Commissioner (OAIC) as required by the Notifiable Data Breaches scheme, and tell you clearly what happened and what we're doing about it.",
     ],
   },
   {
-    heading: "9. Children and minors",
+    heading: "10. Children and minors",
     paragraphs: [
       "Our services and accounts are for adults (18+). We don't knowingly collect personal information from children. Bookings for a person under 18 must be made by a parent or guardian, who provides any relevant information on their behalf.",
     ],
   },
   {
-    heading: "10. Privacy complaints and contact",
+    heading: "11. Privacy complaints and contact",
     paragraphs: [
       "If you have a privacy question or complaint, contact us via Help & Safety (sample contact: privacy@bodyblissmobile.example) and we'll respond within a reasonable time. If we can't resolve your concern, you can contact the Office of the Australian Information Commissioner (OAIC).",
     ],
   },
   {
-    heading: "11. Changes to this policy",
+    heading: "12. Changes to this policy",
     paragraphs: [
       "We may update this policy from time to time, the latest version always lives on this page, with the date below the heading.",
     ],

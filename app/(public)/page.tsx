@@ -8,12 +8,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import {
-  IllustrationChoose,
-  IllustrationLocation,
-  IllustrationTherapist,
-  IllustrationRelax,
-} from "@/components/step-illustrations";
+import { HowItWorksCards } from "@/components/how-it-works";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
@@ -35,29 +30,6 @@ import { THERAPISTS } from "@/lib/therapists";
   profiles) → reviews (clearly-labelled sample) → preparation → FAQ → final CTA.
   No invented safety claims; prices are all-inclusive and shown upfront.
 */
-
-const STEPS = [
-  {
-    illustration: IllustrationChoose,
-    title: "Choose your treatment",
-    body: "Pick the massage, length and time that suits you.",
-  },
-  {
-    illustration: IllustrationLocation,
-    title: "Tell us where",
-    body: "Add your address, parking and access notes so your therapist arrives ready.",
-  },
-  {
-    illustration: IllustrationTherapist,
-    title: "Pick your therapist",
-    body: "Choose a therapist yourself, or let Body Bliss match you with the best available.",
-  },
-  {
-    illustration: IllustrationRelax,
-    title: "Relax at your place",
-    body: "Your therapist brings the table, fresh linen and everything else needed.",
-  },
-];
 
 const TRUST = [
   {
@@ -223,32 +195,9 @@ export default async function Home() {
               eyebrow="Simple as"
               title="How It Works"
             />
-            {/* Immersive step cards: vertical gold rail on phone, four even
-                columns on desktop, no orphaned steps, no dangling lines. */}
-            <ol className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-4">
-              {STEPS.map((step, i) => (
-                <li key={step.title} className="h-full">
-                  <div className="group relative flex h-full flex-col gap-component overflow-hidden rounded border border-border bg-card p-card-padding shadow-rest transition-shadow duration-fade hover:shadow-md">
-                    <step.illustration />
-                    <p className="flex items-center gap-compact font-heading text-subtitle font-semibold text-bb-text-subtitle">
-                      <span
-                        aria-hidden="true"
-                        className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-description font-bold text-secondary-foreground"
-                      >
-                        {i + 1}
-                      </span>
-                      <span>
-                        <span className="sr-only">Step {i + 1}: </span>
-                        {step.title}
-                      </span>
-                    </p>
-                    <p className="text-description text-bb-text-description">
-                      {step.body}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            {/* Tappable step cards: a tap swaps in an even shorter
+                description. Four even columns on desktop. */}
+            <HowItWorksCards />
           </section>
           </Reveal>
 

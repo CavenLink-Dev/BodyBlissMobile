@@ -8,6 +8,7 @@ import {
   Check,
   ChevronLeft,
   Gift,
+  HelpCircle,
   Lock,
   ShieldCheck,
   Users,
@@ -23,11 +24,14 @@ import { PaymentForm } from "@/components/payment/payment-form";
 import { TherapistAvatar } from "@/components/therapists/therapist-card";
 import { formatAud } from "@/lib/format";
 import type { ServiceWithPricing } from "@/lib/catalogue-types";
+import { toast } from "@/components/toaster";
 import {
   useDemoUser,
   addDemoBooking,
   findGiftCard,
   redeemGiftCard,
+  getIdVerified,
+  setIdVerified,
   PROMO_CODES,
 } from "@/lib/demo-store";
 import { therapistsForService, getTherapist } from "@/lib/therapists";
@@ -75,6 +79,19 @@ const STAIRS_OPTIONS = [
 const LIFT_OPTIONS = ["Not applicable", "Lift available", "No lift"] as const;
 
 const PRESSURE_OPTIONS = ["Light", "Medium", "Firm", "Let my therapist advise"] as const;
+
+/* Plain-language guidance shown by the Help me button, one entry per step.
+   Written for people who find websites hard work: what this page is for
+   and exactly what to press next. */
+const STEP_HELP: string[] = [
+  "Pick which massage you want from the first list. Pick how long from the second list. Choose a day, then tap one of the time buttons so it turns gold. When you are done, press the gold Continue button.",
+  "If you are not sure who to pick, leave Match me automatically selected. We will choose a lovely therapist for you. Then press Continue.",
+  "Type your name, your email and your mobile number. We only use these to confirm this booking and to reach you on the day. Then press Continue.",
+  "Type the address where you would like the massage. The other boxes are just helpers and can be left empty. Tick the safety box near the bottom, then press Continue.",
+  "Everything on this page is optional. If nothing applies to you, just tick the consent box at the bottom and press Continue.",
+  "Check the details look right. Tick the box to agree to the terms, then press the gold button to go to payment.",
+  "Type any card details in the boxes and press the gold button. This website is a demonstration, so no money is ever taken.",
+];
 
 /* Deterministic sample availability — same date always shows the same
    slots, with a plausible spread and quieter Sundays. No API. */
@@ -195,6 +212,8 @@ export function BookingFlow({
   });
   const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [submitError, setSubmitError] = React.useState<string | undefined>();
+  const [helpOpen, setHelpOpen] = React.useState(false);
+  const [idVerified, setIdVerifiedState] = React.useState(false);
   const [codeInput, setCodeInput] = React.useState("");
   const [appliedCode, setAppliedCode] = React.useState<
     | { type: "gift"; code: string; appliedCents: number }
@@ -203,6 +222,10 @@ export function BookingFlow({
   >(null);
   const [codeError, setCodeError] = React.useState<string | undefined>();
   const topRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    setIdVerifiedState(getIdVerified());
+  }, []);
 
   // Pre-fill contact details from the demo session once available.
   React.useEffect(() => {
@@ -456,6 +479,42 @@ export function BookingFlow({
   return (
     <div ref={topRef} className="flex flex-col gap-card-gap scroll-mt-24">
       <StepIndicator current={step} />
+
+      {/* Help me: plain-language guidance for this step, always one tap away */}
+      <div className="flex flex-col gap-component">
+        <Button
+          type="button"
+          variant="soft"
+          aria-expanded={helpOpen}
+          aria-controls="booking-help-panel"
+          className="w-fit"
+          onClick={() => setHelpOpen((v) => !v)}
+        >
+          <HelpCircle aria-hidden="true" className="size-5" />
+          {helpOpen ? "Hide help" : "Help me"}
+        </Button>
+        {helpOpen ? (
+          <div
+            id="booking-help-panel"
+            role="note"
+            className="flex flex-col gap-component rounded border border-secondary/50 bg-cream p-card-padding"
+          >
+            <p className="text-subtitle text-bb-text-subtitle">
+              {STEP_HELP[step]}
+            </p>
+            <p className="text-description text-bb-text-description">
+              Prefer a person? Call{" "}
+              <a
+                href="tel:0880000000"
+                className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                (08) 8000 0000
+              </a>{" "}
+              and we will make the whole booking for you over the phone.
+            </p>
+          </div>
+        ) : null}
+      </div>
 
       {/* ---------------- Step 1: Massage & time ---------------- */}
       {step === 0 && (
@@ -796,6 +855,56 @@ export function BookingFlow({
             error={errors.phone}
             onChange={(e) => set("phone", e.target.value)}
           />
+
+          {/* One-time identity check: safety without hoarding data */}
+          <Card className="flex flex-col gap-component">
+            <div className="flex items-center gap-component">
+              <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+                <ShieldCheck className="size-6 text-primary" />
+              </span>
+              <CardTitle className="text-subtitle">
+                One time identity check
+              </CardTitle>
+            </div>
+            <CardDescription>
+              To keep customers and therapists safe, each new customer
+              completes a single photo ID check through a secure verification
+              partner. Body Bliss never stores your photo or document. We keep
+              only the pass result, so if anything serious ever goes wrong we
+              can identify who was involved and assist the authorities.
+            </CardDescription>
+            {idVerified ? (
+              <p className="flex items-center gap-compact text-description text-bb-text-description" role="status">
+                <BadgeCheck aria-hidden="true" className="size-5 text-success" />
+                Identity verified. Nothing more to do.
+              </p>
+            ) : (
+              <div>
+                <Button
+                  type="button"
+                  variant="soft"
+                  onClick={() => {
+                    setIdVerified();
+                    setIdVerifiedState(true);
+                    toast(
+                      "Identity verified (simulated). Only the result is stored, never your document.",
+                    );
+                  }}
+                >
+                  Verify my ID (demo)
+                </Button>
+              </div>
+            )}
+          </Card>
+
+          <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
+            <Lock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+            <span>
+              We only ask for what your massage needs. Your details are used
+              for this appointment and your receipt, and treatment notes are
+              removed within 30 days of your massage.
+            </span>
+          </p>
 
           {navButtons}
         </form>
