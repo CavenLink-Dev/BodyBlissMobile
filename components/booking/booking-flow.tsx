@@ -144,6 +144,9 @@ type BookingState = {
   accessibility: string;
   safeSpace: boolean;
   pressure: string;
+  oilPref: string;
+  othersHome: string;
+  firstMassage: boolean;
   focusAreas: string;
   avoidAreas: string;
   pregnancy: string;
@@ -201,6 +204,9 @@ export function BookingFlow({
     accessibility: "",
     safeSpace: false,
     pressure: "Medium",
+    oilPref: "Standard massage oil",
+    othersHome: "Just me",
+    firstMassage: false,
     focusAreas: "",
     avoidAreas: "",
     pregnancy: "",
@@ -408,6 +414,9 @@ export function BookingFlow({
       data.pets ? `Pets: ${data.pets}` : "",
       data.accessibility ? `Accessibility: ${data.accessibility}` : "",
       `Pressure: ${data.pressure}`,
+      `Oil: ${data.oilPref}`,
+      `Who is home: ${data.othersHome}`,
+      data.firstMassage ? "First professional massage." : "",
       data.focusAreas ? `Focus on: ${data.focusAreas}` : "",
       data.avoidAreas ? `Avoid: ${data.avoidAreas}` : "",
       data.pregnancy ? `Pregnancy: ${data.pregnancy}` : "",
@@ -505,10 +514,10 @@ export function BookingFlow({
             <p className="text-description text-bb-text-description">
               Still stuck after trying? As a last resort you can call{" "}
               <a
-                href="tel:0880000000"
+                href="tel:0404877091"
                 className="font-semibold underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                (08) 8000 0000
+                0404 877 091
               </a>{" "}
               and we will finish the booking with you.
             </p>
@@ -1117,6 +1126,43 @@ export function BookingFlow({
               </option>
             ))}
           </SelectField>
+
+          <SelectField
+            id="oilPref"
+            label="Oil preference"
+            hint="Your therapist brings hypoallergenic options."
+            value={data.oilPref}
+            onChange={(e) => set("oilPref", e.target.value)}
+          >
+            <option>Standard massage oil</option>
+            <option>Unscented oil</option>
+            <option>Minimal oil</option>
+          </SelectField>
+
+          <SelectField
+            id="othersHome"
+            label="Will anyone else be there during the visit?"
+            hint="Helps your therapist know what to expect on arrival."
+            value={data.othersHome}
+            onChange={(e) => set("othersHome", e.target.value)}
+          >
+            <option>Just me</option>
+            <option>Other adults will be home</option>
+            <option>Children will be home</option>
+            <option>It varies</option>
+          </SelectField>
+
+          <label className="flex items-start gap-component">
+            <Checkbox
+              checked={data.firstMassage}
+              onCheckedChange={(v) => set("firstMassage", v === true)}
+              className="mt-0.5"
+            />
+            <span className="text-description text-bb-text-description">
+              This is my first professional massage. My therapist will explain
+              everything as we go.
+            </span>
+          </label>
 
           <Field
             id="focusAreas"

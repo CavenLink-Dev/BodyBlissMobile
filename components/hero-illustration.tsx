@@ -92,12 +92,16 @@ export function HeroIllustration({ className }: { className?: string }) {
         </g>
       </g>
 
-      {/* therapist head and tunic, standing behind the table */}
+      {/* therapist, standing behind the table */}
       <g className="bb-press">
-        {/* head with hair swept into a low bun */}
-        <circle cx="222" cy="102" r="16" fill={IVORY} />
-        <path d="M206 102c-1-13 9-21 20-20 6 1 10 4 12 8-8-3-16-1-20 4-3 3-4 6-4 9l-8-1z" fill={INK} />
-        <circle cx="240" cy="94" r="6.5" fill={INK} />
+        {/* legs, visible below the table rail */}
+        <path d="M212 194v58M236 194v58" stroke={INK} strokeWidth="11" strokeLinecap="round" />
+        <path d="M206 254h14M230 254h14" stroke={SOOT} strokeWidth="7" strokeLinecap="round" />
+        {/* hair behind the face, swept to a low bun at the back */}
+        <circle cx="219" cy="97" r="16" fill={INK} />
+        <circle cx="204" cy="96" r="7" fill={INK} />
+        {/* face, looking toward the client */}
+        <circle cx="226" cy="104" r="13.5" fill={IVORY} />
         {/* torso in gold tunic */}
         <path
           d="M198 196c-2-38 6-62 24-66 18 4 26 28 24 66h-48z"
@@ -119,6 +123,13 @@ export function HeroIllustration({ className }: { className?: string }) {
         {/* head resting on the cradle, dark hair cap */}
         <circle cx="352" cy="188" r="13" fill={IVORY} />
         <path d="M340 183a13 13 0 0121-4c-7-3-14-2-21 4z" fill={INK} />
+      </g>
+
+      {/* sleepy z's drifting up from the client's head */}
+      <g fill={IVORY} fontFamily="inherit" fontWeight="700">
+        <text className="bb-aroma" x="358" y="164" fontSize="15" opacity="0">z</text>
+        <text className="bb-aroma bb-aroma-2" x="368" y="152" fontSize="11" opacity="0">z</text>
+        <text className="bb-aroma bb-aroma-3" x="376" y="142" fontSize="8" opacity="0">z</text>
       </g>
 
       {/* therapist arms, drawn last so the hands rest on the client's back */}

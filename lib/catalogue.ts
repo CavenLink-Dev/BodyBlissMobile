@@ -22,15 +22,22 @@ type StaticService = {
   variants: [number, number][]; // [durationMinutes, priceCents]
 };
 
+/*
+  Mobile pricing, anchored to the owner's target of $149.99 for a one hour
+  relaxation massage. The gaps between services mirror the real Body Bliss
+  Prospect price list (relaxation < deep tissue < remedial), and the levels
+  sit inside the going Adelaide mobile massage range. Prices include
+  travel (metro), table and equipment.
+*/
 const STATIC_SERVICES: StaticService[] = [
   {
     code: "relaxation",
     name: "Relaxation Massage",
     description: "Gentle, flowing massage to calm the nervous system and unwind.",
     variants: [
-      [60, 11900],
-      [90, 16900],
-      [120, 21900],
+      [60, 14999],
+      [90, 19999],
+      [120, 24999],
     ],
   },
   {
@@ -38,8 +45,8 @@ const STATIC_SERVICES: StaticService[] = [
     name: "Deep Tissue Massage",
     description: "Firmer, focused pressure for deeper muscle tension and knots.",
     variants: [
-      [60, 12900],
-      [90, 17900],
+      [60, 15999],
+      [90, 20999],
     ],
   },
   {
@@ -47,8 +54,8 @@ const STATIC_SERVICES: StaticService[] = [
     name: "Remedial Massage",
     description: "Assessment-based treatment targeting specific problem areas.",
     variants: [
-      [60, 13900],
-      [90, 18900],
+      [60, 16999],
+      [90, 21999],
     ],
   },
   {
@@ -56,8 +63,8 @@ const STATIC_SERVICES: StaticService[] = [
     name: "Pregnancy Massage",
     description: "Adapted for each trimester, with suitably experienced therapists.",
     variants: [
-      [60, 12900],
-      [90, 17900],
+      [60, 15999],
+      [90, 20999],
     ],
   },
   {
@@ -65,8 +72,8 @@ const STATIC_SERVICES: StaticService[] = [
     name: "Couples Massage",
     description: "Two therapists, side by side, in the comfort of your own space.",
     variants: [
-      [60, 23800],
-      [90, 33800],
+      [60, 28999],
+      [90, 38999],
     ],
   },
   {
@@ -74,8 +81,8 @@ const STATIC_SERVICES: StaticService[] = [
     name: "Hotel Massage",
     description: "In-room massage for hotel guests staying in Adelaide.",
     variants: [
-      [60, 11900],
-      [90, 16900],
+      [60, 14999],
+      [90, 19999],
     ],
   },
 ];

@@ -139,9 +139,9 @@ export default function HelpPage() {
               <Phone aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
               <div className="flex flex-col gap-compact">
                 <CardTitle className="text-subtitle">Phone</CardTitle>
-                <CardDescription>(08) 8000 0000</CardDescription>
+                <CardDescription><a href="tel:0404877091" className="underline underline-offset-4">0404 877 091</a></CardDescription>
                 <p className="text-caption text-bb-text-caption">
-                  Sample number for demonstration.
+                  The Body Bliss Prospect team.
                 </p>
               </div>
             </Card>
@@ -150,7 +150,7 @@ export default function HelpPage() {
               <div className="flex flex-col gap-compact">
                 <CardTitle className="text-subtitle">Support hours</CardTitle>
                 <CardDescription>
-                  Mon to Fri 8am to 8pm, Sat and Sun 9am to 5pm (ACST)
+                  Open 7 days, 10am to 8pm (ACST)
                 </CardDescription>
               </div>
             </Card>

@@ -11,6 +11,84 @@ costs low, but stay safe and legitimate.
 
 ---
 
+## The lean launch plan (one therapist, minimum money)
+
+We have one licensed therapist. That removes most of the complexity. Do not
+build for a marketplace of therapists yet; build for one person taking real
+bookings. Everything below runs on free tiers, so the monthly cost at launch
+is $0, plus Stripe's percentage per booking.
+
+### The one smart shortcut: no therapist portal
+
+A portal means logins, screens and maintenance. With one therapist you do
+not need any of it. Instead:
+
+1. Customer books and pays on the website.
+2. Supabase saves the booking and Resend emails the therapist:
+   "New booking: Relaxation 90 min, Saturday 2pm, Norwood."
+3. The email contains two secure one tap links: **Accept** and **Decline**.
+   Tapping Accept confirms the booking and emails the customer. Tapping
+   Decline refunds automatically and emails the customer to pick a new time.
+4. The morning of each appointment she gets one summary email with the
+   address, notes and a map link.
+
+That is the entire "portal": her own email inbox. It costs nothing, needs no
+training, and can grow into a real portal later when there are more
+therapists. The customer facing site does not change at all.
+
+### What to simplify for version one
+
+- **Guest bookings only.** Skip customer accounts at launch. Every
+  confirmation email contains a secure Manage link where the customer can
+  view or cancel that booking. Less code, less stored data, less to secure.
+  Add accounts later only if regulars ask for them.
+- **One therapist.** The booking flow's therapist step can say "Your
+  therapist is [name]" with her real photo and bio. The team page and
+  matching stay in the code, hidden, ready for therapist number two.
+- **Defer the photo ID check.** It costs money per verification. At launch,
+  a paid card booking plus a verified mobile number already ties every
+  booking to a real identity if something goes wrong. Turn on Stripe
+  Identity later, when strangers scale beyond what feels comfortable.
+- **Availability is one table.** She sets her working hours once; bookings
+  block out slots automatically. No calendar integrations at launch.
+
+### Domain: subdomain first
+
+The day spa already owns bodyblissmassageprospect.com. Point a free
+subdomain at the Vercel deployment, for example
+**mobile.bodyblissmassageprospect.com**. It costs nothing, is live in
+minutes, and inherits the trust of the existing brand. Buy
+bodyblissmobile.com.au (about $15 a year, needs the ABN) once bookings are
+coming in, and redirect the subdomain to it.
+
+### Cost at launch
+
+| Item | Cost |
+|---|---|
+| Vercel hosting | $0 (hobby tier) |
+| Supabase (bookings, availability) | $0 (free tier) |
+| Resend (emails) | $0 (free tier covers thousands) |
+| Subdomain | $0 (uses existing domain) |
+| Stripe | No monthly fee, about 1.75% + 30c per booking |
+| **Total fixed cost** | **$0 per month** |
+
+### Build order for going live
+
+1. Bookings into Supabase, with the Accept and Decline email links.
+2. Stripe checkout replacing the demo payment form.
+3. Resend emails: new booking to therapist, confirmation, cancellation and
+   the morning summary.
+4. Availability table driving the time slots.
+5. Point the subdomain at Vercel, swap in the real photo, bio, support email
+   and phone number, remove the test mode banner.
+6. First real booking: a friend or family member books and pays $1 end to
+   end. Then launch.
+
+Everything after that (accounts, gift card emails, ID checks, more
+therapists, a real portal) is added only when the bookings justify it.
+
+---
+
 ## 1. Supabase (database, accounts and security)
 
 **What it is.** Supabase is a hosted backend built on PostgreSQL. One service

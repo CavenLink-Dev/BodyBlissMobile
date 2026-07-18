@@ -22,7 +22,7 @@ import { formatAud } from "@/lib/format";
   DEMO-MODE.md §5.
 */
 
-const AMOUNTS_CENTS = [5000, 10000, 15000, 20000] as const;
+const AMOUNTS_CENTS = [10000, 15000, 20000, 30000] as const;
 
 type Stage = "details" | "payment" | "done";
 
@@ -51,8 +51,8 @@ export function GiftCardPurchase() {
     const errs: Record<string, string> = {};
     if (useCustom) {
       const dollars = Number(customAmount);
-      if (!Number.isFinite(dollars) || dollars < 25 || dollars > 500)
-        errs.customAmount = "Choose an amount between $25 and $500.";
+      if (!Number.isFinite(dollars) || dollars < 50 || dollars > 600)
+        errs.customAmount = "Choose an amount between $50 and $600.";
     }
     if (recipientName.trim().length < 2)
       errs.recipientName = "Please enter the recipient's name.";
@@ -232,7 +232,7 @@ export function GiftCardPurchase() {
                 onCheckedChange={(v) => setUseCustom(v === true)}
               />
               <span className="text-description text-bb-text-description">
-                Choose my own amount ($25 to $500)
+                Choose my own amount ($50 to $600)
               </span>
             </label>
             {useCustom ? (
@@ -250,12 +250,12 @@ export function GiftCardPurchase() {
             ) : null}
           </div>
           <p className="text-caption text-bb-text-caption">
-            {effectiveCents >= 23800
+            {effectiveCents >= 28999
               ? "Enough for a couples massage."
-              : effectiveCents >= 15000
-                ? "Enough for a 90-minute massage and more."
-                : effectiveCents >= 10000
-                  ? "Enough for a 60-minute massage."
+              : effectiveCents >= 19999
+                ? "Enough for a 90 minute massage."
+                : effectiveCents >= 14999
+                  ? "Enough for a one hour massage."
                   : "A lovely contribution towards any massage."}
           </p>
         </fieldset>

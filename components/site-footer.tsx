@@ -60,19 +60,20 @@ export function SiteFooter() {
               <li className="flex items-center gap-compact">
                 <Phone aria-hidden="true" className="size-4 text-secondary" />
                 <a
-                  href="tel:0880000000"
+                  href="tel:0404877091"
                   className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
                 >
-                  (08) 8000 0000
+                  0404 877 091
                 </a>
               </li>
               <li className="flex items-center gap-compact">
                 <Clock aria-hidden="true" className="size-4 text-secondary" />
-                Mon to Fri 8am to 8pm, Sat and Sun 9am to 5pm (ACST)
+                Open 7 days, 10am to 8pm (ACST)
               </li>
             </ul>
             <p className="text-caption text-primary-foreground/80">
-              Contact details are sample information for this demonstration.
+              Phone and hours are from our Prospect day spa. The email address
+              is a placeholder until launch.
             </p>
           </div>
 
