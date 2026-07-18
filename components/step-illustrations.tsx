@@ -1,66 +1,85 @@
 /*
-  How-it-works step illustrations — original inline SVGs drawn purely from
-  brand tokens (gold, charcoal, cream, white), so they recolour with the
-  theme. Bright, flat, softly animated: each has one small looping motion
-  (float / pulse / steam) using the bb-anim-* classes in globals.css, which
-  the global prefers-reduced-motion rule freezes automatically.
+  How-it-works step illustrations. Original inline SVG scenes drawn in the
+  brand palette with gentle supporting tones (eucalyptus green, warm taupe,
+  soft sky). Each scene loops one small motion (float, pulse, steam, sway)
+  via the bb-anim classes in globals.css, and the whole illustration
+  responds to touch and hover: it lifts slightly when you press the card,
+  which works with a finger on iPhone through the active state. The global
+  reduced motion rule freezes everything automatically.
 
-  All four are decorative (aria-hidden) — the step title and body carry
-  the meaning. No logos, no stock imagery.
+  All four are decorative (aria-hidden); the step title and body carry the
+  meaning.
 */
 
 const GOLD = "hsl(var(--camel))";
+const GOLD_DEEP = "hsl(41 65% 45%)";
 const CHARCOAL = "hsl(var(--charcoal))";
 const CREAM = "hsl(var(--cream))";
 const LINEN = "hsl(var(--linen))";
 const WHITE = "hsl(var(--white))";
-/* Gentle supporting tones that stay within the warm palette:
-   a muted eucalyptus green and a warm taupe brown. */
 const GREEN = "hsl(150 28% 42%)";
-const GREEN_LIGHT = "hsl(150 30% 55%)";
+const GREEN_LIGHT = "hsl(150 32% 56%)";
 const TAUPE = "hsl(35 27% 43%)";
+const SKY = "hsl(200 45% 88%)";
 
-function Frame({ children }: { children: React.ReactNode }) {
+function Frame({ id, children }: { id: string; children: React.ReactNode }) {
   return (
     <svg
       viewBox="0 0 200 150"
       aria-hidden="true"
       focusable="false"
-      className="h-28 w-full"
+      className="h-32 w-full transition-transform duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-[1.04] group-active:-translate-y-1 group-active:scale-[1.04]"
     >
-      {/* soft backdrop */}
-      <circle cx="100" cy="78" r="64" fill={CREAM} />
-      <circle cx="152" cy="34" r="10" fill={GOLD} opacity="0.25" />
-      <circle cx="44" cy="118" r="6" fill={GOLD} opacity="0.25" />
+      <defs>
+        <linearGradient id={`${id}-bg`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={SKY} />
+          <stop offset="100%" stopColor={CREAM} />
+        </linearGradient>
+        <linearGradient id={`${id}-gold`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={GOLD} />
+          <stop offset="100%" stopColor={GOLD_DEEP} />
+        </linearGradient>
+      </defs>
+      {/* soft sky-to-cream backdrop */}
+      <circle cx="100" cy="76" r="66" fill={`url(#${id}-bg)`} />
+      {/* grounding shadow */}
+      <ellipse cx="100" cy="134" rx="52" ry="7" fill={CHARCOAL} opacity="0.08" />
+      {/* floating dust motes */}
+      <circle cx="152" cy="32" r="5" fill={GOLD} opacity="0.35" className="bb-anim-float" />
+      <circle cx="44" cy="40" r="3.5" fill={GREEN_LIGHT} opacity="0.5" />
       {children}
     </svg>
   );
 }
 
-/* Step 1 — Choose your treatment: a phone with a service list, the chosen
-   row ticked in gold (tick pulses gently). */
+/* Step 1. Choosing a treatment on a phone, the picked service glows gold
+   and its tick pulses. A leaf sways beside the phone. */
 export function IllustrationChoose() {
   return (
-    <Frame>
-      {/* small leaf accent */}
+    <Frame id="ill-choose">
       <g className="bb-anim-sway">
-        <path d="M52 60c-2-10 3-19 11-22 1 9-3 18-11 22z" fill={GREEN_LIGHT} />
+        <path d="M50 66c-3-12 3-23 13-27 2 11-3 22-13 27z" fill={GREEN_LIGHT} />
+        <path d="M52 68c-8-6-18-5-24 1 7 6 17 6 24-1z" fill={GREEN} opacity="0.85" />
       </g>
       <g className="bb-anim-float">
-        <rect x="70" y="26" width="60" height="104" rx="10" fill={TAUPE} />
-        <rect x="75" y="34" width="50" height="88" rx="6" fill={WHITE} />
+        {/* phone body with gold frame */}
+        <rect x="68" y="24" width="64" height="108" rx="12" fill={`url(#ill-choose-gold)`} />
+        <rect x="73" y="32" width="54" height="92" rx="7" fill={WHITE} />
+        {/* header bar */}
+        <rect x="78" y="38" width="26" height="5" rx="2.5" fill={CHARCOAL} opacity="0.7" />
         {/* service rows */}
-        <rect x="80" y="42" width="40" height="12" rx="3" fill={LINEN} />
-        <rect x="80" y="76" width="40" height="12" rx="3" fill={LINEN} />
-        <rect x="80" y="93" width="40" height="12" rx="3" fill={LINEN} />
-        {/* selected row */}
-        <rect x="80" y="59" width="40" height="12" rx="3" fill={GOLD} />
-        <g className="bb-anim-pulse" style={{ transformOrigin: "126px 58px" }}>
-          <circle cx="126" cy="58" r="9" fill={GOLD} />
+        <rect x="78" y="50" width="44" height="13" rx="4" fill={LINEN} />
+        <rect x="78" y="86" width="44" height="13" rx="4" fill={LINEN} />
+        <rect x="78" y="104" width="44" height="13" rx="4" fill={LINEN} />
+        {/* the chosen row */}
+        <rect x="78" y="68" width="44" height="13" rx="4" fill={`url(#ill-choose-gold)`} />
+        <rect x="82" y="72" width="20" height="5" rx="2.5" fill={WHITE} opacity="0.9" />
+        <g className="bb-anim-pulse" style={{ transformOrigin: "128px 68px" }}>
+          <circle cx="128" cy="68" r="10" fill={GREEN} />
           <path
-            d="M121.5 58l3 3 6-6"
+            d="M123 68l3.5 3.5 7-7"
             stroke={WHITE}
-            strokeWidth="2.4"
+            strokeWidth="2.6"
             strokeLinecap="round"
             strokeLinejoin="round"
             fill="none"
@@ -71,107 +90,122 @@ export function IllustrationChoose() {
   );
 }
 
-/* Step 2 — Tell us where: a warm little house with a gold location pin
-   floating above the roof. */
+/* Step 2. A warm home with a glowing porch light and a gold pin floating
+   above the roof, garden swaying beside it. */
 export function IllustrationLocation() {
   return (
-    <Frame>
+    <Frame id="ill-location">
+      {/* path to the door */}
+      <path d="M96 128c0-6 8-6 8 0" stroke={TAUPE} strokeWidth="3" strokeLinecap="round" opacity="0.5" fill="none" />
       {/* house */}
-      <rect x="62" y="78" width="76" height="48" rx="4" fill={WHITE} />
-      <path d="M56 82l44-30 44 30" stroke={TAUPE} strokeWidth="7" strokeLinecap="round" fill="none" />
-      <rect x="90" y="96" width="20" height="30" rx="2" fill={GOLD} />
-      <rect x="70" y="90" width="13" height="13" rx="2" fill={LINEN} />
-      <rect x="117" y="90" width="13" height="13" rx="2" fill={LINEN} />
-      {/* garden bush beside the house */}
+      <rect x="60" y="76" width="80" height="52" rx="5" fill={WHITE} />
+      <path d="M54 80l46-32 46 32" stroke={TAUPE} strokeWidth="8" strokeLinecap="round" fill="none" />
+      {/* door with tiny gold knob */}
+      <rect x="90" y="96" width="21" height="32" rx="3" fill={`url(#ill-location-gold)`} />
+      <circle cx="107" cy="112" r="1.8" fill={CHARCOAL} />
+      {/* windows with warm light */}
+      <rect x="68" y="90" width="14" height="14" rx="2.5" fill={GOLD} opacity="0.45" />
+      <rect x="118" y="90" width="14" height="14" rx="2.5" fill={GOLD} opacity="0.45" />
+      {/* garden */}
       <g className="bb-anim-sway">
-        <circle cx="50" cy="118" r="9" fill={GREEN} />
-        <circle cx="42" cy="122" r="7" fill={GREEN_LIGHT} />
+        <circle cx="50" cy="120" r="10" fill={GREEN} />
+        <circle cx="41" cy="124" r="7" fill={GREEN_LIGHT} />
+      </g>
+      <g className="bb-anim-sway" style={{ animationDelay: "1s" }}>
+        <circle cx="152" cy="122" r="8" fill={GREEN_LIGHT} />
       </g>
       {/* floating pin */}
       <g className="bb-anim-float">
         <path
-          d="M100 18c-9 0-16 7-16 15.5C84 44 100 58 100 58s16-14 16-24.5C116 25 109 18 100 18z"
-          fill={GOLD}
+          d="M100 14c-9.5 0-17 7.3-17 16.3C83 41.5 100 56 100 56s17-14.5 17-25.7C117 21.3 109.5 14 100 14z"
+          fill={`url(#ill-location-gold)`}
         />
-        <circle cx="100" cy="33" r="6" fill={WHITE} />
+        <circle cx="100" cy="30" r="6.2" fill={WHITE} />
       </g>
     </Frame>
   );
 }
 
-/* Step 3 — Pick your therapist: two profile cards, the front one chosen
-   with a pulsing gold tick. */
+/* Step 3. Choosing between two therapist cards, the front one selected
+   with a pulsing green tick. */
 export function IllustrationTherapist() {
   return (
-    <Frame>
+    <Frame id="ill-therapist">
       {/* back card */}
       <g opacity="0.55">
-        <rect x="98" y="44" width="52" height="66" rx="8" fill={WHITE} />
-        <circle cx="124" cy="66" r="11" fill={LINEN} />
-        <rect x="108" y="84" width="32" height="7" rx="3" fill={LINEN} />
-        <rect x="112" y="95" width="24" height="6" rx="3" fill={LINEN} />
+        <rect x="100" y="46" width="52" height="68" rx="9" fill={WHITE} />
+        <circle cx="126" cy="68" r="11" fill={SKY} />
+        <path d="M126 63a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm-7.5 14a10 10 0 0115 0" fill="none" stroke={TAUPE} strokeWidth="2" strokeLinecap="round" />
+        <rect x="110" y="88" width="32" height="6" rx="3" fill={LINEN} />
+        <rect x="114" y="98" width="24" height="5" rx="2.5" fill={LINEN} />
       </g>
       {/* front card */}
-      <rect x="52" y="38" width="56" height="74" rx="8" fill={WHITE} />
-      <circle cx="80" cy="62" r="13" fill={GOLD} />
-      <path
-        d="M80 57a5 5 0 110 10 5 5 0 010-10zm-8.5 16a11 11 0 0117 0"
-        fill="none"
-        stroke={WHITE}
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
-      <rect x="62" y="82" width="36" height="7" rx="3" fill={LINEN} />
-      <rect x="66" y="94" width="28" height="6" rx="3" fill={LINEN} />
-      <g className="bb-anim-pulse" style={{ transformOrigin: "106px 44px" }}>
-        <circle cx="106" cy="44" r="11" fill={GOLD} />
+      <g className="bb-anim-float">
+        <rect x="48" y="38" width="58" height="78" rx="9" fill={WHITE} />
+        <circle cx="77" cy="63" r="14" fill={`url(#ill-therapist-gold)`} />
         <path
-          d="M100.5 44l3.5 3.5 7-7"
+          d="M77 57a5.5 5.5 0 110 11 5.5 5.5 0 010-11zm-9 17.5a12 12 0 0118 0"
+          fill="none"
           stroke={WHITE}
           strokeWidth="2.6"
           strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
         />
+        <rect x="59" y="86" width="36" height="7" rx="3.5" fill={LINEN} />
+        <rect x="63" y="98" width="28" height="6" rx="3" fill={LINEN} />
+        <g className="bb-anim-pulse" style={{ transformOrigin: "104px 44px" }}>
+          <circle cx="104" cy="44" r="11" fill={GREEN} />
+          <path
+            d="M98.5 44l3.5 3.5 7-7"
+            stroke={WHITE}
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </g>
       </g>
     </Frame>
   );
 }
 
-/* Step 4 — Relax at your place: person resting on the massage table, a
-   candle beside it with steam wisps drifting up. */
+/* Step 4. Deep rest: person on the massage table, candle steam drifting,
+   a plant swaying and a little sleepy "z" rising. */
 export function IllustrationRelax() {
   return (
-    <Frame>
+    <Frame id="ill-relax">
+      {/* sleepy z's */}
+      <g fill={TAUPE} className="bb-anim-float" style={{ animationDelay: "0.6s" }}>
+        <text x="52" y="52" fontSize="13" fontFamily="inherit" fontWeight="700" opacity="0.65">z</text>
+        <text x="62" y="42" fontSize="9" fontFamily="inherit" fontWeight="700" opacity="0.45">z</text>
+      </g>
       {/* table */}
-      <rect x="46" y="86" width="108" height="12" rx="6" fill={CHARCOAL} />
-      <path d="M62 98l-8 30M138 98l8 30" stroke={CHARCOAL} strokeWidth="6" strokeLinecap="round" />
-      {/* cushioned top + person */}
-      <rect x="50" y="78" width="100" height="10" rx="5" fill={GOLD} />
-      <circle cx="66" cy="72" r="9" fill={CHARCOAL} />
+      <rect x="44" y="88" width="112" height="12" rx="6" fill={TAUPE} />
+      <path d="M60 100l-8 30M140 100l8 30" stroke={TAUPE} strokeWidth="6" strokeLinecap="round" />
+      {/* cushioned top + person under a white towel */}
+      <rect x="48" y="80" width="104" height="10" rx="5" fill={`url(#ill-relax-gold)`} />
+      <circle cx="64" cy="74" r="9" fill={CHARCOAL} />
       <path
-        d="M76 78c14-8 44-8 62-2"
+        d="M74 80c16-9 46-9 64-2"
         stroke={CHARCOAL}
         strokeWidth="9"
         strokeLinecap="round"
         fill="none"
       />
-      {/* towel stripe */}
-      <rect x="104" y="68" width="26" height="8" rx="4" fill={WHITE} />
+      <path d="M100 72c10-4 26-4 34 1l-2 7h-32v-8z" fill={WHITE} />
       {/* candle */}
-      <rect x="158" y="106" width="14" height="20" rx="3" fill={WHITE} />
-      <rect x="158" y="106" width="14" height="6" rx="3" fill={GOLD} />
-      <g stroke={GOLD} strokeWidth="2.4" strokeLinecap="round" fill="none">
-        <path className="bb-anim-steam" d="M163 98c2-3-2-5 0-8" />
-        <path className="bb-anim-steam-late" d="M168 96c2-3-2-5 0-8" />
+      <rect x="160" y="108" width="14" height="20" rx="3" fill={WHITE} />
+      <rect x="160" y="108" width="14" height="6" rx="3" fill={`url(#ill-relax-gold)`} />
+      <g stroke={GOLD_DEEP} strokeWidth="2.4" strokeLinecap="round" fill="none">
+        <path className="bb-anim-steam" d="M165 100c2-3-2-5 0-8" />
+        <path className="bb-anim-steam-late" d="M170 98c2-3-2-5 0-8" />
       </g>
-      {/* potted plant on the other side */}
+      {/* potted plant */}
       <g>
         <g className="bb-anim-sway">
-          <path d="M36 104c-6-10-16-12-24-10 3 8 12 14 22 12" fill={GREEN_LIGHT} />
-          <path d="M38 104c1-11-4-21-12-24-2 9 2 19 10 24" fill={GREEN} />
+          <path d="M34 104c-6-10-16-12-24-10 3 8 12 14 22 12" fill={GREEN_LIGHT} />
+          <path d="M36 104c1-11-4-21-12-24-2 9 2 19 10 24" fill={GREEN} />
         </g>
-        <path d="M28 104h18l-3 22H31l-3-22z" fill={TAUPE} />
+        <path d="M26 104h18l-3 22H29l-3-22z" fill={TAUPE} />
       </g>
     </Frame>
   );

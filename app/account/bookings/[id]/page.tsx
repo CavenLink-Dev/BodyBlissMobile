@@ -130,7 +130,7 @@ export default function BookingDetailPage() {
           ) : null}
           {booking.discountCents ? (
             <Row
-              label="Gift card / promo"
+              label="Gift card or promo"
               value={`−${formatAud(booking.discountCents)}`}
             />
           ) : null}

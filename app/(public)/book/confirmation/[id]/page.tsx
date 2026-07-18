@@ -124,7 +124,7 @@ export default function ConfirmationPage() {
             ) : null}
             {booking.discountCents ? (
               <span className="flex justify-between">
-                Gift card / promo <span>−{formatAud(booking.discountCents)}</span>
+                Gift card or promo <span>−{formatAud(booking.discountCents)}</span>
               </span>
             ) : null}
             <span className="flex justify-between font-medium text-bb-text-display">

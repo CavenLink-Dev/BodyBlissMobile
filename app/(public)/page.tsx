@@ -168,23 +168,10 @@ export default async function Home() {
                   </a>{" "}
                   and we will arrange everything for you.
                 </p>
-                <ul className="mt-1 flex flex-wrap gap-compact">
-                  {["Reviewed therapists", "Upfront pricing", "Adelaide metro"].map(
-                    (t) => (
-                      <li
-                        key={t}
-                        className="inline-flex items-center gap-compact rounded-full bg-primary-foreground/10 px-3 py-1 text-description text-primary-foreground"
-                      >
-                        <BadgeCheck aria-hidden="true" className="size-4 text-secondary" />
-                        {t}
-                      </li>
-                    ),
-                  )}
-                </ul>
               </div>
 
-              {/* Original at-home massage illustration (decorative) */}
-              <HeroIllustration className="mx-auto mt-2 w-full max-w-md desktop:mt-0" />
+              {/* Original at-home massage illustration (decorative, lifts on touch) */}
+              <HeroIllustration className="mx-auto mt-2 w-full max-w-md transition-transform duration-300 ease-out hover:scale-[1.03] active:scale-[1.03] desktop:mt-0" />
               </div>
             </div>
           </section>

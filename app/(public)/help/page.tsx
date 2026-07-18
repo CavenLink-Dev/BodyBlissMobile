@@ -89,7 +89,7 @@ const FAQS: { q: string; a: string }[] = [
     a: "It's always optional, but it helps your therapist keep you safe and comfortable. Anything you share is used only to prepare for your appointment and goes only to your assigned therapist. Please do mention injuries, allergies or pregnancy before the treatment starts.",
   },
   {
-    q: "I left something behind after an appointment / found something",
+    q: "What about lost property?",
     a: "Contact support with your booking reference and we'll connect you with your therapist to arrange return of lost property.",
   },
   {
