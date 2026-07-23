@@ -803,7 +803,7 @@ export function BookingFlow({
                       ) : null}
                     </span>
                     <span className="text-description capitalize text-bb-text-description">
-                      {t.gender} · {t.yearsExperience} years experience
+                      {t.gender}
                     </span>
                     <span className="text-description text-bb-text-description">
                       {t.shortBio}

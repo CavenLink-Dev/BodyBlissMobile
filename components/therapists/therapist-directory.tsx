@@ -10,10 +10,7 @@ import { THERAPISTS } from "@/lib/therapists";
 import { SERVICES } from "@/lib/catalogue";
 import { TherapistCard } from "@/components/therapists/therapist-card";
 
-/*
-  Therapist directory — simple simulated filtering over local sample data:
-  massage type and gender only. All client-side; no APIs.
-*/
+/* Therapist directory — filter by massage type and gender. */
 
 const ANY = "any";
 

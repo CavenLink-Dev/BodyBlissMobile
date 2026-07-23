@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  MapPin,
   ShieldCheck,
   BadgeCheck,
   CreditCard,
@@ -96,21 +95,15 @@ export default async function Home() {
             <div className="relative overflow-hidden rounded bg-primary p-card-padding tablet:p-12">
               <div className="relative grid grid-cols-1 items-center gap-card-gap desktop:grid-cols-[3fr_2fr]">
               <div className="flex flex-col gap-card-gap">
-                <span className="inline-flex w-fit items-center gap-compact rounded-full border border-primary-foreground/30 px-3 py-1 text-description font-medium text-primary-foreground">
-                  <MapPin aria-hidden="true" className="size-4 text-secondary" />
-                  Mobile massage across Adelaide
-                </span>
                 <h1
                   id="hero-heading"
                   className="font-heading text-display text-primary-foreground"
                 >
                   Massage That Comes To You
                 </h1>
-                <span aria-hidden="true" className="h-1.5 w-16 rounded bg-secondary" />
                 <p className="max-w-prose text-subtitle text-primary-foreground">
                   Book an approved massage therapist to your home, hotel or
-                  workplace, from the Adelaide team behind the Body Bliss day
-                  spas in Prospect and Norwood.
+                  workplace across Adelaide.
                 </p>
                 <div className="mt-1 flex flex-col gap-component tablet:flex-row">
                   <Button asChild variant="primary" className="w-full tablet:w-auto">
@@ -119,14 +112,11 @@ export default async function Home() {
                   <Button
                     asChild
                     variant="soft"
-                    className="w-full text-primary-foreground tablet:w-auto"
+                    className="w-full tablet:w-auto"
                   >
                     <Link href="/gift-cards">Buy a Gift Card</Link>
                   </Button>
                 </div>
-                <p className="text-description text-primary-foreground/80">
-                  Booking takes about two minutes, right from your phone.
-                </p>
               </div>
 
               {/* Original at-home massage illustration (decorative, lifts on touch) */}
@@ -302,14 +292,14 @@ export default async function Home() {
                 <Button
                   asChild
                   variant="soft"
-                  className="w-full text-primary-foreground tablet:w-auto"
+                  className="w-full tablet:w-auto"
                 >
                   <Link href="/gift-cards">Buy a Gift Card</Link>
                 </Button>
                 <Button
                   asChild
                   variant="soft"
-                  className="w-full text-primary-foreground tablet:w-auto"
+                  className="w-full tablet:w-auto"
                 >
                   <Link href="#availability">Check Availability</Link>
                 </Button>

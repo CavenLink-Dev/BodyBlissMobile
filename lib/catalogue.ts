@@ -96,7 +96,7 @@ export const COMING_SOON_SERVICES: ComingSoonService[] = [
     code: "hot_stone",
     name: "Hot Stone Massage",
     description:
-      "Warmed basalt stones combined with massage to melt deep tension. Coming to mobile bookings soon — available today at our day spas.",
+      "Warmed basalt stones combined with massage to melt deep tension. Coming to mobile bookings soon.",
   },
   {
     code: "chiropractic",

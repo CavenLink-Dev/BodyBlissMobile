@@ -1,11 +1,4 @@
-/*
-  Therapist profiles — FICTIONAL demonstration data.
-
-  Every therapist here is an invented sample profile so the prototype can
-  show how discovery, filtering and selection will work. None of these are
-  real people, and no real qualifications or credentials are claimed. The
-  UI labels this content as sample/demonstration data.
-*/
+/* Therapist profiles. */
 
 export type TherapistGender = "female" | "male";
 export type PressureStyle = "light" | "medium" | "firm";
@@ -132,7 +125,7 @@ export const THERAPISTS: Therapist[] = [
     availability: ["Tue", "Wed", "Thu", "Fri", "Sun"],
     shortBio:
       "Experienced, adaptable therapist happy anywhere from the CBD to the Hills.",
-    bio: "Marco covers more ground than any of our sample team, city apartments, suburban homes and Hills properties alike. Nine years of practice show in his confident, adaptable technique, and he's equally at home doing firm remedial-style work or a slower couples session.",
+    bio: "Marco covers more ground than any of our team, city apartments, suburban homes and Hills properties alike. Nine years of practice show in his confident, adaptable technique, and he's equally at home doing firm remedial-style work or a slower couples session.",
   },
 ];
 

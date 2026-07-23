@@ -7,11 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardTitle } from "@/components/ui/card";
 import type { Therapist } from "@/lib/therapists";
 
-/*
-  Therapist card — deliberately minimal: photo (placeholder portrait),
-  name, gender, and a short description of their experience. Nothing else.
-  Profiles are fictional sample data (labelled at page level).
-*/
+/* Therapist card — minimal: portrait, name, gender and a short bio. */
 
 export function TherapistAvatar({
   therapist,
@@ -42,7 +38,7 @@ export function TherapistCard({ therapist }: { therapist: Therapist }) {
         <div className="flex min-w-0 flex-col gap-compact">
           <CardTitle className="text-subtitle">{therapist.name}</CardTitle>
           <p className="text-description capitalize text-bb-text-description">
-            {therapist.gender} · {therapist.yearsExperience} years experience
+            {therapist.gender}
           </p>
         </div>
       </div>

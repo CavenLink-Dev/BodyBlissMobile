@@ -2,13 +2,12 @@
 
 export function formatAud(cents: number | null | undefined): string {
   if (cents == null) return "—";
-  const dollars = cents / 100;
-  // Whole dollars show without decimals; anything else shows cents.
-  const hasCents = Math.round(dollars * 100) % 100 !== 0;
+  // Prices always show as whole dollars, rounded up (e.g. $169.99 → $170).
+  const dollars = Math.ceil(cents / 100);
   return new Intl.NumberFormat("en-AU", {
     style: "currency",
     currency: "AUD",
-    minimumFractionDigits: hasCents ? 2 : 0,
-    maximumFractionDigits: hasCents ? 2 : 0,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(dollars);
 }

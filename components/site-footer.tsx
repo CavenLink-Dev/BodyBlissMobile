@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail } from "lucide-react";
 
-import wholeLogoWhite from "@/assets/body_bliss_whole_logo_white.png";
+import { Logo } from "@/components/logo";
 
 /* Footer */
 
@@ -34,16 +33,10 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
           {/* Brand + contact */}
           <div className="flex flex-col items-start gap-component">
-            <Image
-              src={wholeLogoWhite}
-              alt="Body Bliss Mobile Massage"
-              className="h-28 w-auto tablet:h-36"
-            />
+            <Logo className="items-start text-primary-foreground" />
             <p className="max-w-prose text-description">
               Approved mobile massage therapists at your home, hotel or
-              workplace across Adelaide, from the team behind the Body Bliss
-              Massage and Day Spa locations in Prospect and Norwood, caring
-              for Adelaide since 2017.
+              workplace across Adelaide.
             </p>
             <ul className="flex flex-col gap-compact text-description">
               <li className="flex items-center gap-compact">

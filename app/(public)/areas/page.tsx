@@ -95,7 +95,7 @@ export default function AreasPage() {
               <Button
                 asChild
                 variant="soft"
-                className="w-full text-primary-foreground tablet:w-auto"
+                className="w-full tablet:w-auto"
               >
                 <Link href="/help">Contact Support</Link>
               </Button>

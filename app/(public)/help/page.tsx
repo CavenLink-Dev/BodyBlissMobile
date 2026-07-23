@@ -152,7 +152,7 @@ export default function HelpPage() {
             </summary>
             <p className="mt-component text-description text-bb-text-description">
               If email and the in-booking help haven&apos;t solved it, as a
-              final fallback you can call the Body Bliss Prospect team on{" "}
+              final fallback you can call our team on{" "}
               <a href="tel:0404877091" className="underline underline-offset-4">
                 0404 877 091
               </a>{" "}

@@ -52,7 +52,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t4",
     quote:
-      "Surprised my wife with a couples massage for our anniversary. Two therapists, two tables, side by side in our lounge room. Better than any day spa because afterwards we were already home.",
+      "Surprised my wife with a couples massage for our anniversary. Two therapists, two tables, side by side in our lounge room. Even better because afterwards we were already home.",
     name: "Michael T.",
     suburb: "Burnside",
     service: "Couples Massage",

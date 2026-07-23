@@ -18,7 +18,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
     heading: "1. Who we are",
     paragraphs: [
-      "Body Bliss Mobile Massage (\"Body Bliss\", \"we\", \"us\") arranges professional mobile massage services delivered by approved therapists at your home, hotel, workplace or event within the Adelaide metropolitan area and selected Adelaide Hills suburbs, South Australia. Body Bliss Mobile Massage is operated by the team behind Body Bliss Massage & Day Spa.",
+      "Body Bliss Mobile Massage (\"Body Bliss\", \"we\", \"us\") arranges professional mobile massage services delivered by approved therapists at your home, hotel, workplace or event within the Adelaide metropolitan area and selected Adelaide Hills suburbs, South Australia.",
     ],
   },
   {

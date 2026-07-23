@@ -64,7 +64,7 @@ export function TestimonialsCarousel() {
             <Star aria-hidden="true" className="size-4 fill-bb-star text-bb-star" />
             <span>
               <span className="font-semibold text-primary-foreground">4.9</span>{" "}
-              from 1,500+ reviews of our Prospect and Norwood day spas
+              average from happy Adelaide customers
             </span>
           </p>
         </div>

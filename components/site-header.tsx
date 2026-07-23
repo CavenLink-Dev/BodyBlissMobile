@@ -2,30 +2,20 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/logo";
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
-import wholeLogoCharcoal from "@/assets/body_bliss_whole_logo_charcoal.png";
 
-/*
-  iPhone-first header: clean, translucent background (blends with the
-  #F7F3EC ivory page, gains a subtle backdrop once content scrolls under it),
-  charcoal logo top-left, hamburger top-right. Full navigation lives in a
-  slide-out Sheet so the small screen stays calm — but the primary action
-  ("Book Now") is ALSO surfaced in the header on tablet+ and repeated in
-  the page body, so the key action is never hidden behind the menu.
-  Accessibility: hamburger is a real labelled button with a 48px hit
-  target and focus ring; the Sheet traps focus and has a visible Close.
-*/
+/* iPhone-first header: translucent bar, logo left, hamburger right. */
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
@@ -52,18 +42,10 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-content items-center justify-between gap-component px-page-inline py-2 [padding-top:max(0.5rem,env(safe-area-inset-top))]">
         <Link
           href="/"
-          aria-label="Body Bliss Mobile Massage, home"
-          className="flex min-h-hit-target items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          aria-label="Body Bliss Massage and Day Spa, home"
+          className="flex min-h-hit-target items-center rounded text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          {/* Oversized logo with negative vertical margins: the image grows
-              visually (the PNG has built-in whitespace) while the header bar
-              keeps its previous height. */}
-          <Image
-            src={wholeLogoCharcoal}
-            alt="Body Bliss Mobile Massage"
-            className="-my-3 h-24 w-auto tablet:-my-5 tablet:h-36"
-            priority
-          />
+          <Logo className="items-start" />
         </Link>
 
         <div className="flex items-center gap-compact tablet:gap-component">
