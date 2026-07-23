@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { CalendarPlus, Check, FlaskConical } from "lucide-react";
+import { CalendarPlus, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FlaskConical } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Terms & conditions | Body Bliss Mobile Massage",
@@ -8,11 +7,7 @@ export const metadata: Metadata = {
     "The terms and conditions for booking a Body Bliss mobile massage in Adelaide.",
 };
 
-/*
-  Booking terms — plain-English demonstration terms matching how the
-  prototype behaves. Clearly flagged as placeholder content requiring
-  professional legal review before any commercial launch.
-*/
+/* Booking terms — plain-English. */
 
 const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
@@ -150,19 +145,6 @@ export default function TermsPage() {
           </p>
           <p className="text-caption text-bb-text-caption">
             Last updated 14 July 2026
-          </p>
-          <p
-            className="flex max-w-prose items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
-            role="note"
-          >
-            <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
-            <span>
-              <span className="font-medium text-bb-text-display">
-                Demonstration content.
-              </span>{" "}
-              These terms are placeholder content for this prototype and would
-              require professional legal review before any commercial launch.
-            </span>
           </p>
         </header>
 

@@ -137,7 +137,6 @@ export default async function Home() {
           <section className="flex flex-col gap-card-gap" aria-labelledby="services-heading">
             <SectionHeading
               id="services-heading"
-              eyebrow="Services"
               title="Our Massages"
               action={
                 <Link
@@ -169,7 +168,6 @@ export default async function Home() {
           <section className="flex flex-col gap-card-gap" aria-labelledby="how-heading">
             <SectionHeading
               id="how-heading"
-              eyebrow="Simple as"
               title="How It Works"
             />
             {/* Tappable step cards: a tap swaps in an even shorter
@@ -183,7 +181,6 @@ export default async function Home() {
           <section className="flex flex-col gap-card-gap" aria-labelledby="trust-heading">
             <SectionHeading
               id="trust-heading"
-              eyebrow="Trust"
               title="Why Choose Body Bliss"
             />
             <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
@@ -210,7 +207,6 @@ export default async function Home() {
           <section className="flex flex-col gap-card-gap" aria-labelledby="therapists-heading">
             <SectionHeading
               id="therapists-heading"
-              eyebrow="The team"
               title="Meet Our Therapists"
               action={
                 <Link
@@ -243,7 +239,6 @@ export default async function Home() {
           <section className="flex flex-col gap-card-gap" aria-labelledby="faq-heading">
             <SectionHeading
               id="faq-heading"
-              eyebrow="Answers"
               title="Frequently Asked Questions"
             />
             <div className="flex flex-col gap-component">

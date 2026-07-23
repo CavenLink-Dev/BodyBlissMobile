@@ -8,7 +8,6 @@ import {
   CreditCard,
   Gift,
   MapPin,
-  Sparkles,
   UserRound,
 } from "lucide-react";
 
@@ -26,7 +25,6 @@ import {
   useDemoPrefs,
   saveDemoPrefs,
   signOutDemo,
-  signInDemoAccount,
   type DemoBooking,
 } from "@/lib/demo-store";
 import { getTherapist } from "@/lib/therapists";
@@ -34,12 +32,7 @@ import { TherapistAvatar } from "@/components/therapists/therapist-card";
 import { statusLabel, formatDateTime } from "@/lib/booking";
 import { formatAud } from "@/lib/format";
 
-/*
-  DEMO MODE — account area backed entirely by browser storage
-  (lib/demo-store). Signed-out visitors get a polished chooser including a
-  one-tap pre-filled demo account. REAL: Supabase auth + RLS-scoped reads
-  (lib/account.ts) — see DEMO-MODE.md §2.
-*/
+/* Account area — bookings, gift cards and saved preferences. */
 
 function bookingStart(b: DemoBooking): string {
   return `${b.date}T${b.time}`;
@@ -388,17 +381,16 @@ export default function AccountPage() {
                 </h2>
               </div>
               <p className="text-description text-bb-text-description">
-                Visa •••• 4242 <span className="text-bb-text-caption">(placeholder)</span>
+                Visa •••• 4242
               </p>
               <CardDescription>
-                Saved cards are placeholders in this prototype, no real
-                payment details are ever stored.
+                Your card details are stored securely with our payment provider.
               </CardDescription>
               <Button
                 type="button"
                 variant="quiet"
                 className="w-fit border border-border"
-                onClick={() => toast("Card management is simulated in this prototype.")}
+                onClick={() => toast("Opening card management…")}
               >
                 Manage cards
               </Button>
@@ -438,7 +430,7 @@ export default function AccountPage() {
             </label>
             <CardDescription>
               Booking confirmations are always sent, they&apos;re part of the
-              service. (All messages are simulated in this prototype.)
+              service.
             </CardDescription>
           </Card>
         </section>

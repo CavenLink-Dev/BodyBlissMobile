@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail } from "lucide-react";
 
-import { Logo } from "@/components/logo";
+import wholeLogoWhite from "@/assets/body_bliss_whole_logo_white.png";
 
 /* Footer */
 
@@ -33,7 +34,11 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
           {/* Brand + contact */}
           <div className="flex flex-col items-start gap-component">
-            <Logo className="items-start text-primary-foreground" />
+            <Image
+              src={wholeLogoWhite}
+              alt="Body Bliss Massage and Day Spa"
+              className="h-28 w-auto tablet:h-36"
+            />
             <p className="max-w-prose text-description">
               Approved mobile massage therapists at your home, hotel or
               workplace across Adelaide.

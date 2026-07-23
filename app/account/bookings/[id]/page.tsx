@@ -90,7 +90,7 @@ export default function BookingDetailPage() {
     markBookingReviewed(booking!.id);
     setBooking(getDemoBooking(booking!.id));
     setReviewOpen(false);
-    toast("Thanks, your review was saved (simulated).");
+    toast("Thanks, your review was saved.");
   }
 
   return (

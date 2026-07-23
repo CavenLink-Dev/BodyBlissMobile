@@ -119,7 +119,7 @@ export default function AboutPage() {
               <Button
                 asChild
                 variant="soft"
-                className="w-full text-primary-foreground tablet:w-auto"
+                className="w-full tablet:w-auto"
               >
                 <Link href="/services">See Services &amp; Prices</Link>
               </Button>

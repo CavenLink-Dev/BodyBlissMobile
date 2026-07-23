@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FlaskConical } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Privacy policy | Body Bliss Mobile Massage",
@@ -8,11 +7,7 @@ export const metadata: Metadata = {
     "How Body Bliss Mobile Massage collects, uses and protects your personal information.",
 };
 
-/*
-  Privacy policy — plain-English demonstration policy matching how the
-  prototype handles data, flagged as placeholder content requiring review
-  before commercial launch.
-*/
+/* Privacy policy — plain-English. */
 
 const SECTIONS: { heading: string; paragraphs: string[] }[] = [
   {
@@ -22,7 +17,7 @@ const SECTIONS: { heading: string; paragraphs: string[] }[] = [
       "Account details: your name, email address, phone number and password (stored securely by our authentication provider, we never see your password). Guest bookings collect the same contact details without creating an account.",
       "Booking details: the address for your massage, parking and access notes, your preferred date and time, the service you choose, and any therapist preference.",
       "Optional health information: anything you choose to tell us, accessibility needs, pressure preferences, allergies, pregnancy, injuries or conditions. This is sensitive information, and you never have to share it; share only what you're comfortable with, and we only ask for it to prepare your treatment safely.",
-      "Payment information: handled entirely by our payment provider, full card numbers never touch our systems. (In this prototype, payment is simulated and no card details are collected at all.)",
+      "Payment information: handled entirely by our payment provider, full card numbers never touch our systems.",
       "Identity verification: each new customer completes a one time photo ID check through a secure verification partner. The partner confirms the result to us and keeps the document under its own strict controls. Body Bliss never stores your ID document or photo, only the verified result.",
     ],
   },
@@ -110,19 +105,6 @@ export default function PrivacyPage() {
           </p>
           <p className="text-caption text-bb-text-caption">
             Last updated 14 July 2026
-          </p>
-          <p
-            className="flex max-w-prose items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
-            role="note"
-          >
-            <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
-            <span>
-              <span className="font-medium text-bb-text-display">
-                Demonstration content.
-              </span>{" "}
-              This policy is placeholder content for this prototype and would
-              require professional review before any commercial launch.
-            </span>
           </p>
         </header>
 

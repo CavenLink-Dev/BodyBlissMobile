@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getServicesWithPricing, COMING_SOON_SERVICES } from "@/lib/catalogue";
 import { ServiceIllustration } from "@/components/service-illustrations";

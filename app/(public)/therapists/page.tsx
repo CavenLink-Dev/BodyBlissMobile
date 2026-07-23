@@ -34,7 +34,6 @@ export default function TherapistsPage() {
         <section aria-labelledby="approval-heading" className="flex flex-col gap-card-gap">
           <SectionHeading
             id="approval-heading"
-            eyebrow="Quality"
             title="How Therapists Are Approved"
           />
           <p className="max-w-prose text-description text-bb-text-description">

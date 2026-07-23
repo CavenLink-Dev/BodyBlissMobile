@@ -2,18 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/logo";
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
+import wholeLogoCharcoal from "@/assets/body_bliss_whole_logo_charcoal.png";
 
 /* iPhone-first header: translucent bar, logo left, hamburger right. */
 
@@ -43,9 +44,14 @@ export function SiteHeader() {
         <Link
           href="/"
           aria-label="Body Bliss Massage and Day Spa, home"
-          className="flex min-h-hit-target items-center rounded text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="flex min-h-hit-target items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          <Logo className="items-start" />
+          <Image
+            src={wholeLogoCharcoal}
+            alt="Body Bliss Massage and Day Spa"
+            className="-my-3 h-24 w-auto tablet:-my-5 tablet:h-36"
+            priority
+          />
         </Link>
 
         <div className="flex items-center gap-compact tablet:gap-component">
