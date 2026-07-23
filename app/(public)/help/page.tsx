@@ -124,23 +124,13 @@ export default function HelpPage() {
           >
             Contact Support
           </h2>
-          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
+          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
             <Card variant="row" className="items-start">
               <Mail aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
               <div className="flex flex-col gap-compact">
                 <CardTitle className="text-subtitle">Email</CardTitle>
                 <CardDescription><a href="mailto:bodyblissmassageanddayspa@gmail.com" className="break-all underline underline-offset-4">bodyblissmassageanddayspa@gmail.com</a></CardDescription>
 
-              </div>
-            </Card>
-            <Card variant="row" className="items-start">
-              <Phone aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
-              <div className="flex flex-col gap-compact">
-                <CardTitle className="text-subtitle">Phone</CardTitle>
-                <CardDescription><a href="tel:0404877091" className="underline underline-offset-4">0404 877 091</a></CardDescription>
-                <p className="text-caption text-bb-text-caption">
-                  The Body Bliss Prospect team.
-                </p>
               </div>
             </Card>
             <Card variant="row" className="items-start">
@@ -153,6 +143,22 @@ export default function HelpPage() {
               </div>
             </Card>
           </div>
+          {/* Phone deliberately tucked away — booking online is the primary
+             path; calling is the very last resort. */}
+          <details className="group max-w-prose rounded border border-border bg-card p-card-padding">
+            <summary className="flex min-h-hit-target cursor-pointer list-none items-center gap-compact font-heading text-subtitle text-bb-text-subtitle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+              <Phone aria-hidden="true" className="size-5 text-primary" />
+              Still stuck after emailing?
+            </summary>
+            <p className="mt-component text-description text-bb-text-description">
+              If email and the in-booking help haven&apos;t solved it, as a
+              final fallback you can call the Body Bliss Prospect team on{" "}
+              <a href="tel:0404877091" className="underline underline-offset-4">
+                0404 877 091
+              </a>{" "}
+              and we&apos;ll finish your booking with you.
+            </p>
+          </details>
           <p
             className="flex max-w-prose items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
             role="note"

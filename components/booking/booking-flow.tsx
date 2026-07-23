@@ -84,7 +84,7 @@ const PRESSURE_OPTIONS = ["Light", "Medium", "Firm", "Let my therapist advise"] 
    Written for people who find websites hard work: what this page is for
    and exactly what to press next. */
 const STEP_HELP: string[] = [
-  "Pick which massage you want from the first list. Pick how long from the second list. Choose a day, then tap one of the time buttons so it turns gold. When you are done, press the gold Continue button.",
+  "Tap how long you would like your massage to be so it turns gold. Choose a day, then tap one of the time buttons. When you are done, press the gold Continue button. Your total is always shown near the top.",
   "If you are not sure who to pick, leave Match me automatically selected. We will choose a lovely therapist for you. Then press Continue.",
   "Type your name, your email and your mobile number. We only use these to confirm this booking and to reach you on the day. Then press Continue.",
   "Type the address where you would like the massage. The other boxes are just helpers and can be left empty. Tick the safety box near the bottom, then press Continue.",
@@ -142,6 +142,7 @@ type BookingState = {
   entryNotes: string;
   pets: string;
   accessibility: string;
+  ownTable: boolean;
   safeSpace: boolean;
   pressure: string;
   oilPref: string;
@@ -171,6 +172,9 @@ export function BookingFlow({
   const router = useRouter();
   const { user } = useDemoUser();
 
+  /* When a service arrives preselected (Book Now on a card), the first
+     step is just a simple length picker — no service dropdown. */
+  const preselected = services.some((s) => s.code === initialServiceCode);
   const firstService =
     services.find((s) => s.code === initialServiceCode) ?? services[0];
   const firstVariant =
@@ -202,6 +206,7 @@ export function BookingFlow({
     entryNotes: "",
     pets: "",
     accessibility: "",
+    ownTable: false,
     safeSpace: false,
     pressure: "Medium",
     oilPref: "Standard massage oil",
@@ -259,11 +264,12 @@ export function BookingFlow({
   const people = isCouples ? 1 : data.people; // couples price already covers two
   const baseCents = (selectedVariant?.priceCents ?? 0) * people;
   const travelFeeCents = travelFeeForSuburb(data.postcode) || travelFeeForSuburb(data.suburb);
-  const discountCents = Math.min(
-    appliedCode?.appliedCents ?? 0,
-    baseCents + travelFeeCents,
-  );
-  const totalCents = Math.max(0, baseCents + travelFeeCents - discountCents);
+  /* Own massage table — small saving when we don't need to bring one. */
+  const OWN_TABLE_SAVING_CENTS = 1000;
+  const tableSavingCents = data.ownTable && !isCouples ? OWN_TABLE_SAVING_CENTS : 0;
+  const subtotalCents = Math.max(0, baseCents + travelFeeCents - tableSavingCents);
+  const discountCents = Math.min(appliedCode?.appliedCents ?? 0, subtotalCents);
+  const totalCents = Math.max(0, subtotalCents - discountCents);
 
   const availableTherapists = therapistsForService(data.serviceCode).filter(
     (t) =>
@@ -367,7 +373,7 @@ export function BookingFlow({
         type: "promo",
         code,
         label: promo.label,
-        appliedCents: Math.round((baseCents + travelFeeCents) * (promo.percentOff / 100)),
+        appliedCents: Math.round(subtotalCents * (promo.percentOff / 100)),
       });
       setCodeError(undefined);
       return;
@@ -377,7 +383,7 @@ export function BookingFlow({
       setAppliedCode({
         type: "gift",
         code: card.code,
-        appliedCents: Math.min(card.balanceCents, baseCents + travelFeeCents),
+        appliedCents: Math.min(card.balanceCents, subtotalCents),
       });
       setCodeError(undefined);
       return;
@@ -413,6 +419,9 @@ export function BookingFlow({
       data.entryNotes ? `Entry: ${data.entryNotes}` : "",
       data.pets ? `Pets: ${data.pets}` : "",
       data.accessibility ? `Accessibility: ${data.accessibility}` : "",
+      data.ownTable && !isCouples
+        ? "Customer is providing their own massage table."
+        : "",
       `Pressure: ${data.pressure}`,
       `Oil: ${data.oilPref}`,
       `Who is home: ${data.othersHome}`,
@@ -441,7 +450,7 @@ export function BookingFlow({
       durationMinutes: selectedVariant?.durationMinutes ?? 0,
       priceCents: baseCents,
       travelFeeCents: travelFeeCents || undefined,
-      discountCents: discountCents || undefined,
+      discountCents: discountCents + tableSavingCents || undefined,
       giftCardCode: appliedCode?.type === "gift" ? appliedCode.code : undefined,
       totalCents,
       date: data.date,
@@ -525,6 +534,25 @@ export function BookingFlow({
         ) : null}
       </div>
 
+      {/* Live total — updates with every selection (length, people, suburb
+          travel fee, own table, codes). Review shows the full breakdown. */}
+      {step <= 4 && selectedVariant ? (
+        <div
+          className="flex flex-wrap items-baseline justify-between gap-component rounded border border-border bg-card px-card-padding py-3 shadow-rest"
+          aria-live="polite"
+        >
+          <span className="text-description text-bb-text-description">
+            Your total{" "}
+            <span className="text-caption text-bb-text-caption">
+              — updates with your selections
+            </span>
+          </span>
+          <span className="font-heading text-title font-semibold text-bb-text-display">
+            {formatAud(totalCents)}
+          </span>
+        </div>
+      ) : null}
+
       {/* ---------------- Step 1: Massage & time ---------------- */}
       {step === 0 && (
         <form
@@ -538,47 +566,83 @@ export function BookingFlow({
         >
           <div className="flex flex-col gap-compact">
             <h2 id="step-massage-heading" className="font-heading text-title font-semibold text-bb-text-title">
-              Your massage &amp; time
+              {preselected ? "Choose your length" : "Your massage & time"}
             </h2>
             <p className="text-description text-bb-text-description">
-              Choose your treatment, length and a time that suits you.
+              {preselected ? (
+                <>
+                  {selectedService?.name}.{" "}
+                  <Link
+                    href="/services"
+                    className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Change massage
+                  </Link>
+                </>
+              ) : (
+                "Choose your treatment, length and a time that suits you."
+              )}
             </p>
           </div>
 
-          <SelectField
-            id="service"
-            label="Massage"
-            value={data.serviceCode}
-            onChange={(e) => onServiceChange(e.target.value)}
-          >
-            {services.map((s) => (
-              <option key={s.code} value={s.code}>
-                {s.name}
-              </option>
-            ))}
-          </SelectField>
+          {!preselected ? (
+            <SelectField
+              id="service"
+              label="Massage"
+              value={data.serviceCode}
+              onChange={(e) => onServiceChange(e.target.value)}
+            >
+              {services.map((s) => (
+                <option key={s.code} value={s.code}>
+                  {s.name}
+                </option>
+              ))}
+            </SelectField>
+          ) : null}
 
-          <SelectField
-            id="variant"
-            label="Length"
-            value={data.variantId}
-            error={errors.variantId}
-            onChange={(e) => set("variantId", e.target.value)}
-          >
-            {selectedService?.variants.map((v) => (
-              <option key={v.id} value={v.id}>
-                {v.durationMinutes} min
-                {v.priceCents != null ? `, ${formatAud(v.priceCents)}` : ""}
-              </option>
-            ))}
-          </SelectField>
+          {/* Simple length picker — one tap, price on each option */}
+          <fieldset className="flex flex-col gap-component">
+            <legend className="text-description font-medium text-foreground">
+              {preselected ? "How long would you like?" : "Length"}
+            </legend>
+            <div className="grid grid-cols-1 gap-compact tablet:grid-cols-3">
+              {selectedService?.variants.map((v) => {
+                const selected = data.variantId === v.id;
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => set("variantId", v.id)}
+                    className={cn(
+                      "flex min-h-hit-target items-center justify-between rounded border px-4 py-3 text-description font-medium transition-colors duration-fade",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                      selected
+                        ? "border-transparent bg-secondary font-semibold text-secondary-foreground shadow-secondary-inner"
+                        : "border-border bg-card text-bb-text-description hover:border-primary",
+                    )}
+                  >
+                    <span>{v.durationMinutes} minutes</span>
+                    {v.priceCents != null ? (
+                      <span>{formatAud(v.priceCents)}</span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
+            {errors.variantId ? (
+              <p className="text-description font-medium text-destructive" role="alert">
+                {errors.variantId}
+              </p>
+            ) : null}
+          </fieldset>
 
           {isCouples ? (
             <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description">
               Couples massage covers two people, two therapists arrive
               together with two tables.
             </p>
-          ) : (
+          ) : !preselected ? (
             <SelectField
               id="people"
               label="Number of people"
@@ -589,7 +653,7 @@ export function BookingFlow({
               <option value="1">1 person</option>
               <option value="2">2 people (back-to-back)</option>
             </SelectField>
-          )}
+          ) : null}
 
           <Field
             id="date"
@@ -649,16 +713,6 @@ export function BookingFlow({
                 Sample availability for demonstration.
               </p>
             </fieldset>
-          ) : null}
-
-          {selectedVariant ? (
-            <p className="text-description text-bb-text-description">
-              Estimated price:{" "}
-              <span className="font-medium text-bb-text-display">
-                {formatAud(baseCents)}
-              </span>{" "}
-, includes travel (metro), table and equipment.
-            </p>
           ) : null}
 
           {navButtons}
@@ -1069,6 +1123,21 @@ export function BookingFlow({
             onChange={(e) => set("accessibility", e.target.value)}
           />
 
+          {!isCouples ? (
+            <SelectField
+              id="ownTable"
+              label="Massage table"
+              hint="Your therapist brings a professional table as standard."
+              value={data.ownTable ? "own" : "provided"}
+              onChange={(e) => set("ownTable", e.target.value === "own")}
+            >
+              <option value="provided">Bring everything (included)</option>
+              <option value="own">
+                I have my own massage table (save {formatAud(1000)})
+              </option>
+            </SelectField>
+          ) : null}
+
           <div className="flex flex-col gap-compact">
             <label className="flex items-start gap-component">
               <Checkbox
@@ -1297,6 +1366,12 @@ export function BookingFlow({
             <ReviewRow label="Massage price" value={formatAud(baseCents)} />
             {travelFeeCents > 0 ? (
               <ReviewRow label="Travel fee" value={formatAud(travelFeeCents)} />
+            ) : null}
+            {tableSavingCents > 0 ? (
+              <ReviewRow
+                label="Your own table"
+                value={`−${formatAud(tableSavingCents)}`}
+              />
             ) : null}
             {discountCents > 0 && appliedCode ? (
               <ReviewRow

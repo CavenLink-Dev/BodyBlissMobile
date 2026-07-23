@@ -5,14 +5,13 @@ import {
   ArrowLeft,
   BadgeCheck,
   Check,
-  Clock,
   HeartHandshake,
   Info,
   Sparkles,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getServicesWithPricing, getComingSoonService } from "@/lib/catalogue";
 import { NotifyMe } from "@/components/notify-me";
@@ -22,13 +21,13 @@ import {
   PREPARATION_STEPS,
   SEEK_ADVICE,
 } from "@/lib/service-details";
-import { formatAud } from "@/lib/format";
+import { ServiceIllustration } from "@/components/service-illustrations";
 
 /*
-  Service detail — everything a customer needs to decide: what's included,
-  how it may help, who it suits, things to consider, and every duration
-  with its price. Each duration links straight into the booking
-  flow with the service (and length) pre-selected.
+  Service detail — clean and focused on the essentials: what's included,
+  how it may help, who it suits, and things to consider. No pricing here;
+  prices appear once the customer starts booking (Book Now opens the
+  length picker with prices).
 */
 
 type Params = Promise<{ code: string }>;
@@ -52,7 +51,7 @@ export async function generateMetadata({
   if (!service) notFound();
   return {
     title: `${service.name} | Body Bliss Mobile Massage`,
-    description: `${service.description} Durations, prices and what's included. A vetted therapist comes to you across Adelaide.`,
+    description: `${service.description} A vetted therapist comes to you across Adelaide.`,
   };
 }
 
@@ -134,59 +133,30 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           </Link>
         </nav>
 
-        {/* Header */}
+        {/* Header with illustration and a single clear action */}
         <header className="flex flex-col gap-component">
-          <div className="flex flex-wrap items-center gap-component">
-            <h1 className="font-heading text-display text-bb-text-display">
-              {service.name}
-            </h1>
-            {service.fromPriceCents != null ? (
-              <Badge variant="secondary">from {formatAud(service.fromPriceCents)}</Badge>
-            ) : null}
+          <div className="max-w-md overflow-hidden rounded border border-border shadow-rest">
+            <ServiceIllustration code={service.code} />
           </div>
+          <h1 className="font-heading text-display text-bb-text-display">
+            {service.name}
+          </h1>
           <p className="max-w-prose text-subtitle text-bb-text-subtitle">
             {detail.tagline}
           </p>
           <p className="max-w-prose text-description text-bb-text-description">
             {detail.intro}
           </p>
-        </header>
-
-        {/* Durations & prices, the decision point */}
-        <section aria-labelledby="durations-heading" className="flex flex-col gap-card-gap">
-          <h2
-            id="durations-heading"
-            className="font-heading text-title font-semibold text-bb-text-title"
-          >
-            Choose Your Length
-          </h2>
-          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
-            {service.variants.map((v) => (
-              <Card key={v.id} className="flex h-full flex-col gap-component">
-                <div className="flex items-center gap-compact">
-                  <Clock aria-hidden="true" className="size-5 text-primary" />
-                  <CardTitle className="text-subtitle">
-                    {v.durationMinutes} minutes
-                  </CardTitle>
-                </div>
-                <p className="flex-1 font-heading text-title font-semibold text-bb-text-display">
-                  {formatAud(v.priceCents)}
-                </p>
-                <Button asChild variant="primary" className="w-full">
-                  <Link
-                    href={`/book?service=${service.code}&variant=${v.id}`}
-                    aria-label={`Book ${service.name}, ${v.durationMinutes} minutes`}
-                  >
-                    Select &amp; Book
-                  </Link>
-                </Button>
-              </Card>
-            ))}
+          <div>
+            <Button asChild variant="primary">
+              <Link href={`/book?service=${service.code}`}>Book Now</Link>
+            </Button>
           </div>
           <p className="text-caption text-bb-text-caption">
-            Prices include travel, the massage table and all equipment. No hidden fees.
+            Choose your length and see pricing in the next step. Everything is
+            included — travel, the table and all equipment.
           </p>
-        </section>
+        </header>
 
         {/* What's included / how it may help */}
         <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
@@ -442,8 +412,8 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
               Ready For Your {service.name}?
             </h2>
             <p className="max-w-prose text-description text-primary-foreground">
-              Book in a couple of minutes. A vetted therapist brings everything
-              needed, and the price shown is all-inclusive.
+              Book in a couple of minutes. Pick your length, see the price, and
+              a vetted therapist brings everything needed.
             </p>
             <Button asChild variant="primary">
               <Link href={`/book?service=${service.code}`}>Book Now</Link>

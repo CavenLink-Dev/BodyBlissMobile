@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, Facebook, Instagram, Mail, Phone } from "lucide-react";
+import { Clock, Facebook, Instagram, Mail } from "lucide-react";
 
 import { toast } from "@/components/toaster";
 import wholeLogoWhite from "@/assets/body_bliss_whole_logo_white.png";
@@ -56,15 +56,6 @@ export function SiteFooter() {
               <li className="flex items-center gap-compact">
                 <Mail aria-hidden="true" className="size-4 text-secondary" />
                 bodyblissmassageanddayspa@gmail.com
-              </li>
-              <li className="flex items-center gap-compact">
-                <Phone aria-hidden="true" className="size-4 text-secondary" />
-                <a
-                  href="tel:0404877091"
-                  className="underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-                >
-                  0404 877 091
-                </a>
               </li>
               <li className="flex items-center gap-compact">
                 <Clock aria-hidden="true" className="size-4 text-secondary" />

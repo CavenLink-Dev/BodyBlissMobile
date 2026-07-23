@@ -45,10 +45,13 @@ export function TestimonialsCarousel() {
   }, [paused, count]);
 
   return (
+    /* Full-bleed charcoal band: the section escapes the page container and
+       spans the whole viewport; the content stays aligned to the grid. */
     <section
       aria-labelledby="testimonials-heading"
-      className="flex flex-col gap-card-gap rounded bg-primary p-card-padding shadow-rest tablet:p-8"
+      className="relative left-1/2 w-screen -translate-x-1/2 bg-primary py-page-block"
     >
+      <div className="mx-auto flex w-full max-w-content flex-col gap-card-gap px-page-inline">
       <div className="flex flex-wrap items-end justify-between gap-component">
         <div className="flex flex-col gap-compact">
           <h2
@@ -139,6 +142,7 @@ export function TestimonialsCarousel() {
             />
           </button>
         ))}
+      </div>
       </div>
     </section>
   );

@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getServicesWithPricing, COMING_SOON_SERVICES } from "@/lib/catalogue";
-import { SERVICE_IMAGES } from "@/lib/service-images";
-import { formatAud } from "@/lib/format";
+import { ServiceIllustration } from "@/components/service-illustrations";
 
 export const metadata: Metadata = {
   title: "Services & prices | Body Bliss Mobile Massage",
@@ -43,20 +41,10 @@ export default async function ServicesPage() {
           </Card>
         ) : (
           <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-3">
-            {services.map((s) => {
-              const photo = SERVICE_IMAGES[s.code];
-              return (
+            {services.map((s) => (
               <Card key={s.id} className="flex h-full flex-col gap-component overflow-hidden p-0">
-                {photo ? (
-                  <Image
-                    src={photo}
-                    alt=""
-                    className="aspect-[4/3] w-full object-cover"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    placeholder="blur"
-                  />
-                ) : null}
-                <div className="flex flex-1 flex-col gap-component p-card-padding pt-0 first:pt-card-padding">
+                <ServiceIllustration code={s.code} />
+                <div className="flex flex-1 flex-col gap-component p-card-padding pt-0">
                   <CardTitle className="text-title font-semibold text-bb-text-display">
                     <Link
                       href={`/services/${s.code}`}
@@ -68,15 +56,6 @@ export default async function ServicesPage() {
                   <CardDescription className="flex-1">
                     {s.description}
                   </CardDescription>
-
-                  {s.fromPriceCents != null ? (
-                    <p className="text-description font-medium text-bb-text-display">
-                      From {formatAud(s.fromPriceCents)}{" "}
-                      <span className="font-normal text-bb-text-caption">
-                        · 60 min
-                      </span>
-                    </p>
-                  ) : null}
 
                   <div className="flex flex-wrap gap-component">
                     <Button asChild variant="primary">
@@ -93,8 +72,7 @@ export default async function ServicesPage() {
                   </div>
                 </div>
               </Card>
-              );
-            })}
+            ))}
           </div>
         )}
 
@@ -114,25 +92,28 @@ export default async function ServicesPage() {
           </div>
           <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
             {COMING_SOON_SERVICES.map((s) => (
-              <Card key={s.code} className="flex h-full flex-col gap-component">
-                <div className="flex items-start justify-between gap-component">
-                  <CardTitle className="text-subtitle">
-                    <Link
-                      href={`/services/${s.code}`}
-                      className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    >
-                      {s.name}
-                    </Link>
-                  </CardTitle>
-                  <Badge variant="outline">Coming Soon</Badge>
-                </div>
-                <CardDescription className="flex-1">{s.description}</CardDescription>
-                <div>
-                  <Button asChild variant="quiet" className="border border-border">
-                    <Link href={`/services/${s.code}`} aria-label={`${s.name}, coming soon`}>
-                      Learn More
-                    </Link>
-                  </Button>
+              <Card key={s.code} className="flex h-full flex-col gap-component overflow-hidden p-0">
+                <ServiceIllustration code={s.code} />
+                <div className="flex flex-1 flex-col gap-component p-card-padding pt-0">
+                  <div className="flex items-start justify-between gap-component">
+                    <CardTitle className="text-title font-semibold text-bb-text-display">
+                      <Link
+                        href={`/services/${s.code}`}
+                        className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      >
+                        {s.name}
+                      </Link>
+                    </CardTitle>
+                    <Badge variant="outline">Coming Soon</Badge>
+                  </div>
+                  <CardDescription className="flex-1">{s.description}</CardDescription>
+                  <div>
+                    <Button asChild variant="secondary">
+                      <Link href={`/services/${s.code}`} aria-label={`${s.name}, coming soon`}>
+                        Learn More
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </Card>
             ))}

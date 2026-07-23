@@ -151,6 +151,9 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Full-bleed bands (reviews) use w-screen; clip the sliver of
+       horizontal overflow the scrollbar width would otherwise cause. */
+    overflow-x: clip;
   }
   /* Motion: 150–200ms fades only; honour prefers-reduced-motion */
   @media (prefers-reduced-motion: reduce) {
