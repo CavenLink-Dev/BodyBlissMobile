@@ -473,7 +473,7 @@ export function BookingFlow({
 
   const navButtons = (
     <div className="flex flex-col gap-component tablet:flex-row-reverse tablet:justify-start">
-      <Button type="submit" variant="primary" className="w-full tablet:w-auto">
+      <Button type="submit" variant="secondary" className="w-full tablet:w-auto">
         Continue
       </Button>
       {step > 0 ? (
@@ -1393,7 +1393,7 @@ export function BookingFlow({
           <div className="flex flex-col gap-component tablet:flex-row-reverse tablet:justify-start">
             <Button
               type="button"
-              variant="primary"
+              variant="secondary"
               className="w-full tablet:w-auto"
               onClick={goToPayment}
             >
@@ -1427,7 +1427,7 @@ export function BookingFlow({
                 Your gift card covers the full amount. Confirm below to complete
                 this demonstration booking.
               </CardDescription>
-              <Button type="button" variant="primary" onClick={onPaid}>
+              <Button type="button" variant="secondary" onClick={onPaid}>
                 Complete Demo Booking
               </Button>
             </Card>

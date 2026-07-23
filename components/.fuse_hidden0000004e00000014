@@ -17,7 +17,7 @@ export function BookNowBar() {
       aria-label="Quick booking"
     >
       <div className="mx-auto flex max-w-content items-center gap-component px-page-inline py-2">
-        <Button asChild variant="primary" className="flex-1">
+        <Button asChild variant="secondary" className="flex-1">
           <Link href="/book">Book Now</Link>
         </Button>
         <Button asChild variant="soft" className="flex-1">

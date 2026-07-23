@@ -52,7 +52,7 @@ export function TherapistCard({ therapist }: { therapist: Therapist }) {
       </p>
 
       <div>
-        <Button asChild variant="primary">
+        <Button asChild variant="secondary">
           <Link
             href={`/book?therapist=${therapist.id}`}
             aria-label={`Select ${therapist.name} and start booking`}

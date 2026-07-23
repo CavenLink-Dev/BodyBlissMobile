@@ -74,7 +74,7 @@ export default function ConfirmationPage() {
             We couldn&apos;t find this booking in this browser. Demo bookings
             are stored locally, so they don&apos;t follow you between devices.
           </p>
-          <Button asChild variant="primary">
+          <Button asChild variant="secondary">
             <Link href="/book">Start a new booking</Link>
           </Button>
         </div>
@@ -154,7 +154,7 @@ export default function ConfirmationPage() {
             <div className="flex flex-col gap-component">
               <Button
                 type="button"
-                variant="primary"
+                variant="secondary"
                 className="w-full"
                 onClick={() =>
                   toast("Added to your calendar (simulated, this is a demonstration).")
@@ -217,7 +217,7 @@ export default function ConfirmationPage() {
           </>
         ) : (
           <div className="flex flex-col gap-component">
-            <Button asChild variant="primary" className="w-full">
+            <Button asChild variant="secondary" className="w-full">
               <Link href={`/book?service=${booking.serviceCode}`}>Rebook This Massage</Link>
             </Button>
             <Button asChild variant="quiet" className="w-full">

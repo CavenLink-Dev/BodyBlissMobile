@@ -93,7 +93,7 @@ export function SignupForm() {
           error={errors.password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="submit" variant="secondary" disabled={loading} className="w-full">
+        <Button type="submit" variant="primary" disabled={loading} className="w-full">
           {loading ? "Creating account…" : "Create account"}
         </Button>
       </form>

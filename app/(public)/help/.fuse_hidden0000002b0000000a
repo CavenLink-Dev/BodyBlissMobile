@@ -301,7 +301,7 @@ export default function HelpPage() {
               checking a gift card, updating preferences, can be done straight
               from your account.
             </p>
-            <Button asChild variant="primary">
+            <Button asChild variant="secondary">
               <Link href="/account">Go to my account</Link>
             </Button>
           </Card>

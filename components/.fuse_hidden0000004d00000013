@@ -67,7 +67,7 @@ export function SiteHeader() {
         </Link>
 
         <div className="flex items-center gap-compact tablet:gap-component">
-          <Button asChild variant="primary" className="hidden tablet:inline-flex">
+          <Button asChild variant="secondary" className="hidden tablet:inline-flex">
             <Link href="/book">Book Now</Link>
           </Button>
 
@@ -142,7 +142,7 @@ export function SiteHeader() {
 
               <div className="mt-card-gap flex flex-col gap-component">
                 <SheetClose asChild>
-                  <Button asChild variant="primary" className="w-full">
+                  <Button asChild variant="secondary" className="w-full">
                     <Link href="/book">Book Now</Link>
                   </Button>
                 </SheetClose>

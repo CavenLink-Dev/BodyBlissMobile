@@ -144,7 +144,7 @@ export function ReportConcernForm() {
           error={errors.details}
           onChange={(e) => setDetails(e.target.value)}
         />
-        <Button type="submit" variant="primary" disabled={submitting} className="w-full tablet:w-auto">
+        <Button type="submit" variant="secondary" disabled={submitting} className="w-full tablet:w-auto">
           {submitting ? "Sending…" : "Submit Report"}
         </Button>
         <p className="text-caption text-bb-text-caption">

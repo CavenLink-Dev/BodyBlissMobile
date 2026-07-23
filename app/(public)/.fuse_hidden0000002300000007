@@ -119,7 +119,7 @@ export default async function Home() {
                   spas in Prospect and Norwood.
                 </p>
                 <div className="mt-1 flex flex-col gap-component tablet:flex-row">
-                  <Button asChild variant="primary" className="w-full tablet:w-auto">
+                  <Button asChild variant="secondary" className="w-full tablet:w-auto">
                     <Link href="/book">Book Now</Link>
                   </Button>
                   <Button
@@ -308,7 +308,7 @@ export default async function Home() {
                 Body Bliss gift card.
               </p>
               <div className="flex flex-col gap-component tablet:flex-row">
-                <Button asChild variant="primary" className="w-full tablet:w-auto">
+                <Button asChild variant="secondary" className="w-full tablet:w-auto">
                   <Link href="/book">Book a Massage</Link>
                 </Button>
                 <Button

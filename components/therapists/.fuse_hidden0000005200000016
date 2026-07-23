@@ -69,7 +69,7 @@ export function TherapistDirectory() {
           </CardDescription>
           <Button
             type="button"
-            variant="primary"
+            variant="secondary"
             onClick={() => {
               setSpeciality(ANY);
               setGender(ANY);

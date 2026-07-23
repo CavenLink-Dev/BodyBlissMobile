@@ -5,9 +5,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /*
-  Body Bliss buttons — Rule of Three (design doc §5):
-  - primary:   #3D3B36 fill + white label (11.2:1)
-  - secondary: #C9AC7C camel fill + charcoal label (7.06:1) + token inner shadow
+  Body Bliss buttons — updated colour system (July 2026 reference card):
+  - primary:   gold #F6C440 fill (the previous secondary colour, cooled
+               slightly from the reference #F9C13E) + charcoal label (≈9:1)
+  - secondary: pale gold #F6DE8D fill + espresso #3D3B36 label (the previous
+               primary colour, ≈8:1) + token inner shadow
+  - soft:      alias of secondary (kept for existing call sites)
   - quiet:     charcoal text only
   Metrics per tokens: 44px visual height, 48px hit target (2px invisible
   expansion per side), min-width 132, radius 8, padding-inline 12, gap 10,
@@ -32,13 +35,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-primary text-primary-foreground active:brightness-90",
-        secondary:
+        primary:
           "bg-secondary text-secondary-foreground shadow-secondary-inner active:brightness-95",
-        /* soft: the same gold as the main button, just a lighter tone.
-           A solid pale gold fill so it reads as the main button's lighter
-           sibling for supporting actions (Details, Buy a Gift Card). */
-        soft: "bg-secondary/45 text-secondary-foreground shadow-secondary-inner hover:bg-secondary/55 active:bg-secondary/65",
+        secondary:
+          "bg-gold-soft text-espresso shadow-secondary-inner active:brightness-95",
+        /* soft: kept as an alias of secondary so existing call sites
+           (Details, Buy a Gift Card) pick up the new pale-gold style. */
+        soft: "bg-gold-soft text-espresso shadow-secondary-inner active:brightness-95",
         quiet: "bg-transparent text-foreground active:bg-foreground/10",
       },
     },

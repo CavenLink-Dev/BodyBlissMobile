@@ -24,7 +24,7 @@ export default function NotFound() {
           home, or go straight to booking a massage.
         </p>
         <div className="flex w-full flex-col gap-component tablet:flex-row">
-          <Button asChild variant="primary" className="w-full tablet:w-auto">
+          <Button asChild variant="secondary" className="w-full tablet:w-auto">
             <Link href="/book">Book a Massage</Link>
           </Button>
           <Button asChild variant="quiet" className="w-full tablet:w-auto">

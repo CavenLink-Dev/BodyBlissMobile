@@ -117,7 +117,7 @@ export default function GiftCardsPage() {
             <p className="max-w-prose text-description text-primary-foreground">
               You can book one for yourself in a couple of minutes.
             </p>
-            <Button asChild variant="primary">
+            <Button asChild variant="secondary">
               <Link href="/book">Book Now</Link>
             </Button>
           </Card>

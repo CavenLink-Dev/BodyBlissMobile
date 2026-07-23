@@ -178,7 +178,7 @@ export function PaymentForm({
             onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
           />
         </div>
-        <Button type="submit" variant="primary" disabled={processing} className="w-full">
+        <Button type="submit" variant="secondary" disabled={processing} className="w-full">
           {processing ? (
             <>
               <LoaderCircle aria-hidden="true" className="animate-spin" />

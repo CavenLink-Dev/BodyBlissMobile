@@ -57,7 +57,7 @@ export function CookieNotice() {
         </p>
         <Button
           type="button"
-          variant="primary"
+          variant="secondary"
           onClick={dismiss}
           className="w-full tablet:w-auto"
         >

@@ -104,7 +104,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 Our mobile massage services are available now across Adelaide,
                 including remedial and deep tissue work for problem areas.
               </p>
-              <Button asChild variant="primary">
+              <Button asChild variant="secondary">
                 <Link href="/services">Browse Massage Services</Link>
               </Button>
             </Card>
@@ -172,7 +172,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 <p className="flex-1 font-heading text-title font-semibold text-bb-text-display">
                   {formatAud(v.priceCents)}
                 </p>
-                <Button asChild variant="primary" className="w-full">
+                <Button asChild variant="secondary" className="w-full">
                   <Link
                     href={`/book?service=${service.code}&variant=${v.id}`}
                     aria-label={`Book ${service.name}, ${v.durationMinutes} minutes`}
@@ -445,7 +445,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
               Book in a couple of minutes. A vetted therapist brings everything
               needed, and the price shown is all-inclusive.
             </p>
-            <Button asChild variant="primary">
+            <Button asChild variant="secondary">
               <Link href={`/book?service=${service.code}`}>Book Now</Link>
             </Button>
           </Card>

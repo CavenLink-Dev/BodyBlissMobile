@@ -65,7 +65,7 @@ export function SuburbChecker() {
           onChange={(e) => setQuery(e.target.value)}
           className="flex-1"
         />
-        <Button type="submit" variant="primary" className="w-full tablet:w-auto">
+        <Button type="submit" variant="secondary" className="w-full tablet:w-auto">
           <Search aria-hidden="true" className="size-5" />
           Check Availability
         </Button>
@@ -84,7 +84,7 @@ export function SuburbChecker() {
                   No travel fee applies; the price you see is the price you pay.
                 </span>
               </p>
-              <Button asChild variant="primary">
+              <Button asChild variant="secondary">
                 <Link href="/book">Book Now</Link>
               </Button>
             </div>
@@ -100,7 +100,7 @@ export function SuburbChecker() {
                   before you pay.
                 </span>
               </p>
-              <Button asChild variant="primary">
+              <Button asChild variant="secondary">
                 <Link href="/book">Book Now</Link>
               </Button>
             </div>

@@ -102,7 +102,7 @@ function SignedOut() {
           </CardDescription>
           <Button
             type="button"
-            variant="primary"
+            variant="secondary"
             className="w-full"
             onClick={() => {
               signInDemoAccount();
@@ -240,7 +240,7 @@ export default function AccountPage() {
                 You have no upcoming bookings, your next massage is a couple
                 of minutes away.
               </CardDescription>
-              <Button asChild variant="primary">
+              <Button asChild variant="secondary">
                 <Link href="/book">Book a massage</Link>
               </Button>
             </Card>
@@ -372,7 +372,7 @@ export default function AccountPage() {
               onChange={(e) => setAllergies(e.target.value)}
             />
             <div>
-              <Button type="button" variant="primary" onClick={savePreferences}>
+              <Button type="button" variant="secondary" onClick={savePreferences}>
                 Save Preferences
               </Button>
             </div>

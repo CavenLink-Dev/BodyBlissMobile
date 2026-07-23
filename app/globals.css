@@ -25,7 +25,8 @@
     --cream: 35 38% 91%;           /* #F1EAE0 — tinted wash surfaces */
     --linen: 36 37% 87%;           /* #EAE0D1 — chips, muted surfaces, skeletons */
     --sand: 37 35% 80%;            /* #DDCFB9 — hairlines, decorative rules */
-    --camel: 42 78% 60%;           /* #E9B845 — light gold accent: secondary actions, badges (charcoal label ≈6:1) */
+    --camel: 45 93% 61%;           /* #F6C440 — gold, cooled slightly from the reference #F9C13E: primary actions, badges (charcoal label ≈8:1) */
+    --gold-soft: 45 86% 76%;       /* #F6DE8D — pale gold, cooled from the reference #F6D485: secondary actions (espresso label ≈7:1) */
     --taupe: 35 27% 43%;           /* #8C7351 — deep accent details, pressed reinforcement */
     --stone: 38 10% 49%;           /* #8A8172 — functional input borders (3.47:1 vs ivory, 3.84:1 vs white) */
     /* Charcoal family — unchanged anchor */

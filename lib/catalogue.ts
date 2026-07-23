@@ -33,7 +33,8 @@ const STATIC_SERVICES: StaticService[] = [
   {
     code: "relaxation",
     name: "Relaxation Massage",
-    description: "Gentle, flowing massage to calm the nervous system and unwind.",
+    description:
+      "Gentle, flowing massage to calm the nervous system and unwind. Long, soothing strokes ease everyday stress and leave you feeling rested and radiant.",
     variants: [
       [60, 14999],
       [90, 19999],
@@ -43,7 +44,8 @@ const STATIC_SERVICES: StaticService[] = [
   {
     code: "deep_tissue",
     name: "Deep Tissue Massage",
-    description: "Firmer, focused pressure for deeper muscle tension and knots.",
+    description:
+      "Firmer, focused pressure for deeper muscle tension and knots. Ideal after training, heavy work or long desk days, when muscles need real attention.",
     variants: [
       [60, 15999],
       [90, 20999],
@@ -52,7 +54,8 @@ const STATIC_SERVICES: StaticService[] = [
   {
     code: "remedial",
     name: "Remedial Massage",
-    description: "Assessment-based treatment targeting specific problem areas.",
+    description:
+      "Assessment-based treatment targeting specific problem areas. Your therapist works through pain, injury or restricted movement with techniques chosen for you.",
     variants: [
       [60, 16999],
       [90, 21999],
@@ -61,7 +64,8 @@ const STATIC_SERVICES: StaticService[] = [
   {
     code: "pregnancy",
     name: "Pregnancy Massage",
-    description: "Adapted for each trimester, with suitably experienced therapists.",
+    description:
+      "Adapted for each trimester, with suitably experienced therapists. Supportive positioning and gentle pressure ease the aches that come with pregnancy.",
     variants: [
       [60, 15999],
       [90, 20999],
@@ -70,7 +74,8 @@ const STATIC_SERVICES: StaticService[] = [
   {
     code: "couples",
     name: "Couples Massage",
-    description: "Two therapists, side by side, in the comfort of your own space.",
+    description:
+      "Two therapists, side by side, in the comfort of your own space. A shared hour of calm for partners, friends or family — no waiting rooms, no driving home after.",
     variants: [
       [60, 28999],
       [90, 38999],
@@ -79,7 +84,8 @@ const STATIC_SERVICES: StaticService[] = [
   {
     code: "hotel",
     name: "Hotel Massage",
-    description: "In-room massage for hotel guests staying in Adelaide.",
+    description:
+      "In-room massage for hotel guests staying in Adelaide. We bring the table, towels and music — unwind after travel without leaving your room.",
     variants: [
       [60, 14999],
       [90, 19999],

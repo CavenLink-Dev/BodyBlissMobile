@@ -24,7 +24,7 @@ export default function Error({
           Sorry, that didn&apos;t load properly. It&apos;s usually temporary.
         </p>
         <div className="flex flex-col gap-component tablet:flex-row">
-          <Button type="button" variant="primary" onClick={reset} className="w-full tablet:w-auto">
+          <Button type="button" variant="secondary" onClick={reset} className="w-full tablet:w-auto">
             Try again
           </Button>
           <Button asChild variant="quiet" className="w-full tablet:w-auto">

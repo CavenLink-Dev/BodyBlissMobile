@@ -93,7 +93,7 @@ export default function TherapistsPage() {
               Choose a therapist above, or let Body Bliss match you with the
               best available therapist for your massage and time.
             </p>
-            <Button asChild variant="primary">
+            <Button asChild variant="secondary">
               <Link href="/book">Book Now</Link>
             </Button>
           </Card>
