@@ -4,16 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, Facebook, Instagram, Mail } from "lucide-react";
 
-import { toast } from "@/components/toaster";
 import wholeLogoWhite from "@/assets/body_bliss_whole_logo_white.png";
 
-/*
-  Footer — dark charcoal band (white logo variant belongs here). Four
-  groups: brand+contact, explore, support/legal, plus social placeholders —
-  stacked on phone, columns on tablet+. All links are ≥48px hit targets
-  with visible focus (camel ring works on charcoal, 5.2:1). Contact
-  details are sample/demonstration information.
-*/
+/* Footer */
 
 const EXPLORE = [
   { href: "/book", label: "Book a massage" },
@@ -103,22 +96,24 @@ export function SiteFooter() {
                 Follow Us
               </h2>
               <div className="flex gap-compact">
-                <button
-                  type="button"
-                  aria-label="Instagram (placeholder)"
-                  onClick={() => toast("Social links are placeholders in this prototype.", "info")}
+                <a
+                  href="https://www.instagram.com/bodyblissmassageanddayspa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
                   className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded border border-primary-foreground/30 transition-colors duration-fade hover:bg-primary-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
                 >
                   <Instagram aria-hidden="true" className="size-5" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Facebook (placeholder)"
-                  onClick={() => toast("Social links are placeholders in this prototype.", "info")}
+                </a>
+                <a
+                  href="https://www.facebook.com/bodyblissmassageanddayspa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
                   className="inline-flex min-h-hit-target min-w-hit-target items-center justify-center rounded border border-primary-foreground/30 transition-colors duration-fade hover:bg-primary-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
                 >
                   <Facebook aria-hidden="true" className="size-5" />
-                </button>
+                </a>
               </div>
             </div>
           </div>

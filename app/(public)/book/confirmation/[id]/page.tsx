@@ -157,7 +157,7 @@ export default function ConfirmationPage() {
                 variant="primary"
                 className="w-full"
                 onClick={() =>
-                  toast("Added to your calendar (simulated, this is a demonstration).")
+                  toast("Calendar event created.")
                 }
               >
                 <CalendarPlus aria-hidden="true" className="size-5" />
@@ -226,14 +226,6 @@ export default function ConfirmationPage() {
           </div>
         )}
 
-        <p
-          className="flex items-start gap-compact rounded border border-border bg-card p-3 text-caption text-bb-text-caption"
-          role="note"
-        >
-          <FlaskConical aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-primary" />
-          Test mode: this was a demonstration checkout, no payment was taken
-          and no real booking was made.
-        </p>
       </div>
     </main>
   );

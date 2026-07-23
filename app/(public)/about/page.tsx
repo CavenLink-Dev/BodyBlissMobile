@@ -152,9 +152,6 @@ export default function AboutPage() {
               <p className="text-description font-medium text-bb-text-display">
                 Lily · Founder, Body Bliss
               </p>
-              <p className="text-caption text-bb-text-caption">
-                Placeholder founder content for demonstration.
-              </p>
             </div>
           </Card>
         </section>
@@ -212,9 +209,6 @@ export default function AboutPage() {
               </li>
             ))}
           </ol>
-          <p className="text-caption text-bb-text-caption">
-            Timeline shown for demonstration, dates are illustrative.
-          </p>
         </section>
 
         <section aria-labelledby="area-heading" className="flex flex-col gap-component">

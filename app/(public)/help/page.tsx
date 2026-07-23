@@ -245,9 +245,8 @@ export default function HelpPage() {
               </div>
               <CardDescription>
                 Pay securely by card at checkout. The price you see includes
-                travel (metro), the table and all equipment; any travel fee for
-                outer suburbs is shown before you pay. (Payments are simulated
-                in this demo; nothing is charged.)
+                travel (metro), the table and all equipment. Any travel fee for
+                outer suburbs is shown before you pay.
               </CardDescription>
             </Card>
           </section>

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getServicesWithPricing, COMING_SOON_SERVICES } from "@/lib/catalogue";
 import { ServiceIllustration } from "@/components/service-illustrations";
+import { formatAud } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Services & prices | Body Bliss Mobile Massage",
@@ -13,7 +15,6 @@ export const metadata: Metadata = {
     "Mobile massage options and prices for Body Bliss across Adelaide. A vetted therapist comes to you.",
 };
 
-// Catalogue from lib/catalogue (static in demo mode — see DEMO-MODE.md §6).
 export default async function ServicesPage() {
   const services = await getServicesWithPricing();
 
@@ -42,36 +43,46 @@ export default async function ServicesPage() {
         ) : (
           <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-3">
             {services.map((s) => (
-              <Card key={s.id} className="flex h-full flex-col gap-component overflow-hidden p-0">
+              <div
+                key={s.id}
+                className="group relative flex h-full flex-col overflow-hidden rounded border border-border bg-card shadow-rest transition-all duration-fade hover:shadow-md hover:border-primary/40 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+              >
+                {/* Primary click target — whole card books */}
+                <Link
+                  href={`/book?service=${s.code}`}
+                  aria-label={`Book ${s.name}`}
+                  className="absolute inset-0 z-0 focus-visible:outline-none"
+                  tabIndex={-1}
+                />
                 <ServiceIllustration code={s.code} />
                 <div className="flex flex-1 flex-col gap-component p-card-padding pt-0">
-                  <CardTitle className="text-title font-semibold text-bb-text-display">
-                    <Link
-                      href={`/services/${s.code}`}
-                      className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                    >
-                      {s.name}
-                    </Link>
-                  </CardTitle>
-                  <CardDescription className="flex-1">
+                  <h3 className="font-heading text-title font-semibold text-bb-text-display group-hover:text-primary transition-colors duration-fade">
+                    {s.name}
+                  </h3>
+                  <p className="flex-1 text-description text-bb-text-description">
                     {s.description}
-                  </CardDescription>
-
-                  <div className="flex flex-wrap gap-component">
-                    <Button asChild variant="primary">
-                      <Link href={`/book?service=${s.code}`}>Book Now</Link>
-                    </Button>
-                    <Button asChild variant="secondary">
-                      <Link
-                        href={`/services/${s.code}`}
-                        aria-label={`Learn more about ${s.name}`}
-                      >
-                        Details
-                      </Link>
-                    </Button>
+                  </p>
+                  <div className="flex items-center justify-between">
+                    {s.fromPriceCents != null && (
+                      <span className="text-subtitle font-semibold text-bb-text-title">
+                        From {formatAud(s.fromPriceCents)}
+                      </span>
+                    )}
+                    <span className="inline-flex items-center gap-compact text-nav font-medium text-primary">
+                      Book
+                      <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-fade group-hover:translate-x-1" />
+                    </span>
                   </div>
+                  {/* Details link sits above the card-level booking link */}
+                  <Link
+                    href={`/services/${s.code}`}
+                    aria-label={`Details about ${s.name}`}
+                    className="relative z-10 text-caption text-bb-text-caption underline underline-offset-2 hover:text-primary transition-colors duration-fade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring w-fit"
+                  >
+                    View details
+                  </Link>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         )}
@@ -83,39 +94,35 @@ export default async function ServicesPage() {
               id="coming-soon-heading"
               className="font-heading text-title font-semibold text-bb-text-title"
             >
-              More Treatments. Coming Soon
+              More Treatments Coming Soon
             </h2>
             <p className="max-w-prose text-description text-bb-text-description">
               We&apos;re expanding beyond massage. These mobile treatments are
-              on the way.
+              on the way — leave your email on any to be first to know.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
+          <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2 desktop:grid-cols-4">
             {COMING_SOON_SERVICES.map((s) => (
-              <Card key={s.code} className="flex h-full flex-col gap-component overflow-hidden p-0">
+              <Link
+                key={s.code}
+                href={`/services/${s.code}`}
+                className="group flex h-full flex-col overflow-hidden rounded border border-border bg-card shadow-rest transition-all duration-fade hover:shadow-md hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
                 <ServiceIllustration code={s.code} />
                 <div className="flex flex-1 flex-col gap-component p-card-padding pt-0">
                   <div className="flex items-start justify-between gap-component">
-                    <CardTitle className="text-title font-semibold text-bb-text-display">
-                      <Link
-                        href={`/services/${s.code}`}
-                        className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      >
-                        {s.name}
-                      </Link>
-                    </CardTitle>
-                    <Badge variant="outline">Coming Soon</Badge>
+                    <h3 className="font-heading text-title font-semibold text-bb-text-display group-hover:text-primary transition-colors duration-fade">
+                      {s.name}
+                    </h3>
+                    <Badge variant="outline" className="shrink-0">Soon</Badge>
                   </div>
-                  <CardDescription className="flex-1">{s.description}</CardDescription>
-                  <div>
-                    <Button asChild variant="secondary">
-                      <Link href={`/services/${s.code}`} aria-label={`${s.name}, coming soon`}>
-                        Learn More
-                      </Link>
-                    </Button>
-                  </div>
+                  <p className="flex-1 text-description text-bb-text-description">{s.description}</p>
+                  <span className="inline-flex items-center gap-compact text-nav font-medium text-primary">
+                    Learn more
+                    <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-fade group-hover:translate-x-1" />
+                  </span>
                 </div>
-              </Card>
+              </Link>
             ))}
           </div>
         </section>

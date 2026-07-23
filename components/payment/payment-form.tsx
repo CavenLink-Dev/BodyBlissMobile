@@ -112,10 +112,7 @@ export function PaymentForm({
       >
         <Lock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
         <span>
-          <span className="font-medium text-bb-text-display">Test mode.</span>{" "}
-          This is a demonstration, no payment is taken and card details are
-          never stored or sent. Any valid-looking card works; a number ending
-          in 0002 simulates a declined payment.
+          Your card details are handled securely and never stored.
         </span>
       </p>
 
@@ -124,8 +121,8 @@ export function PaymentForm({
           className="rounded border border-destructive bg-card p-3 text-description font-medium text-destructive"
           role="alert"
         >
-          Your card was declined (simulated). Nothing was charged, try a
-          different card number, or any number not ending in 0002.
+          Your card was declined. Nothing was charged — please try a
+          different card.
         </p>
       ) : null}
 
@@ -188,10 +185,6 @@ export function PaymentForm({
             (buttonLabel ?? `Pay ${formatAud(amountCents)}`)
           )}
         </Button>
-        <p className="text-caption text-bb-text-caption">
-          Payments are simulated in this demo. In the live site this step is
-          handled by a secure payment provider.
-        </p>
       </form>
     </Card>
   );

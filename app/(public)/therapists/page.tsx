@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FlaskConical } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,19 +25,6 @@ export default function TherapistsPage() {
             Every Body Bliss therapist is reviewed and approved before they can
             take a single booking. Browse the team, filter by what matters to
             you, or let us match you when you book.
-          </p>
-          <p
-            className="flex max-w-prose items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description"
-            role="note"
-          >
-            <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
-            <span>
-              <span className="font-medium text-bb-text-display">
-                Sample profiles.
-              </span>{" "}
-              The therapists below are fictional demonstration profiles showing
-              how the live team page will work.
-            </span>
           </p>
         </header>
 

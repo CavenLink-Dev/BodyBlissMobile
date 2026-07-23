@@ -61,9 +61,8 @@ export function ReportConcernForm() {
         </span>
         <CardTitle className="text-subtitle">Concern received</CardTitle>
         <CardDescription>
-          Thank you. In the live site our support team would acknowledge this
-          within one business day at {email}, and prioritise anything involving
-          safety. (This is a demonstration, nothing was sent.)
+          Thank you. Our support team will acknowledge this within one
+          business day at {email}, and prioritise anything involving safety.
         </CardDescription>
         <p className="text-caption text-bb-text-caption">Reference: {ref}</p>
         <Button

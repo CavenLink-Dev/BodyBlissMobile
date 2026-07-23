@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  BadgeCheck,
-  Check,
-  HeartHandshake,
-  Info,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -22,13 +15,7 @@ import {
   SEEK_ADVICE,
 } from "@/lib/service-details";
 import { ServiceIllustration } from "@/components/service-illustrations";
-
-/*
-  Service detail — clean and focused on the essentials: what's included,
-  how it may help, who it suits, and things to consider. No pricing here;
-  prices appear once the customer starts booking (Book Now opens the
-  length picker with prices).
-*/
+import { formatAud } from "@/lib/format";
 
 type Params = Promise<{ code: string }>;
 
@@ -47,7 +34,6 @@ export async function generateMetadata({
   }
   const services = await getServicesWithPricing();
   const service = services.find((s) => s.code === code);
-  // 404 here (before streaming starts) so unknown services return a real 404.
   if (!service) notFound();
   return {
     title: `${service.name} | Body Bliss Mobile Massage`,
@@ -58,6 +44,7 @@ export async function generateMetadata({
 export default async function ServiceDetailPage({ params }: { params: Params }) {
   const { code } = await params;
 
+  /* ── Coming-soon treatment ── */
   const comingSoon = getComingSoonService(code);
   if (comingSoon) {
     return (
@@ -113,16 +100,18 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
     );
   }
 
+  /* ── Active service detail ── */
   const services = await getServicesWithPricing();
   const service = services.find((s) => s.code === code);
   if (!service) notFound();
 
   const detail = getServiceDetail(service.code);
+  const faqs = getServiceFaqs(service.code);
 
   return (
     <main className="px-page-inline py-page-block">
       <div className="mx-auto flex max-w-content flex-col gap-section">
-        {/* Breadcrumb / back */}
+        {/* Back */}
         <nav aria-label="Breadcrumb">
           <Link
             href="/services"
@@ -133,7 +122,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           </Link>
         </nav>
 
-        {/* Header with illustration and a single clear action */}
+        {/* Hero */}
         <header className="flex flex-col gap-component">
           <div className="max-w-md overflow-hidden rounded border border-border shadow-rest">
             <ServiceIllustration code={service.code} />
@@ -147,237 +136,151 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           <p className="max-w-prose text-description text-bb-text-description">
             {detail.intro}
           </p>
+
+          {/* Pricing summary */}
+          {service.variants.length > 0 && (
+            <div className="flex flex-wrap items-baseline gap-card-gap">
+              {service.variants.map((v) => (
+                <span key={v.id} className="text-description text-bb-text-description">
+                  <span className="font-semibold text-bb-text-title">{v.durationMinutes} min</span>
+                  {" — "}
+                  {formatAud(v.priceCents)}
+                </span>
+              ))}
+            </div>
+          )}
+
           <div>
             <Button asChild variant="primary">
               <Link href={`/book?service=${service.code}`}>Book Now</Link>
             </Button>
           </div>
           <p className="text-caption text-bb-text-caption">
-            Choose your length and see pricing in the next step. Everything is
-            included — travel, the table and all equipment.
+            Everything is included — travel, the table and all equipment.
           </p>
         </header>
 
-        {/* What's included / how it may help */}
-        <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
-          <section aria-labelledby="includes-heading">
-            <Card className="flex h-full flex-col gap-card-gap">
-              <div className="flex items-center gap-component">
-                <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
-                  aria-hidden="true"
-                >
-                  <Sparkles className="size-6 text-primary" />
-                </span>
-                <h2
-                  id="includes-heading"
-                  className="font-heading text-subtitle text-bb-text-subtitle"
-                >
-                  What&apos;s included
-                </h2>
-              </div>
-              <ul className="flex flex-col gap-component">
-                {detail.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-compact">
-                    <Check
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-success"
-                    />
-                    <span className="text-description text-bb-text-description">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </section>
-
-          <section aria-labelledby="help-heading">
-            <Card className="flex h-full flex-col gap-card-gap">
-              <div className="flex items-center gap-component">
-                <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
-                  aria-hidden="true"
-                >
-                  <HeartHandshake className="size-6 text-primary" />
-                </span>
-                <h2
-                  id="help-heading"
-                  className="font-heading text-subtitle text-bb-text-subtitle"
-                >
-                  How it may help
-                </h2>
-              </div>
-              <ul className="flex flex-col gap-component">
-                {detail.mayHelp.map((item) => (
-                  <li key={item} className="flex items-start gap-compact">
-                    <Check
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-success"
-                    />
-                    <span className="text-description text-bb-text-description">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-caption text-bb-text-caption">
-                Massage supports general wellbeing, it isn&apos;t a medical
-                treatment or a substitute for professional health advice.
-              </p>
-            </Card>
-          </section>
-        </div>
-
-        {/* Who it suits / considerations */}
-        <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
-          <section aria-labelledby="suits-heading">
-            <Card className="flex h-full flex-col gap-card-gap">
-              <div className="flex items-center gap-component">
-                <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
-                  aria-hidden="true"
-                >
-                  <BadgeCheck className="size-6 text-primary" />
-                </span>
-                <h2
-                  id="suits-heading"
-                  className="font-heading text-subtitle text-bb-text-subtitle"
-                >
-                  Who it&apos;s for
-                </h2>
-              </div>
-              <ul className="flex flex-col gap-component">
-                {detail.suitableFor.map((item) => (
-                  <li key={item} className="flex items-start gap-compact">
-                    <Check
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-success"
-                    />
-                    <span className="text-description text-bb-text-description">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </section>
-
-          <section aria-labelledby="considerations-heading">
-            <Card className="flex h-full flex-col gap-card-gap">
-              <div className="flex items-center gap-component">
-                <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
-                  aria-hidden="true"
-                >
-                  <Info className="size-6 text-primary" />
-                </span>
-                <h2
-                  id="considerations-heading"
-                  className="font-heading text-subtitle text-bb-text-subtitle"
-                >
-                  Good to know
-                </h2>
-              </div>
-              <ul className="flex flex-col gap-component">
-                {detail.considerations.map((item) => (
-                  <li key={item} className="flex items-start gap-compact">
-                    <Info
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-primary"
-                    />
-                    <span className="text-description text-bb-text-description">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </section>
-        </div>
-
-        {/* Preparation & medical guidance */}
-        <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
-          <section aria-labelledby="prep-heading">
-            <Card className="flex h-full flex-col gap-card-gap">
-              <h2
-                id="prep-heading"
-                className="font-heading text-subtitle text-bb-text-subtitle"
-              >
-                Getting ready
-              </h2>
-              <ul className="flex flex-col gap-component">
-                {PREPARATION_STEPS.map((item) => (
-                  <li key={item} className="flex items-start gap-compact">
-                    <Check
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-success"
-                    />
-                    <span className="text-description text-bb-text-description">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </section>
-
-          <section aria-labelledby="advice-heading">
-            <Card className="flex h-full flex-col gap-card-gap">
-              <h2
-                id="advice-heading"
-                className="font-heading text-subtitle text-bb-text-subtitle"
-              >
-                Check with your health practitioner first if…
-              </h2>
-              <ul className="flex flex-col gap-component">
-                {SEEK_ADVICE.map((item) => (
-                  <li key={item} className="flex items-start gap-compact">
-                    <Info
-                      aria-hidden="true"
-                      className="mt-0.5 size-5 shrink-0 text-primary"
-                    />
-                    <span className="text-description text-bb-text-description">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-caption text-bb-text-caption">
-                This website doesn&apos;t provide medical advice, when in
-                doubt, ask your doctor or health practitioner.
-              </p>
-            </Card>
-          </section>
-        </div>
-
-        {/* Service FAQs */}
-        <section aria-labelledby="service-faq-heading" className="flex flex-col gap-card-gap">
+        {/* What's included */}
+        <section className="flex flex-col gap-component" aria-labelledby="includes-heading">
           <h2
-            id="service-faq-heading"
+            id="includes-heading"
             className="font-heading text-title font-semibold text-bb-text-title"
           >
-            Common Questions
+            What&apos;s Included
           </h2>
-          <div className="flex flex-col gap-component">
-            {getServiceFaqs(service.code).map((f) => (
-              <details
-                key={f.q}
-                className="group rounded border border-border bg-card p-card-padding"
-              >
-                <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between gap-component font-heading text-subtitle text-bb-text-subtitle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                  {f.q}
-                </summary>
-                <p className="mt-component max-w-prose text-description text-bb-text-description">
-                  {f.a}
-                </p>
-              </details>
-            ))}
-          </div>
+          <p className="max-w-prose text-description text-bb-text-description">
+            {detail.includes.join(". ")}.
+          </p>
         </section>
 
+        {/* How it may help */}
+        <section className="flex flex-col gap-component" aria-labelledby="help-heading">
+          <h2
+            id="help-heading"
+            className="font-heading text-title font-semibold text-bb-text-title"
+          >
+            How It May Help
+          </h2>
+          <p className="max-w-prose text-description text-bb-text-description">
+            {detail.mayHelp.join(". ")}.
+          </p>
+          <p className="text-caption text-bb-text-caption">
+            Massage supports general wellbeing — it isn&apos;t a medical
+            treatment or a substitute for professional health advice.
+          </p>
+        </section>
+
+        {/* Who it's for & good to know — side by side on tablet+ */}
+        <div className="grid grid-cols-1 gap-section tablet:grid-cols-2">
+          <section className="flex flex-col gap-component" aria-labelledby="suits-heading">
+            <h2
+              id="suits-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              Who It&apos;s For
+            </h2>
+            <p className="max-w-prose text-description text-bb-text-description">
+              {detail.suitableFor.join(". ")}.
+            </p>
+          </section>
+
+          <section className="flex flex-col gap-component" aria-labelledby="considerations-heading">
+            <h2
+              id="considerations-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              Good to Know
+            </h2>
+            <p className="max-w-prose text-description text-bb-text-description">
+              {detail.considerations.join(" ")}
+            </p>
+          </section>
+        </div>
+
+        {/* Getting ready & health guidance */}
+        <div className="grid grid-cols-1 gap-section tablet:grid-cols-2">
+          <section className="flex flex-col gap-component" aria-labelledby="prep-heading">
+            <h2
+              id="prep-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              Getting Ready
+            </h2>
+            <p className="max-w-prose text-description text-bb-text-description">
+              {PREPARATION_STEPS.join(" ")}
+            </p>
+          </section>
+
+          <section className="flex flex-col gap-component" aria-labelledby="advice-heading">
+            <h2
+              id="advice-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              Check With Your Health Practitioner If…
+            </h2>
+            <p className="max-w-prose text-description text-bb-text-description">
+              {SEEK_ADVICE.join("; ")}.
+            </p>
+            <p className="text-caption text-bb-text-caption">
+              This website doesn&apos;t provide medical advice — when in
+              doubt, ask your doctor or health practitioner.
+            </p>
+          </section>
+        </div>
+
+        {/* FAQs */}
+        {faqs.length > 0 && (
+          <section aria-labelledby="service-faq-heading" className="flex flex-col gap-card-gap">
+            <h2
+              id="service-faq-heading"
+              className="font-heading text-title font-semibold text-bb-text-title"
+            >
+              Common Questions
+            </h2>
+            <div className="flex flex-col gap-component">
+              {faqs.map((f) => (
+                <details
+                  key={f.q}
+                  className="group rounded border border-border bg-card p-card-padding"
+                >
+                  <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between gap-component font-heading text-subtitle text-bb-text-subtitle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    {f.q}
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="size-5 shrink-0 transition-transform duration-fade group-open:rotate-90"
+                    />
+                  </summary>
+                  <p className="mt-component max-w-prose text-description text-bb-text-description">
+                    {f.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Other services */}
-        {services.length > 1 ? (
+        {services.length > 1 && (
           <section aria-labelledby="other-heading" className="flex flex-col gap-card-gap">
             <h2
               id="other-heading"
@@ -400,7 +303,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
                 ))}
             </ul>
           </section>
-        ) : null}
+        )}
 
         {/* CTA */}
         <section aria-labelledby="detail-cta">

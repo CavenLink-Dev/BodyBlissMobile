@@ -126,28 +126,17 @@ export function GiftCardPurchase() {
           <CardTitle className="text-title">Gift card sent</CardTitle>
         </div>
 
-        <p
-          className="flex items-start gap-compact rounded border border-border bg-background p-3 text-description text-bb-text-description"
-          role="note"
-        >
-          <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
-          <span>
-            <span className="font-medium text-bb-text-display">Test mode.</span>{" "}
-            No payment was taken and no email was sent, this is a
-            demonstration.
-          </span>
-        </p>
 
         {preview}
 
         <CardDescription>
-          In the live site, {card.recipientName} would receive this gift card
+          {card.recipientName} will receive this gift card
           at {card.recipientEmail}{" "}
           {card.deliveryDate
             ? `on ${card.deliveryDate}`
             : "within a few minutes"}
-          , with instructions to redeem the code at checkout. A receipt would
-          go to {card.buyerEmail}. The card is valid for three years.
+          , with instructions to redeem the code at checkout. Your receipt has been
+          sent to {card.buyerEmail}. The card is valid for three years.
         </CardDescription>
 
         <div className="flex flex-col gap-component tablet:flex-row">

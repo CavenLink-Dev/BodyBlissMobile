@@ -38,10 +38,10 @@ const buttonVariants = cva(
         primary:
           "bg-secondary text-secondary-foreground shadow-secondary-inner active:brightness-95",
         secondary:
-          "bg-gold-soft text-espresso shadow-secondary-inner active:brightness-95",
+          "bg-gold-soft/88 text-espresso shadow-secondary-inner active:brightness-95",
         /* soft: kept as an alias of secondary so existing call sites
            (Details, Buy a Gift Card) pick up the new pale-gold style. */
-        soft: "bg-gold-soft text-espresso shadow-secondary-inner active:brightness-95",
+        soft: "bg-gold-soft/88 text-espresso shadow-secondary-inner active:brightness-95",
         quiet: "bg-transparent text-foreground active:bg-foreground/10",
       },
     },

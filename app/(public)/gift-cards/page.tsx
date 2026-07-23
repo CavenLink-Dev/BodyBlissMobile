@@ -82,11 +82,6 @@ export default function GiftCardsPage() {
             Already Have A Gift Card?
           </h2>
           <GiftCardTools />
-          <p className="text-caption text-bb-text-caption">
-            Tip: the demonstration gift card code{" "}
-            <span className="font-medium text-bb-text-description">GIFT-DEMO-2026</span>{" "}
-            works in these tools and at checkout.
-          </p>
         </section>
 
         <section aria-labelledby="gift-terms-heading" className="flex flex-col gap-component">

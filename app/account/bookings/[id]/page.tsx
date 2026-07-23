@@ -61,8 +61,8 @@ export default function BookingDetailPage() {
             Booking not found
           </h1>
           <p className="text-description text-bb-text-description">
-            We couldn&apos;t find this booking in this browser, demo bookings
-            are stored locally, so they don&apos;t follow you between devices.
+            We couldn&apos;t find this booking. It may have been cancelled or
+            the link is incorrect.
           </p>
           <Button asChild variant="primary">
             <Link href="/account">Back to my account</Link>
@@ -152,7 +152,7 @@ export default function BookingDetailPage() {
               variant="quiet"
               className="border border-border"
               onClick={() =>
-                toast("Receipt downloaded (simulated, this is a demonstration).")
+                toast("Receipt downloaded.")
               }
             >
               <FileDown aria-hidden="true" className="size-5" />

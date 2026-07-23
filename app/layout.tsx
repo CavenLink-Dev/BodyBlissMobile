@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import { CookieNotice } from "@/components/cookie-notice";
-import { TestModeBanner } from "@/components/test-mode-banner";
 import { Toaster } from "@/components/toaster";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -62,7 +61,6 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <TestModeBanner />
         {children}
         <CookieNotice />
         <Toaster />

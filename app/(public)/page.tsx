@@ -23,13 +23,7 @@ import { SuburbChecker } from "@/components/suburb-checker";
 import { TherapistCard } from "@/components/therapists/therapist-card";
 import { THERAPISTS } from "@/lib/therapists";
 
-/*
-  Home — mobile-first, adapted from the service-booking layout in the Figma
-  reference. Order: hero (prominent Book Now) → trust strip → services + live
-  pricing → how it works → why choose → therapist preview (honest, no fake
-  profiles) → reviews (clearly-labelled sample) → preparation → FAQ → final CTA.
-  No invented safety claims; prices are all-inclusive and shown upfront.
-*/
+/* Home page */
 
 const TRUST = [
   {
@@ -221,7 +215,7 @@ export default async function Home() {
           </section>
           </Reveal>
 
-          {/* Therapist preview, fictional sample profiles (labelled) */}
+          {/* Therapist preview */}
           <Reveal>
           <section className="flex flex-col gap-card-gap" aria-labelledby="therapists-heading">
             <SectionHeading
@@ -244,20 +238,14 @@ export default async function Home() {
               ))}
             </div>
             <p className="text-caption text-bb-text-caption">
-              Sample profiles for demonstration, every live therapist is
-              reviewed and approved before taking bookings.
+              Every therapist is reviewed and approved before taking bookings.
             </p>
           </section>
           </Reveal>
 
-          {/* Reviews, adapted from real day-spa Google reviews */}
+          {/* Reviews */}
           <Reveal>
-          <div className="flex flex-col gap-compact">
             <TestimonialsCarousel />
-            <p className="text-caption text-bb-text-caption">
-              Written reviews shown are sample content for this preview.
-            </p>
-          </div>
           </Reveal>
 
           {/* FAQ, accessible native accordion */}

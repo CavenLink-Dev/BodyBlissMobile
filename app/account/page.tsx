@@ -89,30 +89,9 @@ function SignedOut() {
           </h1>
           <p className="text-description text-bb-text-description">
             Sign in to manage bookings, save your details and rebook in
-            seconds. Everything here is simulated, no real account is
-            created.
+            seconds.
           </p>
         </div>
-
-        <Card className="flex flex-col gap-component">
-          <CardTitle className="text-subtitle">Try the demo account</CardTitle>
-          <CardDescription>
-            One tap, no details needed, explore a pre-filled account with
-            upcoming and past bookings, saved addresses and preferences.
-          </CardDescription>
-          <Button
-            type="button"
-            variant="primary"
-            className="w-full"
-            onClick={() => {
-              signInDemoAccount();
-              toast("Signed in to the demo account.");
-            }}
-          >
-            <Sparkles aria-hidden="true" className="size-5" />
-            View Demo Account
-          </Button>
-        </Card>
 
         <div className="flex flex-col gap-component">
           <Button asChild variant="primary" className="w-full">
@@ -208,12 +187,6 @@ export default function AccountPage() {
                 {user.email}
                 {user.phone ? ` · ${user.phone}` : ""}
               </p>
-              {user.isDemoAccount ? (
-                <p className="text-caption text-bb-text-caption">
-                  Demonstration account, all data is sample data in this
-                  browser.
-                </p>
-              ) : null}
             </div>
           </div>
           <Button

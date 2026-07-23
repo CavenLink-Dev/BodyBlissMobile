@@ -90,7 +90,7 @@ const STEP_HELP: string[] = [
   "Type the address where you would like the massage. The other boxes are just helpers and can be left empty. Tick the safety box near the bottom, then press Continue.",
   "Everything on this page is optional. If nothing applies to you, just tick the consent box at the bottom and press Continue.",
   "Check the details look right. Tick the box to agree to the terms, then press the gold button to go to payment.",
-  "Type any card details in the boxes and press the gold button. This website is a demonstration, so no money is ever taken.",
+  "Check the payment details and press the gold button to confirm your booking.",
 ];
 
 /* Deterministic sample availability — same date always shows the same
@@ -676,9 +676,8 @@ export function BookingFlow({
               </legend>
               {slots.length === 0 ? (
                 <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description">
-                  No appointments left on that date, try the next day, or a
-                  nearby date. Availability shown is sample data for this
-                  prototype.
+                  No appointments left on that date — try the next day or a
+                  nearby date.
                 </p>
               ) : (
                 <div className="grid grid-cols-3 gap-compact tablet:grid-cols-5">
@@ -709,9 +708,6 @@ export function BookingFlow({
                   {errors.time}
                 </p>
               ) : null}
-              <p className="text-caption text-bb-text-caption">
-                Sample availability for demonstration.
-              </p>
             </fieldset>
           ) : null}
 
@@ -735,8 +731,7 @@ export function BookingFlow({
               Choose your therapist
             </h2>
             <p className="text-description text-bb-text-description">
-              Let us match you automatically, or pick from the sample team.
-              Profiles are fictional demonstration data.
+              Let us match you automatically, or pick from the team below.
             </p>
           </div>
 
@@ -820,8 +815,8 @@ export function BookingFlow({
 
             {availableTherapists.length === 0 ? (
               <p className="rounded border border-border bg-cream p-3 text-description text-bb-text-description">
-                No sample therapist matches those preferences for this massage
-, choose &ldquo;Match me automatically&rdquo; and we&apos;ll
+                No therapist matches those preferences for this massage —
+                choose &ldquo;Match me automatically&rdquo; and we&apos;ll
                 assign a suitable therapist.
               </p>
             ) : null}
@@ -954,7 +949,7 @@ export function BookingFlow({
                     );
                   }}
                 >
-                  Verify my ID (demo)
+                  Verify my ID
                 </Button>
               </div>
             )}
@@ -1344,7 +1339,7 @@ export function BookingFlow({
               label="Therapist"
               value={
                 chosenTherapist
-                  ? `${chosenTherapist.name} (sample profile)`
+                  ? chosenTherapist.name
                   : "Matched by Body Bliss"
               }
             />
@@ -1412,7 +1407,7 @@ export function BookingFlow({
                 <Field
                   id="codeInput"
                   label="Code"
-                  hint="Try the demo gift card GIFT-DEMO-2026 or promo WELCOME10."
+                  hint="Enter a gift card code or promo code."
                   autoComplete="off"
                   value={codeInput}
                   error={codeError}
@@ -1434,8 +1429,7 @@ export function BookingFlow({
           <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
             <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-success" />
             <span>
-              Free cancellation until your therapist is on the way. Payment is
-              simulated in this demo, nothing is ever charged.
+              Free cancellation until your therapist is on the way.
             </span>
           </p>
 
@@ -1500,16 +1494,16 @@ export function BookingFlow({
               <CardTitle className="text-subtitle">Nothing to pay</CardTitle>
               <CardDescription>
                 Your gift card covers the full amount. Confirm below to complete
-                this demonstration booking.
+                your booking.
               </CardDescription>
               <Button type="button" variant="primary" onClick={onPaid}>
-                Complete Demo Booking
+                Complete Booking
               </Button>
             </Card>
           ) : (
             <PaymentForm
               amountCents={totalCents}
-              buttonLabel={`Complete Demo Booking, ${formatAud(totalCents)}`}
+              buttonLabel={`Complete Booking, ${formatAud(totalCents)}`}
               onPaid={onPaid}
             />
           )}
