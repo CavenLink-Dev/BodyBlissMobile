@@ -70,16 +70,6 @@ export const TESTIMONIALS: Testimonial[] = [
     date: "April 2026",
   },
   {
-    id: "t6",
-    quote:
-      "In town for a conference and booked an in-room massage after a long flight. Discreet, professional, and the hotel didn't bat an eyelid. Travel fatigue gone by morning.",
-    name: "David W.",
-    suburb: "Adelaide CBD",
-    service: "Hotel Massage",
-    rating: 5,
-    date: "April 2026",
-  },
-  {
     id: "t7",
     quote:
       "The remedial session actually addressed my desk-job neck properly, she assessed first, explained what she found, and followed up with stretches. Rare to get that level of care at home.",

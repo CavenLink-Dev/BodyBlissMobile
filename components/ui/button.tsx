@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 /*
   Body Bliss buttons — updated colour system (July 2026 reference card):
   - primary:   gold #F6C440 fill (the previous secondary colour, cooled
-               slightly from the reference #F9C13E) + charcoal label (≈9:1)
-  - secondary: pale gold #F6DE8D fill + espresso #3D3B36 label (the previous
+               slightly from the reference #FFD46F) + charcoal label (≈9:1)
+  - secondary: pale gold #FFD46F fill + espresso #3D3B36 label (the previous
                primary colour, ≈8:1) + token inner shadow
   - soft:      alias of secondary (kept for existing call sites)
   - quiet:     charcoal text only
@@ -38,10 +38,10 @@ const buttonVariants = cva(
         primary:
           "bg-secondary text-secondary-foreground shadow-secondary-inner active:brightness-95",
         secondary:
-          "bg-gold-soft/88 text-espresso shadow-secondary-inner active:brightness-95",
+          "bg-gold-soft text-espresso shadow-secondary-inner active:brightness-95",
         /* soft: kept as an alias of secondary so existing call sites
            (Details, Buy a Gift Card) pick up the new pale-gold style. */
-        soft: "bg-gold-soft/88 text-espresso shadow-secondary-inner active:brightness-95",
+        soft: "bg-gold-soft text-espresso shadow-secondary-inner active:brightness-95",
         quiet: "bg-transparent text-foreground active:bg-foreground/10",
       },
     },

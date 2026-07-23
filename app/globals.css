@@ -26,7 +26,7 @@
     --linen: 36 37% 87%;           /* #EAE0D1 — chips, muted surfaces, skeletons */
     --sand: 37 35% 80%;            /* #DDCFB9 — hairlines, decorative rules */
     --camel: 45 93% 61%;           /* #F6C440 — gold, cooled slightly from the reference #F9C13E: primary actions, badges (charcoal label ≈8:1) */
-    --gold-soft: 42 100% 68%;      /* #FFCE5B — secondary actions @ 88% opacity (espresso label ≈7:1) */
+    --gold-soft: 42 100% 71.8%;    /* #FFD46F — secondary actions (espresso label ≈8:1) */
     --taupe: 35 27% 43%;           /* #8C7351 — deep accent details, pressed reinforcement */
     --stone: 38 10% 49%;           /* #8A8172 — functional input borders (3.47:1 vs ivory, 3.84:1 vs white) */
     /* Charcoal family — unchanged anchor */

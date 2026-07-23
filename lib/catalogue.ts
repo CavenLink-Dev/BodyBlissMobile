@@ -81,16 +81,6 @@ const STATIC_SERVICES: StaticService[] = [
       [90, 38999],
     ],
   },
-  {
-    code: "hotel",
-    name: "Hotel Massage",
-    description:
-      "In-room massage for hotel guests staying in Adelaide. We bring the table, towels and music — unwind after travel without leaving your room.",
-    variants: [
-      [60, 14999],
-      [90, 19999],
-    ],
-  },
 ];
 
 /* Upcoming treatments — shown on the services page as "Coming Soon".
