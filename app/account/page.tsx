@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   CalendarClock,
-  CreditCard,
   Gift,
   MapPin,
   UserRound,
@@ -345,58 +344,29 @@ export default function AccountPage() {
           </Card>
         </section>
 
-        {/* Gift cards & payment */}
-        <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
-          <section aria-labelledby="gift-heading">
-            <Card className="flex h-full flex-col gap-component">
-              <div className="flex items-center gap-component">
-                <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
-                  <Gift className="size-6 text-primary" />
-                </span>
-                <h2 id="gift-heading" className="font-heading text-subtitle text-bb-text-subtitle">
-                  Gift Card Balance
-                </h2>
-              </div>
-              <p className="font-heading text-title font-semibold text-bb-text-display">
-                {formatAud(giftBalance)}
-              </p>
-              <CardDescription>
-                Across {giftCards.length} card{giftCards.length === 1 ? "" : "s"} in
-                this browser. Apply a code at checkout to redeem.
-              </CardDescription>
-              <Button asChild variant="quiet" className="w-fit border border-border">
-                <Link href="/gift-cards">Gift card tools</Link>
-              </Button>
-            </Card>
-          </section>
-
-          <section aria-labelledby="payment-heading">
-            <Card className="flex h-full flex-col gap-component">
-              <div className="flex items-center gap-component">
-                <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
-                  <CreditCard className="size-6 text-primary" />
-                </span>
-                <h2 id="payment-heading" className="font-heading text-subtitle text-bb-text-subtitle">
-                  Payment Methods
-                </h2>
-              </div>
-              <p className="text-description text-bb-text-description">
-                Visa •••• 4242
-              </p>
-              <CardDescription>
-                Your card details are stored securely with our payment provider.
-              </CardDescription>
-              <Button
-                type="button"
-                variant="quiet"
-                className="w-fit border border-border"
-                onClick={() => toast("Opening card management…")}
-              >
-                Manage cards
-              </Button>
-            </Card>
-          </section>
-        </div>
+        {/* Gift cards */}
+        <section aria-labelledby="gift-heading">
+          <Card className="flex flex-col gap-component">
+            <div className="flex items-center gap-component">
+              <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+                <Gift className="size-6 text-primary" />
+              </span>
+              <h2 id="gift-heading" className="font-heading text-subtitle text-bb-text-subtitle">
+                Gift Card Balance
+              </h2>
+            </div>
+            <p className="font-heading text-title font-semibold text-bb-text-display">
+              {formatAud(giftBalance)}
+            </p>
+            <CardDescription>
+              Across {giftCards.length} card{giftCards.length === 1 ? "" : "s"}.
+              Apply a code at checkout to redeem.
+            </CardDescription>
+            <Button asChild variant="quiet" className="w-fit border border-border">
+              <Link href="/gift-cards">Gift card tools</Link>
+            </Button>
+          </Card>
+        </section>
 
         {/* Communication preferences */}
         <section className="flex flex-col gap-card-gap" aria-labelledby="comms-heading">

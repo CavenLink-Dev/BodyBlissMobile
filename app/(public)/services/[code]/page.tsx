@@ -124,136 +124,75 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
 
         {/* Hero */}
         <header className="flex flex-col gap-component">
-          <div className="max-w-md overflow-hidden rounded border border-border shadow-rest">
+          <div className="overflow-hidden rounded border border-border shadow-rest">
             <ServiceIllustration code={service.code} />
           </div>
           <h1 className="font-heading text-display text-bb-text-display">
             {service.name}
           </h1>
-          <p className="max-w-prose text-subtitle text-bb-text-subtitle">
+          <p className="text-subtitle text-bb-text-subtitle">
             {detail.tagline}
           </p>
-          <p className="max-w-prose text-description text-bb-text-description">
+          <p className="text-description text-bb-text-description">
             {detail.intro}
           </p>
 
-          {/* Pricing summary */}
+          {/* Pricing */}
           {service.variants.length > 0 && (
-            <div className="flex flex-wrap items-baseline gap-card-gap">
+            <ul className="flex flex-col divide-y divide-border rounded border border-border bg-card">
               {service.variants.map((v) => (
-                <span key={v.id} className="text-description text-bb-text-description">
-                  <span className="font-semibold text-bb-text-title">{v.durationMinutes} min</span>
-                  {" — "}
-                  {formatAud(v.priceCents)}
-                </span>
+                <li
+                  key={v.id}
+                  className="flex items-center justify-between gap-component px-card-padding py-3"
+                >
+                  <span className="text-description text-bb-text-description">
+                    {v.durationMinutes} minutes
+                  </span>
+                  <span className="text-subtitle font-semibold text-bb-text-title">
+                    {formatAud(v.priceCents)}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
 
-          <div>
-            <Button asChild variant="primary">
-              <Link href={`/book?service=${service.code}`}>Book Now</Link>
-            </Button>
-          </div>
+          <Button asChild variant="primary" className="w-full tablet:w-fit">
+            <Link href={`/book?service=${service.code}`}>Book Now</Link>
+          </Button>
           <p className="text-caption text-bb-text-caption">
             Everything is included — travel, the table and all equipment.
           </p>
         </header>
 
-        {/* What's included */}
-        <section className="flex flex-col gap-component" aria-labelledby="includes-heading">
-          <h2
-            id="includes-heading"
-            className="font-heading text-title font-semibold text-bb-text-title"
-          >
-            What&apos;s Included
-          </h2>
-          <p className="max-w-prose text-description text-bb-text-description">
-            {detail.includes.join(". ")}.
-          </p>
-        </section>
+        {/* Clean single-column info sections */}
+        <InfoSection id="includes-heading" title="What's Included" items={detail.includes} />
 
-        {/* How it may help */}
-        <section className="flex flex-col gap-component" aria-labelledby="help-heading">
-          <h2
-            id="help-heading"
-            className="font-heading text-title font-semibold text-bb-text-title"
-          >
-            How It May Help
-          </h2>
-          <p className="max-w-prose text-description text-bb-text-description">
-            {detail.mayHelp.join(". ")}.
-          </p>
-          <p className="text-caption text-bb-text-caption">
-            Massage supports general wellbeing — it isn&apos;t a medical
-            treatment or a substitute for professional health advice.
-          </p>
-        </section>
+        <InfoSection
+          id="help-heading"
+          title="How It May Help"
+          items={detail.mayHelp}
+          note="Massage supports general wellbeing — it isn't a medical treatment or a substitute for professional health advice."
+        />
 
-        {/* Who it's for & good to know — side by side on tablet+ */}
-        <div className="grid grid-cols-1 gap-section tablet:grid-cols-2">
-          <section className="flex flex-col gap-component" aria-labelledby="suits-heading">
-            <h2
-              id="suits-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Who It&apos;s For
-            </h2>
-            <p className="max-w-prose text-description text-bb-text-description">
-              {detail.suitableFor.join(". ")}.
-            </p>
-          </section>
+        <InfoSection id="suits-heading" title="Who It's For" items={detail.suitableFor} />
 
-          <section className="flex flex-col gap-component" aria-labelledby="considerations-heading">
-            <h2
-              id="considerations-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Good to Know
-            </h2>
-            <p className="max-w-prose text-description text-bb-text-description">
-              {detail.considerations.join(" ")}
-            </p>
-          </section>
-        </div>
+        <InfoSection id="considerations-heading" title="Good to Know" items={detail.considerations} />
 
-        {/* Getting ready & health guidance */}
-        <div className="grid grid-cols-1 gap-section tablet:grid-cols-2">
-          <section className="flex flex-col gap-component" aria-labelledby="prep-heading">
-            <h2
-              id="prep-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Getting Ready
-            </h2>
-            <p className="max-w-prose text-description text-bb-text-description">
-              {PREPARATION_STEPS.join(" ")}
-            </p>
-          </section>
+        <InfoSection id="prep-heading" title="Getting Ready" items={PREPARATION_STEPS} />
 
-          <section className="flex flex-col gap-component" aria-labelledby="advice-heading">
-            <h2
-              id="advice-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
-            >
-              Check With Your Health Practitioner If…
-            </h2>
-            <p className="max-w-prose text-description text-bb-text-description">
-              {SEEK_ADVICE.join("; ")}.
-            </p>
-            <p className="text-caption text-bb-text-caption">
-              This website doesn&apos;t provide medical advice — when in
-              doubt, ask your doctor or health practitioner.
-            </p>
-          </section>
-        </div>
+        <InfoSection
+          id="advice-heading"
+          title="Check With Your Practitioner First If…"
+          items={SEEK_ADVICE}
+          note="This website doesn't provide medical advice — when in doubt, ask your doctor or health practitioner."
+        />
 
         {/* FAQs */}
         {faqs.length > 0 && (
           <section aria-labelledby="service-faq-heading" className="flex flex-col gap-card-gap">
             <h2
               id="service-faq-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
+              className="font-heading text-subtitle font-semibold text-bb-text-title"
             >
               Common Questions
             </h2>
@@ -284,7 +223,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
           <section aria-labelledby="other-heading" className="flex flex-col gap-card-gap">
             <h2
               id="other-heading"
-              className="font-heading text-title font-semibold text-bb-text-title"
+              className="font-heading text-subtitle font-semibold text-bb-text-title"
             >
               Other Massages
             </h2>
@@ -325,5 +264,46 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
         </section>
       </div>
     </main>
+  );
+}
+
+/* Clean, consistent info section: a calm heading + tidy bullet list. */
+function InfoSection({
+  id,
+  title,
+  items,
+  note,
+}: {
+  id: string;
+  title: string;
+  items: readonly string[];
+  note?: string;
+}) {
+  return (
+    <section className="flex flex-col gap-component" aria-labelledby={id}>
+      <h2
+        id={id}
+        className="font-heading text-subtitle font-semibold text-bb-text-title"
+      >
+        {title}
+      </h2>
+      <ul className="flex flex-col gap-compact">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex items-start gap-component text-description text-bb-text-description"
+          >
+            <span
+              aria-hidden="true"
+              className="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-primary/60"
+            />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      {note ? (
+        <p className="text-caption text-bb-text-caption">{note}</p>
+      ) : null}
+    </section>
   );
 }

@@ -57,11 +57,6 @@ const SelectField = React.forwardRef<HTMLSelectElement, SelectFieldProps>(
         <Label htmlFor={id} className="text-description font-medium text-foreground">
           {label}
         </Label>
-        {hint ? (
-          <p id={hintId} className="text-description text-bb-text-description">
-            {hint}
-          </p>
-        ) : null}
         <SelectControl
           id={id}
           ref={ref}
@@ -73,6 +68,11 @@ const SelectField = React.forwardRef<HTMLSelectElement, SelectFieldProps>(
         >
           {children}
         </SelectControl>
+        {hint ? (
+          <p id={hintId} className="text-caption text-bb-text-caption">
+            {hint}
+          </p>
+        ) : null}
         {error ? (
           <p id={errorId} className="text-description font-medium text-destructive">
             {error}

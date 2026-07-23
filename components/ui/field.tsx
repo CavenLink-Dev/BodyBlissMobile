@@ -29,11 +29,6 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
         <Label htmlFor={id} className="text-description font-medium text-foreground">
           {label}
         </Label>
-        {hint ? (
-          <p id={hintId} className="text-description text-bb-text-description">
-            {hint}
-          </p>
-        ) : null}
         <Input
           id={id}
           ref={ref}
@@ -43,6 +38,11 @@ const Field = React.forwardRef<HTMLInputElement, FieldProps>(
           }
           {...props}
         />
+        {hint ? (
+          <p id={hintId} className="text-caption text-bb-text-caption">
+            {hint}
+          </p>
+        ) : null}
         {error ? (
           <p id={errorId} className="text-description font-medium text-destructive">
             {error}
@@ -73,11 +73,6 @@ const FieldTextarea = React.forwardRef<
       <Label htmlFor={id} className="text-description font-medium text-foreground">
         {label}
       </Label>
-      {hint ? (
-        <p id={hintId} className="text-description text-bb-text-description">
-          {hint}
-        </p>
-      ) : null}
       <Textarea
         id={id}
         ref={ref}
@@ -87,6 +82,11 @@ const FieldTextarea = React.forwardRef<
         }
         {...props}
       />
+      {hint ? (
+        <p id={hintId} className="text-caption text-bb-text-caption">
+          {hint}
+        </p>
+      ) : null}
       {error ? (
         <p id={errorId} className="text-description font-medium text-destructive">
           {error}
