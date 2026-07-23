@@ -29,7 +29,7 @@ export default {
         linen: "hsl(var(--linen))",
         sand: "hsl(var(--sand))",
         camel: "hsl(var(--camel))",
-        "gold-soft": "hsl(var(--gold-soft))",
+        "gold-soft": "hsl(var(--gold-soft) / <alpha-value>)",
         taupe: "hsl(var(--taupe))",
         stone: "hsl(var(--stone))",
         charcoal: "hsl(var(--charcoal))",
