@@ -187,10 +187,10 @@ export default async function Home() {
               {TRUST.map((item) => (
                 <Card key={item.title} variant="row" className="items-start">
                   <span
-                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-linen"
+                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-wash"
                     aria-hidden="true"
                   >
-                    <item.icon className="size-6 text-charcoal" />
+                    <item.icon className="size-6 text-espresso" />
                   </span>
                   <div className="flex flex-col gap-compact">
                     <CardTitle className="text-subtitle">{item.title}</CardTitle>

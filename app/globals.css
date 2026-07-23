@@ -27,6 +27,12 @@
     --sand: 37 35% 80%;            /* #DDCFB9 — hairlines, decorative rules */
     --camel: 45 93% 61%;           /* #F6C440 — gold, cooled slightly from the reference #F9C13E: primary actions, badges (charcoal label ≈8:1) */
     --gold-soft: 42 100% 71.8%;    /* #FFD46F — secondary actions (espresso label ≈8:1) */
+    /* Extended gold ramp (July 2026) — gives the site tonal variation instead
+       of one flat gold. Every gold surface still carries charcoal/espresso
+       text only (white-on-gold stays banned). */
+    --gold-light: 44 96% 82%;      /* #FCE3A4 — clearly lighter gold: secondary buttons, soft washes (espresso ≈10:1) */
+    --gold-wash: 44 80% 94%;       /* #FBF2DA — faint gold tint for section/card surfaces */
+    --gold-deep: 38 66% 40%;       /* #A97423 — deep amber: small accents, icon strokes, dividers */
     --taupe: 35 27% 43%;           /* #8C7351 — deep accent details, pressed reinforcement */
     --stone: 38 10% 49%;           /* #8A8172 — functional input borders (3.47:1 vs ivory, 3.84:1 vs white) */
     /* Charcoal family — unchanged anchor */

@@ -124,7 +124,7 @@ export default async function ServiceDetailPage({ params }: { params: Params }) 
 
         {/* Hero */}
         <header className="flex flex-col gap-component">
-          <div className="overflow-hidden rounded border border-border shadow-rest">
+          <div className="w-full max-w-lg overflow-hidden rounded border border-border shadow-rest">
             <ServiceIllustration code={service.code} />
           </div>
           <h1 className="font-heading text-display text-bb-text-display">

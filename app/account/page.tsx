@@ -348,7 +348,7 @@ export default function AccountPage() {
         <section aria-labelledby="gift-heading">
           <Card className="flex flex-col gap-component">
             <div className="flex items-center gap-component">
-              <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+              <span className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash" aria-hidden="true">
                 <Gift className="size-6 text-primary" />
               </span>
               <h2 id="gift-heading" className="font-heading text-subtitle text-bb-text-subtitle">

@@ -84,7 +84,7 @@ export function ReportConcernForm() {
   return (
     <Card className="flex flex-col gap-component">
       <div className="flex items-center gap-component">
-        <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+        <span className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash" aria-hidden="true">
           <ShieldAlert className="size-6 text-primary" />
         </span>
         <CardTitle className="text-subtitle">Report a concern</CardTitle>

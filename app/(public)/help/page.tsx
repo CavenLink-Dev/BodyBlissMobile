@@ -186,7 +186,7 @@ export default function HelpPage() {
             {COMMITMENTS.map((c) => (
               <Card key={c.title} variant="row" className="items-start">
                 <span
-                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-muted"
+                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-wash"
                   aria-hidden="true"
                 >
                   <c.icon className="size-6 text-primary" />
@@ -206,7 +206,7 @@ export default function HelpPage() {
             <Card className="flex h-full flex-col gap-component">
               <div className="flex items-center gap-component">
                 <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
+                  className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash"
                   aria-hidden="true"
                 >
                   <CalendarX className="size-6 text-primary" />
@@ -231,7 +231,7 @@ export default function HelpPage() {
             <Card className="flex h-full flex-col gap-component">
               <div className="flex items-center gap-component">
                 <span
-                  className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
+                  className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash"
                   aria-hidden="true"
                 >
                   <CreditCard className="size-6 text-primary" />

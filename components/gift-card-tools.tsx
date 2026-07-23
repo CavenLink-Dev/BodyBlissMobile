@@ -57,7 +57,7 @@ export function GiftCardTools() {
     <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-2">
       <Card className="flex h-full flex-col gap-component">
         <div className="flex items-center gap-component">
-          <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+          <span className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash" aria-hidden="true">
             <Wallet className="size-6 text-primary" />
           </span>
           <CardTitle className="text-subtitle">Check a balance</CardTitle>
@@ -95,7 +95,7 @@ export function GiftCardTools() {
 
       <Card className="flex h-full flex-col gap-component">
         <div className="flex items-center gap-component">
-          <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+          <span className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash" aria-hidden="true">
             <Mail className="size-6 text-primary" />
           </span>
           <CardTitle className="text-subtitle">Resend a gift card</CardTitle>

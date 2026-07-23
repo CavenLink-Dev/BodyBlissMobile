@@ -74,7 +74,7 @@ export default function AboutPage() {
             {VALUES.map((v) => (
               <Card key={v.title} variant="row" className="items-start">
                 <span
-                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-muted"
+                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-wash"
                   aria-hidden="true"
                 >
                   <v.icon className="size-6 text-primary" />

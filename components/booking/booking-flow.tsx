@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   BadgeCheck,
   Check,
+  ChevronDown,
   ChevronLeft,
   Gift,
   HelpCircle,
@@ -480,13 +481,26 @@ export function BookingFlow({
     );
   }
 
+  {/* Combined footer: live total on the left, Continue on the bottom-right,
+      all in one clean bar. Back sits quietly beneath it. */}
   const navButtons = (
-    <div className="flex flex-col gap-component tablet:flex-row-reverse tablet:justify-start">
-      <Button type="submit" variant="primary" className="w-full tablet:w-auto">
-        Continue
-      </Button>
+    <div className="flex flex-col gap-component">
+      <div className="flex items-end justify-between gap-card-gap rounded border border-border bg-card p-card-padding shadow-rest">
+        <div className="flex flex-col gap-compact">
+          <span className="text-caption text-bb-text-caption">Total</span>
+          <span
+            className="font-heading text-title font-semibold text-bb-text-display"
+            aria-live="polite"
+          >
+            {selectedVariant ? formatAud(totalCents) : "—"}
+          </span>
+        </div>
+        <Button type="submit" variant="primary" className="shrink-0">
+          Continue
+        </Button>
+      </div>
       {step > 0 ? (
-        <Button type="button" variant="quiet" className="w-full tablet:w-auto" onClick={back}>
+        <Button type="button" variant="quiet" className="w-fit" onClick={back}>
           <ChevronLeft aria-hidden="true" className="size-5" />
           Back
         </Button>
@@ -533,25 +547,6 @@ export function BookingFlow({
           </div>
         ) : null}
       </div>
-
-      {/* Live total — updates with every selection (length, people, suburb
-          travel fee, own table, codes). Review shows the full breakdown. */}
-      {step <= 4 && selectedVariant ? (
-        <div
-          className="flex flex-wrap items-baseline justify-between gap-component rounded border border-border bg-card px-card-padding py-3 shadow-rest"
-          aria-live="polite"
-        >
-          <span className="text-description text-bb-text-description">
-            Your total{" "}
-            <span className="text-caption text-bb-text-caption">
-              — updates with your selections
-            </span>
-          </span>
-          <span className="font-heading text-title font-semibold text-bb-text-display">
-            {formatAud(totalCents)}
-          </span>
-        </div>
-      ) : null}
 
       {/* ---------------- Step 1: Massage & time ---------------- */}
       {step === 0 && (
@@ -615,11 +610,11 @@ export function BookingFlow({
                     aria-pressed={selected}
                     onClick={() => set("variantId", v.id)}
                     className={cn(
-                      "flex min-h-hit-target items-center justify-between rounded border px-4 py-3 text-description font-medium transition-colors duration-fade",
+                      "flex min-h-hit-target items-center justify-between rounded border px-4 py-3 text-description transition-colors duration-fade",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                       selected
-                        ? "border-transparent bg-secondary font-semibold text-secondary-foreground shadow-secondary-inner"
-                        : "border-border bg-card text-bb-text-description hover:border-primary",
+                        ? "border-camel bg-gold-wash font-semibold text-bb-text-display"
+                        : "border-border bg-card text-bb-text-description hover:border-camel/60",
                     )}
                   >
                     <span>{v.durationMinutes} minutes</span>
@@ -690,11 +685,11 @@ export function BookingFlow({
                         aria-pressed={selected}
                         onClick={() => set("time", slot)}
                         className={cn(
-                          "inline-flex min-h-hit-target items-center justify-center rounded border text-description font-medium transition-colors duration-fade",
+                          "inline-flex min-h-hit-target items-center justify-center rounded border text-description transition-colors duration-fade",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                           selected
-                            ? "border-transparent bg-secondary font-semibold text-secondary-foreground shadow-secondary-inner"
-                            : "border-border bg-card text-bb-text-description hover:border-primary",
+                            ? "border-camel bg-gold-wash font-semibold text-bb-text-display"
+                            : "border-border bg-card text-bb-text-description hover:border-camel/60",
                         )}
                       >
                         {slot}
@@ -757,11 +752,11 @@ export function BookingFlow({
                 "flex items-start gap-component rounded border p-card-padding text-left transition-colors duration-fade",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                 data.therapistChoice === "match"
-                  ? "border-secondary bg-cream shadow-rest"
-                  : "border-border bg-card hover:border-primary",
+                  ? "border-camel bg-gold-wash shadow-rest"
+                  : "border-border bg-card hover:border-camel/60",
               )}
             >
-              <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+              <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-gold-wash" aria-hidden="true">
                 <Users className="size-6 text-primary" />
               </span>
               <span className="flex flex-col gap-compact">
@@ -790,8 +785,8 @@ export function BookingFlow({
                     "flex items-start gap-component rounded border p-card-padding text-left transition-colors duration-fade",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                     selected
-                      ? "border-secondary bg-cream shadow-rest"
-                      : "border-border bg-card hover:border-primary",
+                      ? "border-camel bg-gold-wash shadow-rest"
+                      : "border-border bg-card hover:border-camel/60",
                   )}
                 >
                   <TherapistAvatar therapist={t} className="size-12 text-subtitle" />
@@ -917,7 +912,7 @@ export function BookingFlow({
           {/* One-time identity check: safety without hoarding data */}
           <Card className="flex flex-col gap-component">
             <div className="flex items-center gap-component">
-              <span className="inline-flex size-11 items-center justify-center rounded-full bg-muted" aria-hidden="true">
+              <span className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash" aria-hidden="true">
                 <ShieldCheck className="size-6 text-primary" />
               </span>
               <CardTitle className="text-subtitle">
@@ -945,7 +940,7 @@ export function BookingFlow({
                     setIdVerified();
                     setIdVerifiedState(true);
                     toast(
-                      "Identity verified (simulated). Only the result is stored, never your document.",
+                      "Identity verified. Only the result is stored, never your document.",
                     );
                   }}
                 >
@@ -987,6 +982,15 @@ export function BookingFlow({
               These details help your therapist arrive prepared and on time.
             </p>
           </div>
+
+          <p className="flex items-start gap-compact rounded border border-border bg-gold-wash p-3 text-description text-bb-text-description">
+            <Lock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-gold-deep" />
+            <span>
+              Your exact address is only shared with your assigned therapist
+              once your booking is confirmed — never before, and never with
+              anyone else.
+            </span>
+          </p>
 
           <SelectField
             id="locationType"
@@ -1053,70 +1057,74 @@ export function BookingFlow({
 
           <FieldTextarea
             id="parking"
-            label="Parking information"
-            hint="Where can the therapist park? Driveway, street, visitor bay, etc."
+            label="Parking & access notes"
+            hint="Where to park, which entrance, gate or buzzer codes — anything that helps your therapist arrive smoothly."
             value={data.parking}
             onChange={(e) => set("parking", e.target.value)}
           />
 
-          <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
-            <SelectField
-              id="stairs"
-              label="Stairs"
-              value={data.stairs}
-              onChange={(e) => set("stairs", e.target.value)}
-            >
-              {STAIRS_OPTIONS.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </SelectField>
-            <SelectField
-              id="lift"
-              label="Lift access"
-              value={data.lift}
-              onChange={(e) => set("lift", e.target.value)}
-            >
-              {LIFT_OPTIONS.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </SelectField>
-          </div>
+          {/* Extra access details tucked away to keep the step simple */}
+          <details className="group rounded border border-border bg-card">
+            <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between gap-component p-card-padding text-description font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset">
+              More access details (optional)
+              <ChevronDown
+                aria-hidden="true"
+                className="size-5 shrink-0 transition-transform duration-fade group-open:rotate-180"
+              />
+            </summary>
+            <div className="flex flex-col gap-component p-card-padding pt-0">
+              <div className="grid grid-cols-1 gap-component tablet:grid-cols-2">
+                <SelectField
+                  id="stairs"
+                  label="Stairs"
+                  value={data.stairs}
+                  onChange={(e) => set("stairs", e.target.value)}
+                >
+                  {STAIRS_OPTIONS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </SelectField>
+                <SelectField
+                  id="lift"
+                  label="Lift access"
+                  value={data.lift}
+                  onChange={(e) => set("lift", e.target.value)}
+                >
+                  {LIFT_OPTIONS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </SelectField>
+              </div>
 
-          <Field
-            id="intercom"
-            label="Gate or intercom instructions"
-            hint="Buzzer number, gate code, or 'call on arrival'."
-            value={data.intercom}
-            onChange={(e) => set("intercom", e.target.value)}
-          />
+              <FieldTextarea
+                id="entryNotes"
+                label="Entry notes"
+                hint="Which entrance, landmarks, anything that helps us find you."
+                value={data.entryNotes}
+                onChange={(e) => set("entryNotes", e.target.value)}
+              />
 
-          <FieldTextarea
-            id="entryNotes"
-            label="Entry notes"
-            hint="Which entrance, landmarks, anything that helps us find you."
-            value={data.entryNotes}
-            onChange={(e) => set("entryNotes", e.target.value)}
-          />
+              <Field
+                id="pets"
+                label="Pets"
+                hint="e.g. 'Friendly dog, will be in the yard.'"
+                value={data.pets}
+                onChange={(e) => set("pets", e.target.value)}
+              />
 
-          <Field
-            id="pets"
-            label="Pets"
-            hint="e.g. 'Friendly dog, will be in the yard.'"
-            value={data.pets}
-            onChange={(e) => set("pets", e.target.value)}
-          />
-
-          <FieldTextarea
-            id="accessibility"
-            label="Accessibility requirements"
-            hint="Anything we should adjust for access or mobility. Optional."
-            value={data.accessibility}
-            onChange={(e) => set("accessibility", e.target.value)}
-          />
+              <FieldTextarea
+                id="accessibility"
+                label="Accessibility requirements"
+                hint="Anything we should adjust for access or mobility."
+                value={data.accessibility}
+                onChange={(e) => set("accessibility", e.target.value)}
+              />
+            </div>
+          </details>
 
           {!isCouples ? (
             <SelectField
@@ -1191,43 +1199,6 @@ export function BookingFlow({
             ))}
           </SelectField>
 
-          <SelectField
-            id="oilPref"
-            label="Oil preference"
-            hint="Your therapist brings hypoallergenic options."
-            value={data.oilPref}
-            onChange={(e) => set("oilPref", e.target.value)}
-          >
-            <option>Standard massage oil</option>
-            <option>Unscented oil</option>
-            <option>Minimal oil</option>
-          </SelectField>
-
-          <SelectField
-            id="othersHome"
-            label="Will anyone else be there during the visit?"
-            hint="Helps your therapist know what to expect on arrival."
-            value={data.othersHome}
-            onChange={(e) => set("othersHome", e.target.value)}
-          >
-            <option>Just me</option>
-            <option>Other adults will be home</option>
-            <option>Children will be home</option>
-            <option>It varies</option>
-          </SelectField>
-
-          <label className="flex items-start gap-component">
-            <Checkbox
-              checked={data.firstMassage}
-              onCheckedChange={(v) => set("firstMassage", v === true)}
-              className="mt-0.5"
-            />
-            <span className="text-description text-bb-text-description">
-              This is my first professional massage. My therapist will explain
-              everything as we go.
-            </span>
-          </label>
-
           <Field
             id="focusAreas"
             label="Areas to focus on"
@@ -1242,34 +1213,84 @@ export function BookingFlow({
             value={data.avoidAreas}
             onChange={(e) => set("avoidAreas", e.target.value)}
           />
-          <Field
-            id="pregnancy"
-            label="Pregnancy"
-            hint="If pregnant, how many weeks? We only book pregnancy massage from 12 weeks."
-            value={data.pregnancy}
-            onChange={(e) => set("pregnancy", e.target.value)}
-          />
-          <Field
-            id="allergies"
-            label="Allergies or sensitivities"
-            hint="e.g. nut oils, fragrances, latex."
-            value={data.allergies}
-            onChange={(e) => set("allergies", e.target.value)}
-          />
-          <Field
-            id="mobility"
-            label="Mobility requirements"
-            hint="e.g. difficulty lying flat, need help getting on the table."
-            value={data.mobility}
-            onChange={(e) => set("mobility", e.target.value)}
-          />
-          <FieldTextarea
-            id="healthNotes"
-            label="Health notes (optional)"
-            hint="Injuries, conditions or recent surgery you'd like your therapist to know about. Share only what you're comfortable with."
-            value={data.healthNotes}
-            onChange={(e) => set("healthNotes", e.target.value)}
-          />
+
+          <label className="flex items-start gap-component">
+            <Checkbox
+              checked={data.firstMassage}
+              onCheckedChange={(v) => set("firstMassage", v === true)}
+              className="mt-0.5"
+            />
+            <span className="text-description text-bb-text-description">
+              This is my first professional massage. My therapist will explain
+              everything as we go.
+            </span>
+          </label>
+
+          {/* Extra preferences tucked away to keep the step simple */}
+          <details className="group rounded border border-border bg-card">
+            <summary className="flex min-h-hit-target cursor-pointer list-none items-center justify-between gap-component p-card-padding text-description font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset">
+              More preferences &amp; health notes (optional)
+              <ChevronDown
+                aria-hidden="true"
+                className="size-5 shrink-0 transition-transform duration-fade group-open:rotate-180"
+              />
+            </summary>
+            <div className="flex flex-col gap-component p-card-padding pt-0">
+              <SelectField
+                id="oilPref"
+                label="Oil preference"
+                hint="Your therapist brings hypoallergenic options."
+                value={data.oilPref}
+                onChange={(e) => set("oilPref", e.target.value)}
+              >
+                <option>Standard massage oil</option>
+                <option>Unscented oil</option>
+                <option>Minimal oil</option>
+              </SelectField>
+
+              <SelectField
+                id="othersHome"
+                label="Will anyone else be there during the visit?"
+                hint="Helps your therapist know what to expect on arrival."
+                value={data.othersHome}
+                onChange={(e) => set("othersHome", e.target.value)}
+              >
+                <option>Just me</option>
+                <option>Other adults will be home</option>
+                <option>Children will be home</option>
+                <option>It varies</option>
+              </SelectField>
+
+              <Field
+                id="pregnancy"
+                label="Pregnancy"
+                hint="If pregnant, how many weeks? We only book pregnancy massage from 12 weeks."
+                value={data.pregnancy}
+                onChange={(e) => set("pregnancy", e.target.value)}
+              />
+              <Field
+                id="allergies"
+                label="Allergies or sensitivities"
+                hint="e.g. nut oils, fragrances, latex."
+                value={data.allergies}
+                onChange={(e) => set("allergies", e.target.value)}
+              />
+              <Field
+                id="mobility"
+                label="Mobility requirements"
+                hint="e.g. difficulty lying flat, need help getting on the table."
+                value={data.mobility}
+                onChange={(e) => set("mobility", e.target.value)}
+              />
+              <FieldTextarea
+                id="healthNotes"
+                label="Health notes"
+                hint="Injuries, conditions or recent surgery you'd like your therapist to know about. Share only what you're comfortable with."
+                value={data.healthNotes}
+                onChange={(e) => set("healthNotes", e.target.value)}
+              />
+            </div>
+          </details>
 
           <p className="flex items-start gap-compact rounded border border-border bg-card p-3 text-description text-bb-text-description">
             <Lock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />

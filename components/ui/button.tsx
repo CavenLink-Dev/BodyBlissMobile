@@ -37,11 +37,11 @@ const buttonVariants = cva(
       variant: {
         primary:
           "bg-secondary text-secondary-foreground shadow-secondary-inner active:brightness-95",
-        /* secondary & soft: same fill + label as primary, at 88% opacity so
-           they read a touch lighter. */
+        /* secondary & soft: a distinctly lighter pale-gold, espresso label —
+           clearly readable as the lighter, secondary action. */
         secondary:
-          "bg-secondary/[0.88] text-secondary-foreground shadow-secondary-inner active:brightness-95",
-        soft: "bg-secondary/[0.88] text-secondary-foreground shadow-secondary-inner active:brightness-95",
+          "bg-gold-light text-espresso shadow-secondary-inner active:brightness-95",
+        soft: "bg-gold-light text-espresso shadow-secondary-inner active:brightness-95",
         quiet: "bg-transparent text-foreground active:bg-foreground/10",
       },
     },

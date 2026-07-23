@@ -35,7 +35,7 @@ export function SuburbChecker() {
     <Card className="flex flex-col gap-component">
       <div className="flex items-center gap-component">
         <span
-          className="inline-flex size-11 items-center justify-center rounded-full bg-muted"
+          className="inline-flex size-11 items-center justify-center rounded-full bg-gold-wash"
           aria-hidden="true"
         >
           <MapPin className="size-6 text-primary" />
