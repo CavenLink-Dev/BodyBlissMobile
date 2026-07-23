@@ -10,13 +10,8 @@ import { GiftCardTools } from "@/components/gift-card-tools";
 export const metadata: Metadata = {
   title: "Gift cards | Body Bliss Mobile Massage",
   description:
-    "Give the gift of a Body Bliss mobile massage. Choose an amount, add a message, and it's delivered by email.",
+    "Give the gift of a Body Bliss mobile massage. Choose an amount, add a message, then email it or print it to give in person.",
 };
-
-/*
-  Gift cards — DEMO MODE. The purchase flow is a complete, simulated
-  checkout (see components/gift-card-purchase.tsx). REAL: DEMO-MODE.md §5.
-*/
 
 export default function GiftCardsPage() {
   return (
@@ -45,10 +40,10 @@ export default function GiftCardsPage() {
           <div className="grid grid-cols-1 gap-card-gap tablet:grid-cols-3">
             <Card className="flex h-full flex-col gap-component">
               <Gift aria-hidden="true" className="size-8 text-primary" />
-              <CardTitle className="text-subtitle">You send it</CardTitle>
+              <CardTitle className="text-subtitle">You give it</CardTitle>
               <CardDescription>
-                Choose an amount, add a message, and the gift card is delivered
-                to their inbox.
+                Choose an amount, add a message, then email it straight to them
+                or download it to print and give in person.
               </CardDescription>
             </Card>
             <Card className="flex h-full flex-col gap-component">
